@@ -19,7 +19,6 @@ public class Drive {
 	private SwerveDrive swerveDrive;
     public final XboxController DRIVER_CONTROLLER;
 	private Field2d field;;
-	private boolean slow;
 	private boolean fieldRelative;
 
     public static Drive getInstance() {
@@ -33,8 +32,7 @@ public class Drive {
 		field = new Field2d();
         DRIVER_CONTROLLER = new XboxController(0);
 
-		slow = false;
-		fieldRelative = true;
+
 
 		try {
 			File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
@@ -54,15 +52,6 @@ public class Drive {
     }
 	
 	public void periodic() {
-		if (slow) {
-			if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) slow = false;
-			swerveInputs.scaleTranslation(0.33);
-			swerveInputs.scaleRotation(0.33);
-		} else {
-			if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) slow = true;
-			swerveInputs.scaleTranslation(1);
-			swerveInputs.scaleRotation(1);
-		}
 
 		if (fieldRelative) {
 			if (DRIVER_CONTROLLER.getBackButtonPressed()) {
