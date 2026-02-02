@@ -18,7 +18,9 @@ public class Drive {
     private SwerveInputStream swerveInputs;
 	private SwerveDrive swerveDrive;
     public final XboxController DRIVER_CONTROLLER;
-	private Field2d field;
+	private Field2d field;;
+	private boolean slow;
+	private boolean fieldRelative;
 
     public static Drive getInstance() {
 		if (instance == null) {
@@ -31,6 +33,9 @@ public class Drive {
 		field = new Field2d();
         DRIVER_CONTROLLER = new XboxController(0);
 
+		slow = false;
+		fieldRelative = true;
+
 		try {
 			File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
 			swerveDrive = new SwerveParser(swerveJsonDirectory).createSwerveDrive(
@@ -42,11 +47,34 @@ public class Drive {
 		}
 		swerveDrive.setMotorIdleMode(true);
 
-        swerveInputs = SwerveInputStream.of(swerveDrive, () -> -DRIVER_CONTROLLER.getLeftY(), () -> -DRIVER_CONTROLLER.getLeftX());
+        swerveInputs = SwerveInputStream.of(swerveDrive, () -> DRIVER_CONTROLLER.getLeftY(), () -> DRIVER_CONTROLLER.getLeftX()) 			
+		.withControllerRotationAxis(() -> -DRIVER_CONTROLLER.getRightX())
+		.allianceRelativeControl(true)
+		.driveToPoseEnabled(false);
     }
 	
 	public void periodic() {
-	
+		if (slow) {
+			if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) slow = false;
+			swerveInputs.scaleTranslation(0.33);
+			swerveInputs.scaleRotation(0.33);
+		} else {
+			if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) slow = true;
+			swerveInputs.scaleTranslation(1);
+			swerveInputs.scaleRotation(1);
+		}
+
+		if (fieldRelative) {
+			if (DRIVER_CONTROLLER.getBackButtonPressed()) {
+				fieldRelative = false;
+			}
+			swerveDrive.driveFieldOriented(swerveInputs.get());
+		} else {
+			if (DRIVER_CONTROLLER.getBackButtonPressed()) {
+				fieldRelative = true;
+			}
+			swerveDrive.drive(swerveInputs.get());
+		}
 
 		field.setRobotPose(swerveDrive.getPose());
 		SmartDashboard.putData(field);
