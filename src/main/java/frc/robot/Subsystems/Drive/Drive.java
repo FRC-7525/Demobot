@@ -67,16 +67,10 @@ public class Drive {
 
 		field.setRobotPose(swerveDrive.getPose());
 		SmartDashboard.putData(field);
+
+		
 	}
 
-	public void zeroGyro() {
-		swerveDrive.resetOdometry(
-			new Pose2d(
-				swerveDrive.getPose().getX(),
-				swerveDrive.getPose().getY(),
-				Rotation2d.fromDegrees(0)
-			)
-		);
-	}
+
 
 }
