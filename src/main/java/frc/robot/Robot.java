@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import frc.robot.Subsystems.Drive.Drive;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -16,10 +17,16 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
-  public Robot() {}
+  Drive drive;
+
+  public Robot() {
+    drive = Drive.getInstance();
+  }
 
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    drive.periodic();
+  }
 
   @Override
   public void autonomousInit() {}

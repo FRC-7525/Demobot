@@ -6,6 +6,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import swervelib.SwerveDrive;
 import swervelib.SwerveInputStream;
 import swervelib.parser.SwerveParser;
@@ -15,8 +17,8 @@ public class Drive {
     private static Drive instance;
     private SwerveInputStream swerveInputs;
 	private SwerveDrive swerveDrive;
-	private boolean fieldRelative;
     public final XboxController DRIVER_CONTROLLER;
+	private Field2d field;
 
     public static Drive getInstance() {
 		if (instance == null) {
@@ -26,12 +28,13 @@ public class Drive {
 	}
 
     private Drive() {
+		field = new Field2d();
         DRIVER_CONTROLLER = new XboxController(0);
 
 		try {
 			File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
 			swerveDrive = new SwerveParser(swerveJsonDirectory).createSwerveDrive(
-				MAX_SPEED.magnitude(),
+				MAX_SPEED,
 				new Pose2d(9.9, 4.0, Rotation2d.fromDegrees(0))
 			);
 		} catch (Exception e) {
@@ -41,4 +44,22 @@ public class Drive {
 
         swerveInputs = SwerveInputStream.of(swerveDrive, () -> -DRIVER_CONTROLLER.getLeftY(), () -> -DRIVER_CONTROLLER.getLeftX());
     }
+	
+	public void periodic() {
+	
+
+		field.setRobotPose(swerveDrive.getPose());
+		SmartDashboard.putData(field);
+	}
+
+	public void zeroGyro() {
+		swerveDrive.resetOdometry(
+			new Pose2d(
+				swerveDrive.getPose().getX(),
+				swerveDrive.getPose().getY(),
+				Rotation2d.fromDegrees(0)
+			)
+		);
+	}
+
 }
