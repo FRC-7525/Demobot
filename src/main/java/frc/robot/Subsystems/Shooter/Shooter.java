@@ -1,39 +1,45 @@
 package frc.robot.Subsystems.Shooter;
 
-import com.ctre.phoenix6.hardware.TalonFX;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.math.controller.PIDController;
-import frc.robot.Constants;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 
-
+import static frc.robot.Subsystems.Shooter.ShooterConstants.*;
 
 public class Shooter {
-    private ShooterStates state;  
-    private TalonFX leftMotor; 
-    private TalonFX rightMotor;
-    private PIDController leadermotorcontrollerleft;
-    private PIDController followermotorcontrollerright;
+    protected ShooterStates state;
+    protected SparkMax followerleftMotor; 
+    protected SparkMax leaderrightMotor;
+    protected PIDController motorcontrollerright;
+    private SparkMaxConfig followerConfig;
+    protected SimpleMotorFeedforward feedforward;
 
     public Shooter() {
         state = ShooterStates.IDLE;
-        motorcontrollerright = new PIDController(Constants.Shooter.MOTOR_RIGHT_PROPORTION, Constants.Shooter.MOTOR_RIGHT_INTEGRAL, Constants.Shooter.MOTOR_RIGHT_DERIVATIVE); //PID Tune values
-        
-        followerleftMotor = new TalonFX(Constants.Shooter.LEFT_MOTOR_ID);
-        leaderrightMotor = new TalonFX(Constants.Shooter.RIGHT_MOTOR_ID);
-
-        followerleftMotor.set(ControlMode.Follower, leaderrightMotor.getDeviceID());
-        followerleftMotor.setInverted(TalonFXInvertType.OpposeMaster); // oppose or follow master??? there is a .FollowMaster Method
+        motorcontrollerright = new PIDController(MOTOR_RIGHT_PROPORTION, MOTOR_RIGHT_INTEGRAL, MOTOR_RIGHT_DERIVATIVE); //PID Tune values
+        followerleftMotor = new SparkMax(LEFT_MOTOR_ID, MotorType.kBrushless);
+        leaderrightMotor = new SparkMax(RIGHT_MOTOR_ID, MotorType.kBrushless);
+        followerConfig = new SparkMaxConfig();
+        followerConfig.follow(leaderrightMotor, true);
+        followerleftMotor.configure(followerConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+        feedforward = new SimpleMotorFeedforward(kS, kV, kA);
     }
     
     public void setState(ShooterStates state) {
         this.state = state;
     }
 
+
     public void periodic() {
-        if (state == IDLE) {
-            rightmotor.set(0);
+        if (state == ShooterStates.IDLE) {
+            leaderrightMotor.set(0);
         } else {
-            rightMotor.set(motorcontrollerright.calculate(rightMotor.getVelocity().getValueAsDouble(), state.getShooterRPS()));
+            leaderrightMotor.set(motorcontrollerright.calculate(leaderrightMotor.getEncoder().getVelocity(), state.getShooterRPS() * 60) + feedforward.calculate(state.getShooterRPS() * 60));
         }
     }
 }

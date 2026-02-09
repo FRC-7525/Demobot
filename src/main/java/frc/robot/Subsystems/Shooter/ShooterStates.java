@@ -1,8 +1,8 @@
 package frc.robot.Subsystems.Shooter;
 
-import static frc.robot.Constants.Shooter.*;
+import static frc.robot.Subsystems.Shooter.ShooterConstants.*;
 
-enum ShooterStates {
+public enum ShooterStates {
     IDLE(0), 
     FIXEDSHOOT(FIXED_SHOOT_RPS),
     DYNAMICSHOOT(FIXED_SHOOT_RPS),
