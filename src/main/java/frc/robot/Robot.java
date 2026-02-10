@@ -5,6 +5,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import frc.robot.Subsystems.Climber.Climber;
+import frc.robot.Subsystems.Climber.ClimberSim;
+import frc.robot.Subsystems.Climber.ClimberStates;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -16,12 +21,22 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
-  public Robot() {}
+  // Climber climber;
+  private ClimberSim climber;
+
+
+  public Robot() {
+
+
+    this.climber = new ClimberSim();
+  }
 
   @Override
-  public void robotPeriodic() {}
-
-  @Override
+  public void robotPeriodic() {
+    climber.periodic();
+  }
+    
+      @Override
   public void autonomousInit() {}
 
   @Override
