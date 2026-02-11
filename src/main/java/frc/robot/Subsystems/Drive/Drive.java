@@ -18,7 +18,7 @@ public class Drive {
     private SwerveInputStream swerveInputs;
 	private SwerveDrive swerveDrive;
     public final XboxController DRIVER_CONTROLLER;
-	private Field2d field;;
+	private Field2d robot;
 	private boolean fieldRelative;
 
     public static Drive getInstance() {
@@ -29,10 +29,8 @@ public class Drive {
 	}
 
     private Drive() {
-		field = new Field2d();
+		robot = new Field2d();
         DRIVER_CONTROLLER = new XboxController(0);
-
-
 
 		try {
 			File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
@@ -65,12 +63,7 @@ public class Drive {
 			swerveDrive.drive(swerveInputs.get());
 		}
 
-		field.setRobotPose(swerveDrive.getPose());
-		SmartDashboard.putData(field);
-
-		
+		robot.setRobotPose(swerveDrive.getSimulationDriveTrainPose().get());
+		SmartDashboard.putData(robot);
 	}
-
-
-
 }
