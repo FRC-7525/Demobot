@@ -1,23 +1,17 @@
 package frc.robot.Subsystems.Climber;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
-import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.revrobotics.sim.SparkMaxSim;
 
-import static frc.robot.Subsystems.Climber.ClimberConstants.*;
-
-public class ClimberSim {
-DCMotorSim climberSim; 
-ClimberStates state;
-private static ClimberSim instance;
-PIDController Climbcontroller;
-XboxController controller;
+public class ClimberSim extends Climber {
+    private static ClimberSim instance;
+    private SparkMaxSim motorSim;
+    private DCMotorSim climberSim;
+    private XboxController controller;
 
     public static ClimberSim getInstance() {
         if (instance == null) {
@@ -29,11 +23,9 @@ XboxController controller;
 
     public ClimberSim() {
         state = ClimberStates.IDLE;
-        climberSim = new DCMotorSim(LinearSystemId.createDCMotorSystem(DCMotor.getNEO(1), 1, 1), DCMotor.getNEO(1), 1);
-        Climbcontroller = new PIDController( MOTOR_PROPORTION, MOTOR_INTEGRAL, MOTOR_DERIVATIVE);
+        motorSim = new SparkMaxSim(motor, DCMotor.getNEO(1));
+        climberSim = new DCMotorSim(LinearSystemId.createDCMotorSystem(DCMotor.getNEO(1), 1, 1), DCMotor.getNEO(1));
         controller = new XboxController(0);
-        
-        
     }
         
     public void setState(ClimberStates state) {
@@ -41,20 +33,29 @@ XboxController controller;
     }
 
     public void periodic() {
-
-        
-        
         if (state == ClimberStates.IDLE) {
             climberSim.setInputVoltage(0);
         } else {
-            climberSim.setInputVoltage(Climbcontroller.calculate(climberSim.getAngularPositionRad(), state.getPosition()));
+            climberSim.setInputVoltage(12 * motorcontroller.calculate(motor.getEncoder().getPosition(), state.getPosition()));
         }
       
-                
         if (controller.getYButtonPressed()) {
             state = ClimberStates.L1;
+        } else if (controller.getXButtonPressed()) {
+            state = ClimberStates.L2;
+        } else if (controller.getAButtonPressed()) {
+            state = ClimberStates.DEPLOY;
+        } else if (controller.getBButtonPressed()) {
+            state = ClimberStates.IDLE;
         }
-        SmartDashboard.putNumber( "Climber position", climberSim.getAngularPositionRad());
+
+        climberSim.update(0.02);
+        motorSim.setPosition(climberSim.getAngularPositionRotations());
+        motorSim.setVelocity(climberSim.getAngularVelocityRPM());
+        SmartDashboard.putNumber("Climber sim position", climberSim.getAngularPositionRotations());
+        SmartDashboard.putNumber("Climber sim setpoint", state.getPosition());
+        SmartDashboard.putString("Climber sim state", state.getStateString());
+        
     }
 
 

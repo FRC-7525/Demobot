@@ -1,7 +1,6 @@
 package frc.robot.Subsystems.Climber;
 import static frc.robot.Subsystems.Climber.ClimberConstants.*;
 
-
 public enum ClimberStates {
     IDLE("IDLE", IDLE_POSITION),
     L1("L1", L1_POSITION),
@@ -23,5 +22,4 @@ public enum ClimberStates {
 	public double getPosition() {
 		return position;
 	}
-
 }
