@@ -10,53 +10,45 @@ import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterSim extends Shooter {
-    private SparkMaxSim leftSim;
-    private SparkMaxSim rightSim;
-    private FlywheelSim bigWheel;
 
-    public ShooterSim() {
-        leftSim = new SparkMaxSim(followerleftMotor, DCMotor.getNEO(leftSimMotor));
-        rightSim = new SparkMaxSim(leaderrightMotor, DCMotor.getNEO(rightSimMotor));
-        bigWheel = new FlywheelSim(
-            LinearSystemId.createFlywheelSystem(
-                DCMotor.getNEO(leftSimMotor + rightSimMotor),
-                JKgMetersSquared,
-                gearing
-            ),
-            DCMotor.getNEO(leftSimMotor + rightSimMotor));
-    }
+	private SparkMaxSim leftSim;
+	private SparkMaxSim rightSim;
+	private FlywheelSim bigWheel;
 
-    public void setState(ShooterStates state) {
-        this.state = state;
-    }
+	public ShooterSim() {
+		leftSim = new SparkMaxSim(followerleftMotor, DCMotor.getNEO(leftSimMotor));
+		rightSim = new SparkMaxSim(leaderrightMotor, DCMotor.getNEO(rightSimMotor));
+		bigWheel = new FlywheelSim(LinearSystemId.createFlywheelSystem(DCMotor.getNEO(leftSimMotor + rightSimMotor), JKgMetersSquared, gearing), DCMotor.getNEO(leftSimMotor + rightSimMotor));
+	}
 
-    public void periodic() {
-        // Rand sim annoying stuffs
-        leftSim.setVelocity(Units.radiansToRotations(bigWheel.getAngularVelocityRadPerSec()));
-        rightSim.setVelocity(Units.radiansToRotations(bigWheel.getAngularVelocityRadPerSec()));
-        leftSim.setBusVoltage(busVoltage);
-        rightSim.setBusVoltage(busVoltage);
-        bigWheel.update(bigWheelUpdate);
+	public void setState(ShooterStates state) {
+		this.state = state;
+	}
 
-        // Logging
-        SmartDashboard.putNumber("Shooter/Current Speed (RPM)", bigWheel.getAngularVelocityRPM());
-        SmartDashboard.putNumber("Shooter/Target Speed (RPM)", state.getShooterRPS() * RPStoRPMConversionFactor);
-        SmartDashboard.putData("Shooter/PID Controller", motorcontrollerright);
+	public void periodic() {
+		// Rand sim annoying stuffs
+		leftSim.setVelocity(Units.radiansToRotations(bigWheel.getAngularVelocityRadPerSec()));
+		rightSim.setVelocity(Units.radiansToRotations(bigWheel.getAngularVelocityRadPerSec()));
+		leftSim.setBusVoltage(busVoltage);
+		rightSim.setBusVoltage(busVoltage);
+		bigWheel.update(bigWheelUpdate);
 
-        feedforward.setKa(SmartDashboard.getNumber("kA", kADefaultValueSim));
-        SmartDashboard.putNumber("kA", feedforward.getKa());
-        feedforward.setKv(SmartDashboard.getNumber("kV", kVDefaultValueSim));
-        SmartDashboard.putNumber("kV", feedforward.getKv());
-        feedforward.setKs(SmartDashboard.getNumber("kS", kSDefaultValueSim));
-        SmartDashboard.putNumber("kS", feedforward.getKs());
+		// Logging
+		SmartDashboard.putNumber("Shooter/Current Speed (RPM)", bigWheel.getAngularVelocityRPM());
+		SmartDashboard.putNumber("Shooter/Target Speed (RPM)", state.getShooterRPS() * RPStoRPMConversionFactor);
+		SmartDashboard.putData("Shooter/PID Controller", motorcontrollerright);
 
+		feedforward.setKa(SmartDashboard.getNumber("kA", kADefaultValueSim));
+		SmartDashboard.putNumber("kA", feedforward.getKa());
+		feedforward.setKv(SmartDashboard.getNumber("kV", kVDefaultValueSim));
+		SmartDashboard.putNumber("kV", feedforward.getKv());
+		feedforward.setKs(SmartDashboard.getNumber("kS", kSDefaultValueSim));
+		SmartDashboard.putNumber("kS", feedforward.getKs());
 
-
-        if (state == ShooterStates.IDLE) {
-            bigWheel.setInputVoltage(IDLESpeedOrVoltage);
-        } else {
-            bigWheel.setInputVoltage(BigWheelVoltageInitalCalcFactor * motorcontrollerright.calculate(bigWheel.getAngularVelocityRPM(), state.getShooterRPS() * RPStoRPMConversionFactor) + feedforward.calculate(state.getShooterRPS() * RPStoRPMConversionFactor));
-        }
-    }
-
+		if (state == ShooterStates.IDLE) {
+			bigWheel.setInputVoltage(IDLESpeedOrVoltage);
+		} else {
+			bigWheel.setInputVoltage(BigWheelVoltageInitalCalcFactor * motorcontrollerright.calculate(bigWheel.getAngularVelocityRPM(), state.getShooterRPS() * RPStoRPMConversionFactor) + feedforward.calculate(state.getShooterRPS() * RPStoRPMConversionFactor));
+		}
+	}
 }

@@ -15,52 +15,54 @@ import frc.robot.Subsystems.Shooter.ShooterStates;
  * this project, you must also update the Main.java file in the project.
  */
 public class Robot extends TimedRobot {
-  /**
-   * This function is run when the robot is first started up and should be used for any
-   * initialization code.
-   */
-  private XboxController controller = new XboxController(0);
-  private ShooterSim shooter = new ShooterSim();
-  public Robot() {}
 
-  @Override
-  public void robotPeriodic() {
-    if (controller.getBButtonPressed()) {
-      shooter.setState(ShooterStates.IDLE);
-    } else if (controller.getAButtonPressed()) {
-      shooter.setState(ShooterStates.FIXEDSHOOT);
-    }
+	/**
+	 * This function is run when the robot is first started up and should be used for any
+	 * initialization code.
+	 */
+	private XboxController controller = new XboxController(0);
+	private ShooterSim shooter = new ShooterSim();
 
-    shooter.periodic();
-  }
+	public Robot() {}
 
-  @Override
-  public void autonomousInit() {}
+	@Override
+	public void robotPeriodic() {
+		if (controller.getBButtonPressed()) {
+			shooter.setState(ShooterStates.IDLE);
+		} else if (controller.getAButtonPressed()) {
+			shooter.setState(ShooterStates.FIXEDSHOOT);
+		}
 
-  @Override
-  public void autonomousPeriodic() {}
+		shooter.periodic();
+	}
 
-  @Override
-  public void teleopInit() {}
+	@Override
+	public void autonomousInit() {}
 
-  @Override
-  public void teleopPeriodic() {}
+	@Override
+	public void autonomousPeriodic() {}
 
-  @Override
-  public void disabledInit() {}
+	@Override
+	public void teleopInit() {}
 
-  @Override
-  public void disabledPeriodic() {}
+	@Override
+	public void teleopPeriodic() {}
 
-  @Override
-  public void testInit() {}
+	@Override
+	public void disabledInit() {}
 
-  @Override
-  public void testPeriodic() {}
+	@Override
+	public void disabledPeriodic() {}
 
-  @Override
-  public void simulationInit() {}
+	@Override
+	public void testInit() {}
 
-  @Override
-  public void simulationPeriodic() {}
+	@Override
+	public void testPeriodic() {}
+
+	@Override
+	public void simulationInit() {}
+
+	@Override
+	public void simulationPeriodic() {}
 }
