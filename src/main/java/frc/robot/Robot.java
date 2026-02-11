@@ -5,6 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.Subsystems.Passthrough.PassthroughSim;
+import frc.robot.Subsystems.Passthrough.PassthroughStates;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -16,10 +19,23 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+
+  private XboxController controller = new XboxController(0);
+  private PassthroughSim passthrough = new PassthroughSim();
+
   public Robot() {}
 
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    if (controller.getBButtonPressed()) {
+      passthrough.setState(PassthroughStates.IDLE);
+      
+    } else if (controller.getAButtonPressed()) {
+      passthrough.setState(PassthroughStates.PASS);
+    }
+
+    passthrough.periodic();
+  }
 
   @Override
   public void autonomousInit() {}
