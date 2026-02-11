@@ -3,7 +3,7 @@ package frc.robot.Subsystems.Shooter;
 import static frc.robot.Subsystems.Shooter.ShooterConstants.*;
 
 public enum ShooterStates {
-    IDLE(0), 
+    IDLE(IDLE_RPS), 
     FIXEDSHOOT(FIXED_SHOOT_RPS),
     DYNAMICSHOOT(FIXED_SHOOT_RPS),
     LONGPASS(LONG_PASS_RPS);

@@ -37,9 +37,9 @@ public class Shooter {
 
     public void periodic() {
         if (state == ShooterStates.IDLE) {
-            leaderrightMotor.set(0);
+            leaderrightMotor.set(IDLESpeedOrVoltage);
         } else {
-            leaderrightMotor.set(motorcontrollerright.calculate(leaderrightMotor.getEncoder().getVelocity(), state.getShooterRPS() * 60) + feedforward.calculate(state.getShooterRPS() * 60));
+            leaderrightMotor.set(motorcontrollerright.calculate(leaderrightMotor.getEncoder().getVelocity(), state.getShooterRPS() * RPStoRPMConversionFactor) + feedforward.calculate(state.getShooterRPS() * RPStoRPMConversionFactor));
         }
     }
 }
