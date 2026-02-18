@@ -2,6 +2,8 @@ package frc.robot.Subsystems.Shooter;
 
 import static frc.robot.Subsystems.Shooter.ShooterConstants.*;
 
+import edu.wpi.first.units.measure.AngularVelocity;
+
 public enum ShooterStates {
     IDLE(IDLE_RPS), 
     FIXEDSHOOT(FIXED_SHOOT_RPS),
@@ -9,9 +11,9 @@ public enum ShooterStates {
     LONGPASS(LONG_PASS_RPS);
 
     private String stateString;
-    private double shooterSpeed;
+    private AngularVelocity shooterSpeed;
 
-    ShooterStates(double shooterSpeed) {
+    ShooterStates(AngularVelocity shooterSpeed) {
         this.stateString = this.name();
         this.shooterSpeed = shooterSpeed;
     }
@@ -20,7 +22,7 @@ public enum ShooterStates {
         return stateString;
     }
 
-    public Double getShooterRPS() {
+    public AngularVelocity getShooterRPS() {
         return shooterSpeed;
     }
 }

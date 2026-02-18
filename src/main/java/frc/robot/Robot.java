@@ -5,9 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.Subsystems.Shooter.ShooterSim;
-import frc.robot.Subsystems.Shooter.ShooterStates;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -19,19 +16,10 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
-  private XboxController controller = new XboxController(0);
-  private ShooterSim shooter = new ShooterSim();
   public Robot() {}
 
   @Override
   public void robotPeriodic() {
-    if (controller.getBButtonPressed()) {
-      shooter.setState(ShooterStates.IDLE);
-    } else if (controller.getAButtonPressed()) {
-      shooter.setState(ShooterStates.FIXEDSHOOT);
-    }
-
-    shooter.periodic();
   }
 
   @Override
