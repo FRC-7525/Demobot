@@ -10,57 +10,50 @@ import edu.wpi.first.units.AngularVelocityUnit;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
 public class ShooterSim extends Shooter {
-    private SparkMaxSim leftSim;
-    private SparkMaxSim rightSim;
-    private FlywheelSim bigWheel;
-    private AngularVelocityUnit angularVelocityUnit;
 
-    public ShooterSim() {
-        leftSim = new SparkMaxSim(followerleftMotor, DCMotor.getNEO(LEFT_SIM_MOTOR));
-        rightSim = new SparkMaxSim(leaderrightMotor, DCMotor.getNEO(RIGHT_SIM_MOTOR));
-        bigWheel = new FlywheelSim(
-            LinearSystemId.createFlywheelSystem(
-                DCMotor.getNEO(LEFT_SIM_MOTOR + RIGHT_SIM_MOTOR),
-                JKG_METERS_SQUARED,
-                GEARING
-            ),
-            DCMotor.getNEO(LEFT_SIM_MOTOR + RIGHT_SIM_MOTOR));
-            angularVelocityUnit = edu.wpi.first.units.Units.RadiansPerSecond;
-    }
+	private SparkMaxSim leftSim;
+	private SparkMaxSim rightSim;
+	private FlywheelSim bigWheel;
+	private AngularVelocityUnit angularVelocityUnit;
 
-    public void setState(ShooterStates state) {
-        this.state = state;
-    }
+	public ShooterSim() {
+		leftSim = new SparkMaxSim(followerleftMotor, DCMotor.getNEO(LEFT_SIM_MOTOR));
+		rightSim = new SparkMaxSim(leaderrightMotor, DCMotor.getNEO(RIGHT_SIM_MOTOR));
+		bigWheel = new FlywheelSim(LinearSystemId.createFlywheelSystem(DCMotor.getNEO(LEFT_SIM_MOTOR + RIGHT_SIM_MOTOR), JKG_METERS_SQUARED, GEARING), DCMotor.getNEO(LEFT_SIM_MOTOR + RIGHT_SIM_MOTOR));
+		angularVelocityUnit = edu.wpi.first.units.Units.RadiansPerSecond;
+	}
 
-    public void periodic() {
-        // Rand sim annoying stuffs
-        leftSim.setVelocity(Units.radiansToRotations(bigWheel.getAngularVelocityRadPerSec()));
-        rightSim.setVelocity(Units.radiansToRotations(bigWheel.getAngularVelocityRadPerSec()));
-        leftSim.setBusVoltage(BUS_VOLTAGE);
-        rightSim.setBusVoltage(BUS_VOLTAGE);
-        bigWheel.update(BIG_WHEEL_UPDATE);
+	public void setState(ShooterStates state) {
+		this.state = state;
+	}
 
-        // Logging
-        SmartDashboard.putNumber("Shooter/Current Speed (RPM)", bigWheel.getAngularVelocityRadPerSec());
-        SmartDashboard.putNumber("Shooter/Target Speed (RPM)", state.getShooterRPS().in(angularVelocityUnit) * RPS_TO_RPM_CONVERSION_FACTOR);
-        SmartDashboard.putData("Shooter/PID Controller", motorcontrollerright);
+	public void periodic() {
+		// Rand sim annoying stuffs
+		leftSim.setVelocity(Units.radiansToRotations(bigWheel.getAngularVelocityRadPerSec()));
+		rightSim.setVelocity(Units.radiansToRotations(bigWheel.getAngularVelocityRadPerSec()));
+		leftSim.setBusVoltage(BUS_VOLTAGE);
+		rightSim.setBusVoltage(BUS_VOLTAGE);
+		bigWheel.update(BIG_WHEEL_UPDATE);
 
-        feedforward.setKa(SmartDashboard.getNumber("kA", feedforward.getKa()));
-        SmartDashboard.putNumber("kA", feedforward.getKa());
-        feedforward.setKv(SmartDashboard.getNumber("kV", feedforward.getKv()));
-        SmartDashboard.putNumber("kV", feedforward.getKv());
-        feedforward.setKs(SmartDashboard.getNumber("kS", feedforward.getKs()));
-        SmartDashboard.putNumber("kS", feedforward.getKs());
+		// Logging
+		SmartDashboard.putNumber("Shooter/Current Speed (RPM)", bigWheel.getAngularVelocityRadPerSec());
+		SmartDashboard.putNumber("Shooter/Target Speed (RPM)", state.getShooterRPS().in(angularVelocityUnit) * RPS_TO_RPM_CONVERSION_FACTOR);
+		SmartDashboard.putData("Shooter/PID Controller", motorcontrollerright);
 
+		feedforward.setKa(SmartDashboard.getNumber("kA", feedforward.getKa()));
+		SmartDashboard.putNumber("kA", feedforward.getKa());
+		feedforward.setKv(SmartDashboard.getNumber("kV", feedforward.getKv()));
+		SmartDashboard.putNumber("kV", feedforward.getKv());
+		feedforward.setKs(SmartDashboard.getNumber("kS", feedforward.getKs()));
+		SmartDashboard.putNumber("kS", feedforward.getKs());
 
-
-        if (state == ShooterStates.IDLE) {
-            bigWheel.setInputVoltage(IDLE_SPEED_OR_VOLTAGE);
-        } else {
-            bigWheel.setInputVoltage(BIG_WHEEL_VOLTAGE_INITIAL_CALC_FACTOR * motorcontrollerright.calculate(bigWheel.getAngularVelocityRPM(), state.getShooterRPS().in(angularVelocityUnit) * RPS_TO_RPM_CONVERSION_FACTOR) + feedforward.calculate(state.getShooterRPS().in(angularVelocityUnit) * RPS_TO_RPM_CONVERSION_FACTOR));
-        }
-    }
-
+		if (state == ShooterStates.IDLE) {
+			bigWheel.setInputVoltage(IDLE_SPEED_OR_VOLTAGE);
+		} else {
+			bigWheel.setInputVoltage(
+				BIG_WHEEL_VOLTAGE_INITIAL_CALC_FACTOR * motorcontrollerright.calculate(bigWheel.getAngularVelocityRPM(), state.getShooterRPS().in(angularVelocityUnit) * RPS_TO_RPM_CONVERSION_FACTOR) + feedforward.calculate(state.getShooterRPS().in(angularVelocityUnit) * RPS_TO_RPM_CONVERSION_FACTOR)
+			);
+		}
+	}
 }
