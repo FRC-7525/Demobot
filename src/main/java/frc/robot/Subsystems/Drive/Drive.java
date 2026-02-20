@@ -43,7 +43,7 @@ public class Drive {
 		}
 		swerveDrive.setMotorIdleMode(true);
 
-        swerveInputs = SwerveInputStream.of(swerveDrive, () -> DRIVER_CONTROLLER.getLeftY(), () -> DRIVER_CONTROLLER.getLeftX()) 			
+        swerveInputs = SwerveInputStream.of(swerveDrive, () -> -DRIVER_CONTROLLER.getLeftY(), () -> -DRIVER_CONTROLLER.getLeftX()) 			
 		.withControllerRotationAxis(() -> -DRIVER_CONTROLLER.getRightX())
 		.allianceRelativeControl(true)
 		.driveToPoseEnabled(false);
