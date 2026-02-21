@@ -2,12 +2,18 @@ package frc.robot.Subsystems.Drive;
 
 import java.io.File;
 
+import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.GlobalConstants;
+import frc.robot.GlobalConstants.RobotMode;
 import swervelib.SwerveDrive;
 import swervelib.SwerveInputStream;
 import swervelib.parser.SwerveParser;
@@ -27,6 +33,7 @@ public class Drive {
 		}
 		return instance;
 	}
+	
 
     private Drive() {
 		robot = new Field2d();
@@ -48,6 +55,9 @@ public class Drive {
 		.allianceRelativeControl(true)
 		.driveToPoseEnabled(false);
     }
+	public Pose2d getPose() {
+		return swerveDrive.getPose();
+	}
 	
 	public void periodic() {
 
@@ -65,5 +75,21 @@ public class Drive {
 
 		robot.setRobotPose(swerveDrive.getSimulationDriveTrainPose().get());
 		SmartDashboard.putData(robot);
+
+	}
+		public void addVisionMeasurement(
+		Pose2d visionPose,
+		double timestamp,
+		Matrix<N3, N1> visionMeasurementStdDevs
+	) {
+		if (GlobalConstants.ROBOT_MODE == RobotMode.REAL) {
+			swerveDrive.addVisionMeasurement(visionPose, timestamp, visionMeasurementStdDevs);
+		} else {
+			swerveDrive.addVisionMeasurement(visionPose, timestamp, visionMeasurementStdDevs);
+		}
+		swerveDrive.updateOdometry();
+	}
+	public ChassisSpeeds getRobotRelativeSpeeds() {
+		return swerveDrive.getRobotVelocity();
 	}
 }

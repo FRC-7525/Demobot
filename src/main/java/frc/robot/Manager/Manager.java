@@ -95,4 +95,9 @@ public class Manager {
 
     }
 
+
+    public ManagerStates getState() {
+        return robotstate;
+    }
+
 }

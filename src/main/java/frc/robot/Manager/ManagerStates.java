@@ -13,7 +13,8 @@ public enum ManagerStates {
     INTAKING(Climber.IDLE, Intake.INTAKING, Passthrough.IDLE, Shooter.IDLE, "INTAKING"),
     DYNAMICSHOT(Climber.IDLE, Intake.IDLE, Passthrough.PASS, Shooter.DYNAMICSHOT, "DYNAMICSHOT"),
     LONGSHOT(Climber.IDLE, Intake.IDLE, Passthrough.PASS, Shooter.LONGSHOT, "LONGSHOT"),
-    FIXEDSHOT(Climber.IDLE, Intake.IDLE, Passthrough.PASS, Shooter.FIXEDSHOT, "FIXEDSHOT");
+    FIXEDSHOT(Climber.IDLE, Intake.IDLE, Passthrough.PASS, Shooter.FIXEDSHOT, "FIXEDSHOT"),
+     AUTO_ALIGN_CLOSE(Climber.IDLE, Intake.IDLE, Passthrough.PASS, Shooter.AUTO_ALIGN_CLOSE, "AUTO_ALIGN_CLOSE"),;
 
     Climber climber;
     Intake intake;
