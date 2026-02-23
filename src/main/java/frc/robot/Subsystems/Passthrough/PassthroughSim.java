@@ -5,6 +5,8 @@ import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import static frc.robot.Subsystems.Passthrough.PassthroughConstants.*;
+import static frc.robot.Subsystems.Passthrough.PassthroughStates.*;
 
 public class PassthroughSim extends Passthrough {
     private SparkMaxSim mainmotorSim;
@@ -13,16 +15,16 @@ public class PassthroughSim extends Passthrough {
     private FlywheelSim backWheel;
 
     public PassthroughSim() {
-        mainmotorSim = new SparkMaxSim(mainmotor, DCMotor.getNEO(1));
-        backmotorSim = new SparkMaxSim(backmotor, DCMotor.getNEO(1));
+        mainmotorSim = new SparkMaxSim(mainmotor, DCMotor.getNEO(NUM_MOTORS));
+        backmotorSim = new SparkMaxSim(backmotor, DCMotor.getNEO(NUM_MOTORS));
         mainWheel = new FlywheelSim(
             LinearSystemId.createFlywheelSystem(
-                DCMotor.getNEO(1), 0.0001, 1),
-                DCMotor.getNEO(1));
+                DCMotor.getNEO(NUM_MOTORS), JKG_METERS_SQUARED, GEARING),
+                DCMotor.getNEO(NUM_MOTORS));
         backWheel = new FlywheelSim(
             LinearSystemId.createFlywheelSystem(
-                DCMotor.getNEO(1), 0.0001, 1),
-                DCMotor.getNEO(1));
+                DCMotor.getNEO(NUM_MOTORS), JKG_METERS_SQUARED, GEARING),
+                DCMotor.getNEO(NUM_MOTORS));
     }
 
     public void setState(PassthroughStates state) {
@@ -33,27 +35,27 @@ public class PassthroughSim extends Passthrough {
         // Rand sim annoying stuffs
         backmotorSim.setVelocity(Units.radiansToRotations(backWheel.getAngularVelocityRadPerSec()));
         mainmotorSim.setVelocity(Units.radiansToRotations(mainWheel.getAngularVelocityRadPerSec()));
-        backmotorSim.setBusVoltage(12);
-        mainmotorSim.setBusVoltage(12);
-        mainWheel.update(0.02);
-        backWheel.update(0.02);
+        backmotorSim.setBusVoltage(CAN_BUS_VOLTAGE);
+        mainmotorSim.setBusVoltage(CAN_BUS_VOLTAGE);
+        mainWheel.update(DT_SECONDS);
+        backWheel.update(DT_SECONDS);
 
         // Logging
 
         SmartDashboard.putNumber("Passthrough/Current MainSpeed (RPM)", mainWheel.getAngularVelocityRPM());
-        SmartDashboard.putNumber("Passthrough/Target MainSpeed (RPM)", PassthroughConstants.PASSTHROUGHMAINMOTOR_RPS * 60);
+        SmartDashboard.putNumber("Passthrough/Target MainSpeed (RPM)", PASSTHROUGH_MAINMOTOR_RPS * RPS_TO_RPM);
         SmartDashboard.putData("Passthrough/PID Controller main", mainmotorcontroller);
 
         SmartDashboard.putNumber("Passthrough/Current BackSpeed (RPM)", backWheel.getAngularVelocityRPM());
-        SmartDashboard.putNumber("Passthrough/Target BackSpeed (RPM)", PassthroughConstants.PASSTHROUGHBACKMOTOR_RPS * 60);
+        SmartDashboard.putNumber("Passthrough/Target BackSpeed (RPM)", PASSTHROUGH_BACKMOTOR_RPS * RPS_TO_RPM);
         SmartDashboard.putData("Passthrough/PID Controller back", backmotorcontroller);
 
-        if (state == PassthroughStates.IDLE) {
-            mainWheel.setInputVoltage(0);
-            backWheel.setInputVoltage(0);
-        } else if (state == PassthroughStates.PASS){
-            mainWheel.setInputVoltage(12 * mainmotorcontroller.calculate(mainWheel.getAngularVelocityRPM(), PassthroughConstants.PASSTHROUGHMAINMOTOR_RPS * 60));
-            backWheel.setInputVoltage(12 * backmotorcontroller.calculate(backWheel.getAngularVelocityRPM(), PassthroughConstants.PASSTHROUGHBACKMOTOR_RPS * 60));
+        if (state == IDLE) {
+            mainWheel.setInputVoltage(SET_INPUT_VOLTS);
+            backWheel.setInputVoltage(SET_INPUT_VOLTS);
+        } else if (state == PASS){
+            mainWheel.setInputVoltage(PASS_VOLTAGE * mainmotorcontroller.calculate(mainWheel.getAngularVelocityRPM(), PASSTHROUGH_MAINMOTOR_RPS * RPS_TO_RPM));
+            backWheel.setInputVoltage(PASS_VOLTAGE * backmotorcontroller.calculate(backWheel.getAngularVelocityRPM(), PASSTHROUGH_BACKMOTOR_RPS * RPS_TO_RPM));
 
         }
     }
