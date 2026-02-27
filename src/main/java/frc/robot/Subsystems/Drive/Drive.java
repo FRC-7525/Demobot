@@ -5,6 +5,7 @@ import java.io.File;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
@@ -14,6 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.GlobalConstants;
 import frc.robot.GlobalConstants.RobotMode;
+import frc.robot.Subsystems.AutoAlign.AutoAlign;
+import frc.robot.Subsystems.AutoAlign.AutoAlignStates;
 import swervelib.SwerveDrive;
 import swervelib.SwerveInputStream;
 import swervelib.parser.SwerveParser;
@@ -26,6 +29,7 @@ public class Drive {
     public final XboxController DRIVER_CONTROLLER;
 	private Field2d robot;
 	private boolean fieldRelative;
+	private AutoAlign autoAlign;
 
     public static Drive getInstance() {
 		if (instance == null) {
@@ -92,4 +96,17 @@ public class Drive {
 	public ChassisSpeeds getRobotRelativeSpeeds() {
 		return swerveDrive.getRobotVelocity();
 	}
+	public boolean driveRobotAutoAlign(double x, double y, double rot) {
+		swerveInputs.driveToPoseEnabled(true);
+		swerveDrive.drive(new ChassisSpeeds(x, y, rot));
+		if ( AutoAlign.getInstance().getAutoAlignState() == AutoAlignStates.OFF) {
+			swerveInputs.driveToPoseEnabled(false);
+			return true;
+		}
+		return false;
+		}
+		
 }
+
+
+

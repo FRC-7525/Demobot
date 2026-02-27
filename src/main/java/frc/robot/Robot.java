@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import frc.robot.Subsystems.AutoAlign.AutoAlign;
 import frc.robot.Subsystems.Drive.Drive;
 
 /**
@@ -19,14 +20,17 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
   Drive drive;
+  AutoAlign autoAlign;
 
   public Robot() {
     drive = Drive.getInstance();
+	autoAlign = AutoAlign.getInstance();
   }
 
   @Override
   public void robotPeriodic() {
     drive.periodic();
+    autoAlign.periodic();
   }
 
 	@Override
