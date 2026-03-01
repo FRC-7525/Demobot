@@ -23,18 +23,13 @@
 //     private XboxController driverController = new XboxController(DRIVER_CONTROLLER_PORT);
 //     private XboxController operatorController = new XboxController(OPERATOR_CONTROLLER_PORT);
 
-
 //     private static Manager instance;
-
-
 
 //     private Manager() {
 //         climber = new Climber();
 //         intake = new Intake();
 //         passthrough = new Passthrough();
 //         shooter = new Shooter();
-
-       
 
 //         robotstate = IDLE;
 
@@ -55,7 +50,7 @@
 //         robotstate = LONGSHOT;
 //     } else if (operatorController.getRightTriggerAxis() < 0.1) {
 //         robotstate = IDLE;
-        
+
 //     }
 //     if (operatorController.getRightBumperButtonPressed()) {
 //         robotstate = FIXEDSHOT;
@@ -80,8 +75,6 @@
 //         robotstate = IDLE;
 //     }
 
-
-    
 // 	public static Manager getInstance() {
 // 		if (instance == null) {
 // 			instance = new Manager();
@@ -89,7 +82,6 @@
 // 		return instance;
 // 	}
 
-    
 //     public void periodic() {
 //         intake.getInstance().setState().getIntakeState();
 //         passthrough.getInstance().setState().getPassthroughState();
@@ -105,9 +97,7 @@
 //         Climber.getInstance().periodic();
 //         Drive.getInstance().periodic();
 
-
 //     }
-
 
 //     public ManagerStates getState() {
 //         return robotstate;

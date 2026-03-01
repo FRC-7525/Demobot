@@ -34,7 +34,6 @@
 // 	List<Pose3d> allRobotPosesAccepted = new LinkedList<>();
 // 	List<Pose3d> allRobotPosesRejected = new LinkedList<>();
 
-
 // 	private static Vision instance;
 
 //     private Set<Short> allianceReefTag;

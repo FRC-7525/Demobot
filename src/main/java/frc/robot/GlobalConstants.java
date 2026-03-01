@@ -3,7 +3,6 @@ package frc.robot;
 import static edu.wpi.first.units.Units.*;
 
 import edu.wpi.first.units.measure.LinearAcceleration;
-
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +11,6 @@ public class GlobalConstants {
 
 	public static final LinearAcceleration GRAVITY = MetersPerSecondPerSecond.of(9.81);
 	public static final double SIMULATION_PERIOD = 0.02;
-
 
 	public static final Field2d FIELD = new Field2d();
 
