@@ -60,16 +60,6 @@ public class AutoAlign {
         if (getAutoAlignState() == AutoAlignStates.OFF) {
         targetPose = getAutoAlignState().getLocation();
         }
-        if (DRIVER_CONTROLLER.getXButtonPressed()) {
-            state = AutoAlignStates.toOutpost;
-        } else if (DRIVER_CONTROLLER.getYButtonPressed()) {
-            state = AutoAlignStates.toShootRangeHub;
-        } else if (DRIVER_CONTROLLER.getBButtonPressed()) {
-            state = AutoAlignStates.toTower;
-        } else if (DRIVER_CONTROLLER.getAButtonPressed()) {
-            state = AutoAlignStates.toDepot;
-        }
-        
         
         if (!DriverStation.getAlliance().isEmpty() && DriverStation.getAlliance().get() == Alliance.Red) {
             goalPose = targetPose.getBluePose();
@@ -87,7 +77,6 @@ public class AutoAlign {
             ) {
                 state = AutoAlignStates.OFF;
             }
-
             if (DRIVER_CONTROLLER.getXButtonPressed()) {
                 state = AutoAlignStates.toOutpost;
             } else if (DRIVER_CONTROLLER.getYButtonPressed()) {

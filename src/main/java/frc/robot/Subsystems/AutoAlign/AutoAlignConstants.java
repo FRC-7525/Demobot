@@ -7,9 +7,9 @@ import frc.robot.GlobalConstants;
 public class AutoAlignConstants {
     public static final Supplier<PIDController> ROTATIONAL_CONTROLLER = () ->
         switch (GlobalConstants.ROBOT_MODE) {
-            case REAL -> new PIDController(20, 0, 0);
-			case SIM -> new PIDController(0.5, 0, 0);
-			default -> new PIDController(3, 0, 0);
+            case REAL -> new PIDController(0.2, 0,0);
+			case SIM -> new PIDController( 0.1, 0, 0);            
+			default -> new PIDController(0.2, 0, 0);
         };
 
     public static final Supplier<PIDController> X_TRANSLATIONAL_CONTROLLER = () ->
