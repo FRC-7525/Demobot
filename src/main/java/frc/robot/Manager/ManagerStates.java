@@ -16,15 +16,13 @@
 //     LONGSHOT(Climber.IDLE, Intake.IDLE, Passthrough.PASS, Shooter.LONGSHOT, "LONGSHOT"),
 //     FIXEDSHOT(Climber.IDLE, Intake.IDLE, Passthrough.PASS, Shooter.FIXEDSHOT, "FIXEDSHOT"),
 
-   
 //     Climber climber;
 //     Intake intake;
 //     Passthrough passthrough;
 //     Shooter shooter;
 //     AutoAlign autoalign;
 //     String stateString;
-    
-    
+
 //     ManagerStates(Climber climber, Intake intake, Passthrough passthrough, Shooter shooter, AutoAlign autoalign, String stateString) {
 //         this.climber = climber;
 //         this.intake = intake;
@@ -35,34 +33,29 @@
 //         this.autoalign = autoalign;
 
 //     }
-    
-    
+
 //     public Climber getClimberState() {
 //         return climber;
 //     }
-    
+
 //     public Intake getIntakeState() {
 //         return intake;
 //     }
-    
+
 //     public Passthrough getPassthroughState() {
 //         return passthrough;
 //     }
-    
+
 //     public Shooter getShooterState() {
 //         return shooter;
 //     }
-    
+
 //     public AutoAlign getAutoAlignState() {
 //         return autoalign;
 //     }
-    
-    
+
 //     public String getStateString() {
 //         return stateString;
 //     }
-
-
-
 
 // }
