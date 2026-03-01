@@ -75,12 +75,16 @@ public class AutoAlign {
             }
             if (DRIVER_CONTROLLER.getXButtonPressed()) {
                 state = AutoAlignStates.toOutpost;
+                targetPose = getAutoAlignState().getLocation();
             } else if (DRIVER_CONTROLLER.getYButtonPressed()) {
                 state = AutoAlignStates.toShootRangeHub;
+                targetPose = getAutoAlignState().getLocation();
             } else if (DRIVER_CONTROLLER.getBButtonPressed()) {
                 state = AutoAlignStates.toTower;
+                targetPose = getAutoAlignState().getLocation();
             } else if (DRIVER_CONTROLLER.getAButtonPressed()) {
                 state = AutoAlignStates.toDepot;
+                targetPose = getAutoAlignState().getLocation();
             }
         }
         
