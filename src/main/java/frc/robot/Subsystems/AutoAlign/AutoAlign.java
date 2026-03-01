@@ -57,9 +57,7 @@ public class AutoAlign {
     }
     public void periodic() {
 
-        if (getAutoAlignState() == AutoAlignStates.OFF) {
-        targetPose = getAutoAlignState().getLocation();
-        }
+
         
         if (!DriverStation.getAlliance().isEmpty() && DriverStation.getAlliance().get() == Alliance.Red) {
             goalPose = targetPose.getBluePose();
@@ -77,16 +75,21 @@ public class AutoAlign {
             ) {
                 state = AutoAlignStates.OFF;
             }
-            if (DRIVER_CONTROLLER.getXButtonPressed()) {
+        }
+       if (DRIVER_CONTROLLER.getXButtonPressed()) {
                 state = AutoAlignStates.toOutpost;
+                targetPose = getAutoAlignState().getLocation();
             } else if (DRIVER_CONTROLLER.getYButtonPressed()) {
                 state = AutoAlignStates.toShootRangeHub;
+                targetPose = getAutoAlignState().getLocation();
             } else if (DRIVER_CONTROLLER.getBButtonPressed()) {
                 state = AutoAlignStates.toTower;
+                targetPose = getAutoAlignState().getLocation();
             } else if (DRIVER_CONTROLLER.getAButtonPressed()) {
                 state = AutoAlignStates.toDepot;
+                targetPose = getAutoAlignState().getLocation();
             }
-        }
+ 
         
         // SmartDashboard.putData("Target Pose", goalPose);
         // SmartDashboard.putData("Current Pose", currentPose);
