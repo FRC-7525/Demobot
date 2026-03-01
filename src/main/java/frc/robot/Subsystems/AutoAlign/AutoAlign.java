@@ -39,29 +39,30 @@ public class AutoAlign {
 		goalPose = new Pose2d(null, null);
 		SmartDashboard.putData("Rotaitonal Cotroller", rotationalController);
 		SmartDashboard.putData("Y Transisitional Controller", ytranslationalController);
-        SmartDashboard.putData("X Transisitional Controller", xtranslationalController);
-        
-    }
-    public static AutoAlign getInstance() {
-        if (instance == null) {
-            instance = new AutoAlign();
-        }
-        return instance;
-    }
-    public AutoAlignStates getAutoAlignState() {
-        return state;
-    }
-    public void periodic() {
+		SmartDashboard.putData("X Transisitional Controller", xtranslationalController);
+	}
 
-        if (getAutoAlignState() == AutoAlignStates.OFF) {
-        targetPose = getAutoAlignState().getLocation();
-        }
-        
-        if (!DriverStation.getAlliance().isEmpty() && DriverStation.getAlliance().get() == Alliance.Red) {
-            goalPose = targetPose.getBluePose();
-        } else {
-            goalPose = targetPose.getRedPose();
-        }
+	public static AutoAlign getInstance() {
+		if (instance == null) {
+			instance = new AutoAlign();
+		}
+		return instance;
+	}
+
+	public AutoAlignStates getAutoAlignState() {
+		return state;
+	}
+
+	public void periodic() {
+		if (getAutoAlignState() == AutoAlignStates.OFF) {
+			targetPose = getAutoAlignState().getLocation();
+		}
+
+		if (!DriverStation.getAlliance().isEmpty() && DriverStation.getAlliance().get() == Alliance.Red) {
+			goalPose = targetPose.getBluePose();
+		} else {
+			goalPose = targetPose.getRedPose();
+		}
 
         Pose2d currentPose = Drive.getInstance().getPose();
         
@@ -75,16 +76,12 @@ public class AutoAlign {
             }
             if (DRIVER_CONTROLLER.getXButtonPressed()) {
                 state = AutoAlignStates.toOutpost;
-                targetPose = getAutoAlignState().getLocation();
             } else if (DRIVER_CONTROLLER.getYButtonPressed()) {
                 state = AutoAlignStates.toShootRangeHub;
-                targetPose = getAutoAlignState().getLocation();
             } else if (DRIVER_CONTROLLER.getBButtonPressed()) {
                 state = AutoAlignStates.toTower;
-                targetPose = getAutoAlignState().getLocation();
             } else if (DRIVER_CONTROLLER.getAButtonPressed()) {
                 state = AutoAlignStates.toDepot;
-                targetPose = getAutoAlignState().getLocation();
             }
         }
         
