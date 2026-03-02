@@ -67,37 +67,34 @@ public class AutoAlign {
 			goalPose = targetPose.getRedPose();
 		}
 
-        Pose2d currentPose = Drive.getInstance().getPose();
-        
-        if (!(AutoAlignStates.OFF == getAutoAlignState())) {
-            if (Drive.getInstance().driveRobotAutoAlign( 
-                xtranslationalController.calculate(currentPose.getX(), goalPose.getX()),
-                ytranslationalController.calculate(currentPose.getY(), goalPose.getY()),
-                rotationalController.calculate(currentPose.getRotation().getDegrees(), goalPose.getRotation().getDegrees()))
-            ) {
-                state = AutoAlignStates.OFF;
-            }
+		Pose2d currentPose = Drive.getInstance().getPose();
 
-        }
-            if (DRIVER_CONTROLLER.getXButtonPressed()) {
-                state = AutoAlignStates.toOutpost;
-            } else if (DRIVER_CONTROLLER.getYButtonPressed()) {
-                state = AutoAlignStates.toShootRangeHub;
-            } else if (DRIVER_CONTROLLER.getBButtonPressed()) {
-                state = AutoAlignStates.toTower;
-            } else if (DRIVER_CONTROLLER.getAButtonPressed()) {
-                state = AutoAlignStates.toDepot;
-            }
+		if (!(AutoAlignStates.OFF == getAutoAlignState())) {
+			if (
+				Drive.getInstance()
+					.driveRobotAutoAlign(xtranslationalController.calculate(currentPose.getX(), goalPose.getX()), ytranslationalController.calculate(currentPose.getY(), goalPose.getY()), rotationalController.calculate(currentPose.getRotation().getDegrees(), goalPose.getRotation().getDegrees()))
+			) {
+				state = AutoAlignStates.OFF;
+			}
+		}
+		if (DRIVER_CONTROLLER.getXButtonPressed()) {
+			state = AutoAlignStates.toOutpost;
+		} else if (DRIVER_CONTROLLER.getYButtonPressed()) {
+			state = AutoAlignStates.toShootRangeHub;
+		} else if (DRIVER_CONTROLLER.getBButtonPressed()) {
+			state = AutoAlignStates.toTower;
+		} else if (DRIVER_CONTROLLER.getAButtonPressed()) {
+			state = AutoAlignStates.toDepot;
+		}
 
-        SmartDashboard.putString("State", state.name());
-        if (DRIVER_CONTROLLER.getRightBumperButtonPressed()) {
-            state = AutoAlignStates.OFF;
-            rotationalController.reset();
-            xtranslationalController.reset();   
-            ytranslationalController.reset();
-
+		SmartDashboard.putString("State", state.name());
+		if (DRIVER_CONTROLLER.getRightBumperButtonPressed()) {
+			state = AutoAlignStates.OFF;
+			rotationalController.reset();
+			xtranslationalController.reset();
+			ytranslationalController.reset();
 		}
 		goalPoseLog.getObject("Goal Pose").setPose(goalPose);
 		SmartDashboard.putData(goalPoseLog);
-    }
+	}
 }
