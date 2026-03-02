@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Subsystems.Drive.Drive;
 import org.littletonrobotics.junction.Logger;
@@ -24,6 +25,7 @@ public class AutoAlign {
 	private static final XboxController DRIVER_CONTROLLER = new XboxController(0);
 
 	private PosePair targetPose;
+	private Field2d goalPoseLog;
 	private Pose2d goalPose;
 
 	private AutoAlign() {
@@ -35,8 +37,9 @@ public class AutoAlign {
 		this.xtranslationalController = X_TRANSLATIONAL_CONTROLLER.get();
 		this.ytranslationalController = Y_TRANSLATIONAL_CONTROLLER.get();
 
-		targetPose = new PosePair(null, null);
-		goalPose = new Pose2d(null, null);
+		targetPose = new PosePair(Pose2d.kZero, Pose2d.kZero);
+		goalPose = Pose2d.kZero;
+		goalPoseLog = new Field2d();
 		SmartDashboard.putData("Rotaitonal Cotroller", rotationalController);
 		SmartDashboard.putData("Y Transisitional Controller", ytranslationalController);
 		SmartDashboard.putData("X Transisitional Controller", xtranslationalController);
@@ -54,7 +57,7 @@ public class AutoAlign {
 	}
 
 	public void periodic() {
-		if (getAutoAlignState() == AutoAlignStates.OFF) {
+		if (getAutoAlignState() != AutoAlignStates.OFF) {
 			targetPose = getAutoAlignState().getLocation();
 		}
 
@@ -74,6 +77,8 @@ public class AutoAlign {
             ) {
                 state = AutoAlignStates.OFF;
             }
+
+        }
             if (DRIVER_CONTROLLER.getXButtonPressed()) {
                 state = AutoAlignStates.toOutpost;
             } else if (DRIVER_CONTROLLER.getYButtonPressed()) {
@@ -83,10 +88,7 @@ public class AutoAlign {
             } else if (DRIVER_CONTROLLER.getAButtonPressed()) {
                 state = AutoAlignStates.toDepot;
             }
-        }
-        
-        // SmartDashboard.putData("Target Pose", goalPose);
-        // SmartDashboard.putData("Current Pose", currentPose);
+
         SmartDashboard.putString("State", state.name());
         if (DRIVER_CONTROLLER.getRightBumperButtonPressed()) {
             state = AutoAlignStates.OFF;
@@ -94,9 +96,8 @@ public class AutoAlign {
             xtranslationalController.reset();   
             ytranslationalController.reset();
 
-            
-        }
-
+		}
+		goalPoseLog.getObject("Goal Pose").setPose(goalPose);
+		SmartDashboard.putData(goalPoseLog);
     }
-
 }

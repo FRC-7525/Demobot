@@ -72,6 +72,7 @@ public class Drive {
 		}
 
 		robot.setRobotPose(swerveDrive.getSimulationDriveTrainPose().get());
+		
 		SmartDashboard.putData(robot);
 	}
 
