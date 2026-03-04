@@ -1,6 +1,8 @@
 package frc.robot.Subsystems.Intake;
 
 import static edu.wpi.first.units.Units.Degree;
+import static edu.wpi.first.units.Units.KilogramSquareMeters;
+import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import java.util.function.Supplier;
@@ -8,6 +10,8 @@ import java.util.function.Supplier;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.MomentOfInertia;
 import frc.robot.GlobalConstants;
 
 public class IntakeConstants {
@@ -18,6 +22,17 @@ public class IntakeConstants {
 	public static Angle OUT_ANGLE = Degree.of(45);
 	public static AngularVelocity OFF_WHEEL_SPEED = RotationsPerSecond.of(0);
 	public static AngularVelocity INTAKING_WHEEL_SPEED = RotationsPerSecond.of(20);
+
+	public static MomentOfInertia FLYWHEEL_MOI = KilogramSquareMeters.of(1);
+	public static double FLYWHEEL_GEARING = 1;
+	public static int FLYWHEEL_MOTOR_COUNT = 1;
+
+	public static MomentOfInertia PIVOT_MOI = KilogramSquareMeters.of(1);
+	public static double PIVOT_GEARING = 1;
+	public static int PIVOT_MOTOR_COUNT = 1;
+	public static Distance PIVOT_ARM_LENGTH = Meters.of(1);
+	public static Angle PIVOT_MIN_ANGLE = Degree.of(0);
+	public static Angle PIVOT_MAX_ANGLE = Degree.of(45);
 
     public static final Supplier<PIDController> WHEEL_CONTROLLER = () ->
 		switch (GlobalConstants.ROBOT_MODE) {
