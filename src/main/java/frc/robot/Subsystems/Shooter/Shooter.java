@@ -9,16 +9,26 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import static frc.robot.Subsystems.Shooter.ShooterConstants.*;
 
 public class Shooter {
+    private static Shooter instance;
     protected ShooterStates state;
     protected SparkMax followerleftMotor; 
     protected SparkMax leaderrightMotor;
     protected PIDController motorcontrollerright;
     private SparkMaxConfig followerConfig;
     protected SimpleMotorFeedforward feedforward;
+
+    public static Shooter getInstance() {
+		if (instance == null) {
+			instance = new Shooter();
+		}
+
+		return instance;
+	}
 
     public Shooter() {
         state = ShooterStates.IDLE;
@@ -37,6 +47,18 @@ public class Shooter {
 
 
     public void periodic() {
+
+        SmartDashboard.putNumber("Shooter/Current Speed (RPM)", leaderrightMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Shooter/Target Speed (RPM)", state.getShooterRPS().in(Units.RadiansPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR);
+        SmartDashboard.putData("Shooter/PID Controller", motorcontrollerright);
+
+        feedforward.setKa(SmartDashboard.getNumber("kA", feedforward.getKa()));
+        SmartDashboard.putNumber("kA", feedforward.getKa());
+        feedforward.setKv(SmartDashboard.getNumber("kV", feedforward.getKv()));
+        SmartDashboard.putNumber("kV", feedforward.getKv());
+        feedforward.setKs(SmartDashboard.getNumber("kS", feedforward.getKs()));
+        SmartDashboard.putNumber("kS", feedforward.getKs());
+
         if (state == ShooterStates.IDLE) {
             leaderrightMotor.set(IDLE_SPEED_OR_VOLTAGE);
         } else {

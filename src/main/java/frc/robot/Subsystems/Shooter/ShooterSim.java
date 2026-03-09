@@ -1,5 +1,4 @@
 package frc.robot.Subsystems.Shooter;
-
 import static frc.robot.Subsystems.Shooter.ShooterConstants.*;
 
 import com.revrobotics.sim.SparkMaxSim;
@@ -12,10 +11,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class ShooterSim extends Shooter {
+    public static ShooterSim instance;
     private SparkMaxSim leftSim;
     private SparkMaxSim rightSim;
     private FlywheelSim bigWheel;
     private AngularVelocityUnit angularVelocityUnit;
+
+    public static ShooterSim getInstance() {
+		if (instance == null) {
+			instance = new ShooterSim();
+		}
+
+		return instance;
+	}
 
     public ShooterSim() {
         leftSim = new SparkMaxSim(followerleftMotor, DCMotor.getNEO(LEFT_SIM_MOTOR));
@@ -43,7 +51,7 @@ public class ShooterSim extends Shooter {
         bigWheel.update(BIG_WHEEL_UPDATE);
 
         // Logging
-        SmartDashboard.putNumber("Shooter/Current Speed (RPM)", bigWheel.getAngularVelocityRadPerSec());
+        SmartDashboard.putNumber("Shooter/Current Speed (RPM)", bigWheel.getAngularVelocityRadPerSec() * RPS_TO_RPM_CONVERSION_FACTOR);
         SmartDashboard.putNumber("Shooter/Target Speed (RPM)", state.getShooterRPS().in(angularVelocityUnit) * RPS_TO_RPM_CONVERSION_FACTOR);
         SmartDashboard.putData("Shooter/PID Controller", motorcontrollerright);
 
