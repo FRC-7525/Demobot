@@ -1,17 +1,16 @@
 package frc.robot.Subsystems.Shooter;
 
+import static frc.robot.Subsystems.Shooter.ShooterConstants.*;
+
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
-import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import static frc.robot.Subsystems.Shooter.ShooterConstants.*;
 
 public class Shooter {
     private static Shooter instance;
@@ -45,8 +44,7 @@ public class Shooter {
         this.state = state;
     }
 
-
-    public void periodic() {
+	public void periodic() {
 
         SmartDashboard.putNumber("Shooter/Current Speed (RPM)", leaderrightMotor.getEncoder().getVelocity());
         SmartDashboard.putNumber("Shooter/Target Speed (RPM)", state.getShooterRPS().in(Units.RadiansPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR);
@@ -59,11 +57,10 @@ public class Shooter {
         feedforward.setKs(SmartDashboard.getNumber("kS", feedforward.getKs()));
         SmartDashboard.putNumber("kS", feedforward.getKs());
 
-        if (state == ShooterStates.IDLE) {
-            leaderrightMotor.set(IDLE_SPEED_OR_VOLTAGE);
-        } else {
-            leaderrightMotor.set(motorcontrollerright.calculate(leaderrightMotor.getEncoder().getVelocity(), state.getShooterRPS().in(Units.RadiansPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR) + feedforward.calculate(state.getShooterRPS().in(Units.RadiansPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR));
-        }
-    }
+		if (state == ShooterStates.IDLE) {
+			leaderrightMotor.set(IDLE_SPEED_OR_VOLTAGE);
+		} else {
+			leaderrightMotor.set(motorcontrollerright.calculate(leaderrightMotor.getEncoder().getVelocity(), state.getShooterRPS().in(Units.RadiansPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR) + feedforward.calculate(state.getShooterRPS().in(Units.RadiansPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR));
+		}
+	}
 }
-
