@@ -19,8 +19,6 @@ public class Passthrough {
 		state = IDLE;
 		mainmotorcontroller = new PIDController(MOTOR_PROPORTION, MOTOR_INTEGRAL, MOTOR_DERIVATIVE);
 		mainmotor = new SparkMax(MAIN_MOTOR_ID, MotorType.kBrushless);
-		backmotorcontroller = new PIDController(MOTOR_PROPORTION, MOTOR_INTEGRAL, MOTOR_DERIVATIVE);
-		backmotor = new SparkMax(BACK_MOTOR_ID, MotorType.kBrushless);
 	}
 
 	public void setState(PassthroughStates state) {
@@ -30,10 +28,8 @@ public class Passthrough {
 	public void periodic() {
 		if (state == IDLE) {
 			mainmotor.set(SPEED);
-			backmotor.set(SPEED);
 		} else if (state == PASS) {
 			mainmotor.set(mainmotorcontroller.calculate(mainmotor.getEncoder().getVelocity(), PASSTHROUGH_MAINMOTOR_RPS * RPS_TO_RPM));
-			backmotor.set(backmotorcontroller.calculate(backmotor.getEncoder().getVelocity(), PASSTHROUGH_BACKMOTOR_RPS * RPS_TO_RPM));
 		}
 	}
 }
