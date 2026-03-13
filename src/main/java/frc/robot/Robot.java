@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.Subsystems.AutoAlign.AutoAlign;
 import frc.robot.Subsystems.Drive.Drive;
+import frc.robot.Subsystems.Intake.Intake;
 import frc.robot.Subsystems.Passthrough.Passthrough;
 
 /**
@@ -21,10 +22,23 @@ public class Robot extends TimedRobot {
 	 * This function is run when the robot is first started up and should be used for any
 	 * initialization code.
 	 */
-	public Robot() {}
+	// Drive drive;
+	// AutoAlign autoAlign;
+	Intake intake;
+
+	public Robot() {
+		// drive = Drive.getInstance();
+		// autoAlign = AutoAlign.getInstance();
+		intake = Intake.getInstance();
+	}
 
 	@Override
-	public void robotPeriodic() {}
+	public void robotPeriodic() {
+		// drive.periodic();
+		// autoAlign.periodic();
+		intake.periodic();
+		
+	}
 
 	@Override
 	public void autonomousInit() {}
