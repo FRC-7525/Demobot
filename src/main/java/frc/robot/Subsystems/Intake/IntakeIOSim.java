@@ -24,6 +24,8 @@ public class IntakeIOSim implements IntakeIO { // blah blah blah sim here
 	PIDController wheelController;
 
 	public IntakeIOSim() {
+		this.pivotController = PIVOT_CONTROLLER.get();
+		this.wheelController = WHEEL_CONTROLLER.get();
 		var flywheelPlant = LinearSystemId.createFlywheelSystem(DCMotor.getNEO(FLYWHEEL_MOTOR_COUNT), FLYWHEEL_MOI.in(KilogramSquareMeters), FLYWHEEL_GEARING);
 		wheelSim = new FlywheelSim(flywheelPlant, DCMotor.getNEO(FLYWHEEL_MOTOR_COUNT));
 		var pivotPlant = LinearSystemId.createSingleJointedArmSystem(DCMotor.getNEO(PIVOT_MOTOR_COUNT), PIVOT_MOI.in(KilogramSquareMeters), PIVOT_GEARING);
@@ -61,4 +63,12 @@ public class IntakeIOSim implements IntakeIO { // blah blah blah sim here
 	public double getPivotMotorCurrent() {
 		return pivotSim.getCurrentDrawAmps();
 	}
+
+	@Override
+	public double getIntakeAngle() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
 }

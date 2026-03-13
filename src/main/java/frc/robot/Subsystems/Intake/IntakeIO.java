@@ -15,4 +15,6 @@ public interface IntakeIO {
 	public double getWheelMotorCurrent();
 
 	public double getPivotMotorCurrent();
+
+	public double getIntakeAngle();
 }

@@ -10,6 +10,7 @@ import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class IntakeIOReal implements IntakeIO {
 
@@ -37,12 +38,12 @@ public class IntakeIOReal implements IntakeIO {
 
 	@Override
 	public Angle getCurrentAngle() {
-		return Rotations.of(pivotMotor.getAbsoluteEncoder().getPosition());
+		return Rotations.of(pivotMotor.getEncoder().getPosition());
 	}
 
 	@Override
 	public AngularVelocity getCurrentWheelSpeed() {
-		return RotationsPerSecond.of(wheelMotor.getAbsoluteEncoder().getVelocity() / 60);
+		return RotationsPerSecond.of(wheelMotor.getEncoder().getVelocity() / 60);
 	}
 
 	@Override
@@ -53,5 +54,10 @@ public class IntakeIOReal implements IntakeIO {
 	@Override
 	public double getPivotMotorCurrent() {
 		return pivotMotor.getOutputCurrent();
+	}
+
+	@Override
+	public double getIntakeAngle() {
+		return getCurrentAngle().in(Degrees);
 	}
 }
