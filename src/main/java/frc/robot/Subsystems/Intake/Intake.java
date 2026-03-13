@@ -24,7 +24,6 @@ public class Intake {
 			switch (GlobalConstants.ROBOT_MODE) {
 				case REAL -> instance = new Intake(new IntakeIOReal());
 				case SIM -> instance = new Intake(new IntakeIOSim());
-				case TESTING -> instance = new Intake(new IntakeIOReal());
 			}
 		}
 		return instance;
