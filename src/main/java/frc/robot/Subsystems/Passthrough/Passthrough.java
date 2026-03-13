@@ -8,12 +8,21 @@ import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.controller.PIDController;
 
 public class Passthrough {
+	private static Passthrough instance;
 
 	protected PassthroughStates state;
 	protected SparkMax mainmotor;
 	protected PIDController mainmotorcontroller;
 	protected SparkMax backmotor;
 	protected PIDController backmotorcontroller;
+
+	public static Passthrough getInstance() {
+		if (instance == null) {
+			instance = new Passthrough();
+		}
+
+		return instance;
+	}
 
 	public Passthrough() {
 		state = IDLE;

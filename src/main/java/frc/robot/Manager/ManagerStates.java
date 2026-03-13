@@ -1,61 +1,58 @@
-// package frc.robot.Manager;
+package frc.robot.Manager;
 
 // import frc.robot.Subsystems.AutoAlign.AutoAlign;
-// import frc.robot.Subsystems.Climber.Climber;
-// import frc.robot.Subsystems.Intake.Intake;
-// import frc.robot.Subsystems.Passthrough.Passthrough;
-// import frc.robot.Subsystems.Shooter.Shooter;
+import frc.robot.Subsystems.Climber.ClimberStates;
+import frc.robot.Subsystems.Intake.IntakeStates;
+import frc.robot.Subsystems.Passthrough.PassthroughStates;
+import frc.robot.Subsystems.Shooter.ShooterStates;
 
-// public enum ManagerStates {
-//     CLIMBPREP(Climber.CLIMBPREP, Intake.IDLE, Passthrough.IDLE, Shooter.IDLE, "CLIMBPREP"),
-//     CLIMBLV1(Climber.CLIMBLV1, Intake.IDLE, Passthrough.IDLE, Shooter.IDLE, "CLIMBLV1"),
-//     CLIMBLV2(Climber.CLIMBLV2, Intake.IDLE, Passthrough.IDLE, Shooter.IDLE, "CLIMBLV2"),
-//     IDLE(Climber.IDLE, Intake.IDLE, Passthrough.IDLE, Shooter.IDLE, "IDLE"),
-//     INTAKING(Climber.IDLE, Intake.INTAKING, Passthrough.IDLE, Shooter.IDLE, "INTAKING"),
-//     DYNAMICSHOT(Climber.IDLE, Intake.IDLE, Passthrough.PASS, Shooter.DYNAMICSHOT, "DYNAMICSHOT"),
-//     LONGSHOT(Climber.IDLE, Intake.IDLE, Passthrough.PASS, Shooter.LONGSHOT, "LONGSHOT"),
-//     FIXEDSHOT(Climber.IDLE, Intake.IDLE, Passthrough.PASS, Shooter.FIXEDSHOT, "FIXEDSHOT"),
+public enum ManagerStates {
+    CLIMBPREP(ClimberStates.DEPLOY, IntakeStates.IDLE, PassthroughStates.IDLE, ShooterStates.IDLE, "CLIMBPREP"),
+    CLIMBLV1(ClimberStates.L1, IntakeStates.IDLE, PassthroughStates.IDLE, ShooterStates.IDLE, "CLIMBLV1"),
+    CLIMBLV2(ClimberStates.L2, IntakeStates.IDLE, PassthroughStates.IDLE, ShooterStates.IDLE, "CLIMBLV2"),
+    IDLE(ClimberStates.IDLE, IntakeStates.IDLE, PassthroughStates.IDLE, ShooterStates.IDLE, "IDLE"),
+    INTAKING(ClimberStates.IDLE, IntakeStates.INTAKING, PassthroughStates.IDLE, ShooterStates.IDLE, "INTAKING"),
+    DYNAMICSHOT(ClimberStates.IDLE, IntakeStates.IDLE, PassthroughStates.PASS, ShooterStates.DYNAMICSHOOT, "DYNAMICSHOT"),
+    LONGSHOT(ClimberStates.IDLE, IntakeStates.IDLE, PassthroughStates.PASS, ShooterStates.LONGPASS, "LONGPASS"),
+    FIXEDSHOT(ClimberStates.IDLE, IntakeStates.IDLE, PassthroughStates.PASS, ShooterStates.FIXEDSHOOT, "FIXEDSHOOT");
 
-//     Climber climber;
-//     Intake intake;
-//     Passthrough passthrough;
-//     Shooter shooter;
-//     AutoAlign autoalign;
-//     String stateString;
+    private final String stateString;
+    private final IntakeStates intakeState;
+    private final ShooterStates shooterState;
+    private final ClimberStates climberState;
+    private final PassthroughStates passthroughState;
 
-//     ManagerStates(Climber climber, Intake intake, Passthrough passthrough, Shooter shooter, AutoAlign autoalign, String stateString) {
-//         this.climber = climber;
-//         this.intake = intake;
-//         this.passthrough = passthrough;
-//         this.shooter = shooter;
-//         this.autoalign = autoalign;
-//         this.stateString = stateString;
-//         this.autoalign = autoalign;
+    ManagerStates(ClimberStates climberState, IntakeStates intakeState, PassthroughStates passthroughState, ShooterStates shooterState, String stateString) {
+        this.climberState = climberState;
+        this.intakeState = intakeState;
+        this.passthroughState = passthroughState;
+        this.shooterState = shooterState;
+        this.stateString = stateString;
 
-//     }
+    }
 
-//     public Climber getClimberState() {
-//         return climber;
-//     }
+    public ClimberStates getClimberState() {
+        return climberState;
+    }
 
-//     public Intake getIntakeState() {
-//         return intake;
-//     }
+    public IntakeStates getIntakeState() {
+        return intakeState;
+    }
 
-//     public Passthrough getPassthroughState() {
-//         return passthrough;
-//     }
+    public PassthroughStates getPassthroughState() {
+        return passthroughState;
+    }
 
-//     public Shooter getShooterState() {
-//         return shooter;
-//     }
+    public ShooterStates getShooterState() {
+        return shooterState;
+    }
 
-//     public AutoAlign getAutoAlignState() {
-//         return autoalign;
-//     }
+    // public AutoAlign getAutoAlignState() {
+    //     return autoalign;
+    // }
 
-//     public String getStateString() {
-//         return stateString;
-//     }
+    public String getStateString() {
+        return stateString;
+    }
 
-// }
+}
