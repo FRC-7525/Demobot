@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.Subsystems.AutoAlign.AutoAlign;
 import frc.robot.Subsystems.Drive.Drive;
+import frc.robot.Subsystems.Passthrough.Passthrough;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
