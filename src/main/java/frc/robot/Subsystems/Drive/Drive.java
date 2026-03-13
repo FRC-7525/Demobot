@@ -26,12 +26,17 @@ public class Drive {
 
 	private static Drive instance;
 	private SwerveInputStream swerveInputs;
+
+	private static Drive instance;
+	private SwerveInputStream swerveInputs;
 	private SwerveDrive swerveDrive;
+	public final XboxController DRIVER_CONTROLLER;
 	public final XboxController DRIVER_CONTROLLER;
 	private Field2d robot;
 	private boolean fieldRelative;
 	private AutoAlign autoAlign;
 
+	public static Drive getInstance() {
 	public static Drive getInstance() {
 		if (instance == null) {
 			instance = new Drive();
@@ -40,11 +45,14 @@ public class Drive {
 	}
 
 	private Drive() {
+	private Drive() {
 		robot = new Field2d();
+		DRIVER_CONTROLLER = new XboxController(0);
 		DRIVER_CONTROLLER = new XboxController(0);
 
 		try {
 			File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
+			swerveDrive = new SwerveParser(swerveJsonDirectory).createSwerveDrive(MAX_SPEED, new Pose2d(9.9, 4.0, Rotation2d.fromDegrees(0)));
 			swerveDrive = new SwerveParser(swerveJsonDirectory).createSwerveDrive(MAX_SPEED, new Pose2d(9.9, 4.0, Rotation2d.fromDegrees(0)));
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to create SwerveDrive", e);
