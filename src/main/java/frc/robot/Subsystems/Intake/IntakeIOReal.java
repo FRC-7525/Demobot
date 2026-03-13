@@ -6,6 +6,10 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static frc.robot.Subsystems.Intake.IntakeConstants.*;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.units.measure.Angle;
@@ -24,6 +28,7 @@ public class IntakeIOReal implements IntakeIO {
 		this.wheelMotor = new SparkMax(WHEEL_MOTOR_ID, MotorType.kBrushless);
 		this.pivotController = IntakeConstants.PIVOT_CONTROLLER.get();
 		this.wheelSpeedController = IntakeConstants.WHEEL_CONTROLLER.get();
+		wheelMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 	}
 
 	@Override

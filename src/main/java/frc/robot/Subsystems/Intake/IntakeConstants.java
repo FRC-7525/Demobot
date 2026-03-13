@@ -21,7 +21,7 @@ public class IntakeConstants {
 	public static Angle IN_ANGLE = Degree.of(0);
 	public static Angle OUT_ANGLE = Degree.of(-70);
 	public static AngularVelocity OFF_WHEEL_SPEED = RotationsPerSecond.of(0);
-	public static AngularVelocity INTAKING_WHEEL_SPEED = RotationsPerSecond.of(60);
+	public static AngularVelocity INTAKING_WHEEL_SPEED = RotationsPerSecond.of(90);
 	// dont go lower than 60
 
 	public static MomentOfInertia FLYWHEEL_MOI = KilogramSquareMeters.of(1);

@@ -6,6 +6,8 @@ import static frc.robot.Subsystems.Passthrough.PassthroughStates.*;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Passthrough {
 	private static Passthrough instance;
@@ -13,8 +15,6 @@ public class Passthrough {
 	protected PassthroughStates state;
 	protected SparkMax mainmotor;
 	protected PIDController mainmotorcontroller;
-	protected SparkMax backmotor;
-	protected PIDController backmotorcontroller;
 
 	public static Passthrough getInstance() {
 		if (instance == null) {
@@ -35,10 +35,16 @@ public class Passthrough {
 	}
 
 	public void periodic() {
+		SmartDashboard.putNumber("Passthrough/Current Speed (RPM)", mainmotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Passthrough/Target Speed (RPM)", state.getSpeed().in(Units.RadiansPerSecond) * RPS_TO_RPM);
+        SmartDashboard.putData("Passthrough/PID Controller", mainmotorcontroller);
+
+
 		if (state == IDLE) {
 			mainmotor.set(SPEED);
 		} else if (state == PASS) {
-			mainmotor.set(mainmotorcontroller.calculate(mainmotor.getEncoder().getVelocity(), PASSTHROUGH_MAINMOTOR_RPS * RPS_TO_RPM));
+			//mainmotor.set(mainmotorcontroller.calculate(mainmotor.getEncoder().getVelocity(), PASSTHROUGH_MAINMOTOR_RPS * RPS_TO_RPM));
+			mainmotor.set(1);
 		}
 	}
 }

@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 public final class ShooterConstants {
 
 	public static final AngularVelocity IDLE_RPS = Units.RadiansPerSecond.of(0);
-	public static final AngularVelocity FIXED_SHOOT_RPS = Units.RadiansPerSecond.of(25);
+	public static final AngularVelocity FIXED_SHOOT_RPS = Units.RadiansPerSecond.of(5);
 	public static final AngularVelocity LONG_PASS_RPS = Units.RadiansPerSecond.of(50);
 
 	public static final int LEFT_MOTOR_ID = 13;
@@ -18,16 +18,16 @@ public final class ShooterConstants {
 
 	public static final Supplier<PIDController> WHEEL_PID = () ->
 		switch (GlobalConstants.ROBOT_MODE) {
-			case REAL -> new PIDController(1, 0, 0);
+			case REAL -> new PIDController(0.01, 0, 0);
 			case SIM -> new PIDController(1, 0, 0.01);
-			default -> new PIDController(20, 1, 0);
+			// default -> new PIDController(20, 1, 0);
 		};
 
 	public static final Supplier<SimpleMotorFeedforward> WHEEL_FEEDFORWARD = () ->
-		switch (GlobalConstants.ROBOT_FEEDFORWARD_MODE) {
+		switch (GlobalConstants.ROBOT_MODE) {
 			case REAL -> new SimpleMotorFeedforward(0, 0, 0);
 			case SIM -> new SimpleMotorFeedforward(0, 0.001, 0);
-			default -> new SimpleMotorFeedforward(0, 0.1, 0);
+			// default -> new SimpleMotorFeedforward(0, 0.1, 0);
 		};
 
 	// for Simulation

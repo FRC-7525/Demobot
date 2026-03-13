@@ -6,7 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.Manager.Manager;
-import frc.robot.Subsystems.AutoAlign.AutoAlign;
+// import frc.robot.Subsystems.AutoAlign.AutoAlign;
 import frc.robot.Subsystems.Drive.Drive;
 import frc.robot.Subsystems.Intake.Intake;
 import frc.robot.Subsystems.Passthrough.Passthrough;

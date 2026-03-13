@@ -27,11 +27,4 @@ public class GlobalConstants {
 
 		public static final ArrayList<Integer> CANIVORE_DEVICE_ORDER = new ArrayList<Integer>(Arrays.asList(39, 56, 6, 4, 58, 9, 5, 11, 12, 2, 59, 3, 8));
 	}
-
-	public enum RobotFeedforwardMode {
-		REAL,
-		SIM,
-	}
-
-	public static final RobotFeedforwardMode ROBOT_FEEDFORWARD_MODE = RobotFeedforwardMode.SIM; // same comment as above
 }

@@ -7,7 +7,8 @@ import edu.wpi.first.units.measure.AngularVelocity;
 
 public enum IntakeStates {
 	IDLE("IDLE", OFF_WHEEL_SPEED, IN_ANGLE),
-	INTAKING("INTAKING", INTAKING_WHEEL_SPEED, OUT_ANGLE);
+	INTAKING("INTAKING", INTAKING_WHEEL_SPEED, IN_ANGLE),
+	INTAKINGNOROLLER("INTAKINGNOROLLER", OFF_WHEEL_SPEED, OUT_ANGLE);
 
 	String stateString;
 	AngularVelocity wheelSpeed;
