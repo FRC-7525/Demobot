@@ -1,8 +1,5 @@
 package frc.robot.Subsystems.Shooter;
 
-<<<<<<< HEAD
-public class Shooter {}
-=======
 import static frc.robot.Subsystems.Shooter.ShooterConstants.*;
 
 import com.revrobotics.PersistMode;
@@ -67,4 +64,3 @@ public class Shooter {
 		}
 	}
 }
->>>>>>> Shooter
