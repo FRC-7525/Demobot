@@ -23,7 +23,7 @@ public class Climber {
 	public Climber() {
 		state = ClimberStates.IDLE;
 		motorcontroller = new PIDController(ClimberConstants.MOTOR_PROPORTION, ClimberConstants.MOTOR_INTEGRAL, ClimberConstants.MOTOR_DERIVATIVE);
-		motor = new SparkMax(23, MotorType.kBrushless);
+		motor = new SparkMax(11, MotorType.kBrushless);
 	}
 
 	public void setState(ClimberStates state) {

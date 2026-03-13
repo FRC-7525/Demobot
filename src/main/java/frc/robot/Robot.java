@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import frc.robot.Manager.Manager;
 import frc.robot.Subsystems.AutoAlign.AutoAlign;
 import frc.robot.Subsystems.Drive.Drive;
 import frc.robot.Subsystems.Intake.Intake;
@@ -16,6 +17,7 @@ import frc.robot.Subsystems.Passthrough.Passthrough;
  * this project, you must also update the Main.java file in the project.
  */
 public class Robot extends TimedRobot {
+    private final Manager manager = Manager.getInstance();
 
 	public static boolean isRedAlliance;
 	/**
@@ -24,19 +26,21 @@ public class Robot extends TimedRobot {
 	 */
 	// Drive drive;
 	// AutoAlign autoAlign;
-	Intake intake;
+	// Intake intake;
 
 	public Robot() {
 		// drive = Drive.getInstance();
 		// autoAlign = AutoAlign.getInstance();
-		intake = Intake.getInstance();
+		// intake = Intake.getInstance();
+	
 	}
 
 	@Override
 	public void robotPeriodic() {
 		// drive.periodic();
 		// autoAlign.periodic();
-		intake.periodic();
+		// intake.periodic();
+		manager.periodic();
 		
 	}
 

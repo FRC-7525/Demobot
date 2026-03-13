@@ -13,8 +13,8 @@ public final class ShooterConstants {
 	public static final AngularVelocity FIXED_SHOOT_RPS = Units.RadiansPerSecond.of(25);
 	public static final AngularVelocity LONG_PASS_RPS = Units.RadiansPerSecond.of(50);
 
-	public static final int LEFT_MOTOR_ID = 15;
-	public static final int RIGHT_MOTOR_ID = 14;
+	public static final int LEFT_MOTOR_ID = 13;
+	public static final int RIGHT_MOTOR_ID = 12;
 
 	public static final Supplier<PIDController> WHEEL_PID = () ->
 		switch (GlobalConstants.ROBOT_MODE) {

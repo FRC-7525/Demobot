@@ -17,15 +17,15 @@ public class Intake {
 
 	private IntakeStates currentState;
 
-	private XboxController controller;
+	// private XboxController controller;
 
-	private boolean intakeOn;
+	// private boolean intakeOn;
 
 	private Intake(IntakeIO io) {
 		this.io = io;
 		currentState = IntakeStates.IDLE;
-		controller = new XboxController(0);
-		intakeOn = false;
+		// controller = new XboxController(0);
+		// intakeOn = false;
 	}
 
 	public static Intake getInstance() {
@@ -40,15 +40,15 @@ public class Intake {
 
 
 	public void periodic() {
-		if (controller.getAButtonPressed()) {
-			intakeOn = !intakeOn;
-		}
+		// if (controller.getAButtonPressed()) {
+		// 	intakeOn = !intakeOn;
+		// }
 
-		if (intakeOn) {
-			setState(IntakeStates.INTAKING);
-		} else if (intakeOn == false) {
-			setState(IntakeStates.IDLE);
-		}
+		// if (intakeOn) {
+		// 	setState(IntakeStates.INTAKING);
+		// } else if (intakeOn == false) {
+		// 	setState(IntakeStates.IDLE);
+		// }
 		io.setTargetAngle(currentState.getTargetAngle());
 		io.setWheelSpeed(currentState.getWheelSpeed());
 		SmartDashboard.putNumber("Intake/Pivot Angle", io.getIntakeAngle());

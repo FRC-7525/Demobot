@@ -26,13 +26,22 @@ public class Manager {
     private static Manager instance;
 
     private Manager() {
-        climber = new Climber();
+        climber = Climber.getInstance();
         intake = Intake.getInstance();
-        passthrough = new Passthrough();
-        shooter = new Shooter();
+        passthrough = Passthrough.getInstance();
+        shooter = Shooter.getInstance();
 
         robotstate = IDLE;
+    }
 
+	public static Manager getInstance() {
+		if (instance == null) {
+			instance = new Manager();
+		}
+		return instance;
+	}
+
+    public void periodic() {
         //Intaking
         if (driverController.getXButtonPressed()) {
             robotstate = INTAKING;
@@ -73,16 +82,6 @@ public class Manager {
     } else if (driverController.getLeftBumperButtonReleased()) {
         robotstate = IDLE;
     }
-    }
-
-	public static Manager getInstance() {
-		if (instance == null) {
-			instance = new Manager();
-		}
-		return instance;
-	}
-
-    public void periodic() {
         intake.setState(getState().getIntakeState());
         passthrough.setState(getState().getPassthroughState());
         shooter.setState(getState().getShooterState());
@@ -97,6 +96,7 @@ public class Manager {
         Climber.getInstance().periodic();
         Drive.getInstance().periodic();
 
+        
     }
 
     public ManagerStates getState() {
