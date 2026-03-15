@@ -104,23 +104,17 @@ public class Manager {
     } 
 
     // CLIMBING
-    if (operatorController.getYButtonPressed()) {
-        if(robotstate == IDLE) {
-            robotstate = CLIMBPREP;
-        }
-        else if(robotstate == CLIMBPREP) {
-            robotstate = CLIMBLV1;
-        }
-        else if(robotstate == CLIMBLV1) {
-            robotstate = CLIMBLV2;
-        }
-        else if(robotstate == CLIMBLV2) {
-            robotstate = IDLE;
-        }
-    } 
-
-
-
+    if (operatorController.getRightTriggerAxis() > 0.1) {
+        robotstate = CLIMBOUT;
+    } else if(operatorController.getRightTriggerAxis() < 0.1 && robotstate == CLIMBOUT) {
+        robotstate = IDLE;
+    }
+    
+     if (operatorController.getLeftTriggerAxis() > 0.1) {
+        robotstate = CLIMBIN;
+    } else if(operatorController.getLeftTriggerAxis() < 0.1 && robotstate == CLIMBIN) {
+        robotstate = IDLE;
+    }
 
 
         intake.setState(getState().getIntakeState());

@@ -3,24 +3,23 @@ package frc.robot.Subsystems.Climber;
 import static frc.robot.Subsystems.Climber.ClimberConstants.*;
 
 public enum ClimberStates {
-	IDLE("IDLE", IDLE_POSITION),
-	L1("L1", L1_POSITION),
-	L2("L2", L2_POSITION),
-	DEPLOY("DEPLOY", DEPLOY_POSITION);
+	IDLE("IDLE", IDLE_SPEED),
+	GOINGOUT("GOINGOUT", GOINGOUT_SPEED),
+	COMINGIN("COMINGIN", COMINGIN_SPEED);
 
 	private String stateString;
-	private double position;
+	private double speed;
 
-	ClimberStates(String stateString, double position) {
+	ClimberStates(String stateString, double speed) {
 		this.stateString = stateString;
-		this.position = position;
+		this.speed = speed;
 	}
 
 	public String getStateString() {
 		return stateString;
 	}
 
-	public double getPosition() {
-		return position;
+	public double getSpeed() {
+		return speed;
 	}
 }

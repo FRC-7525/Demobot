@@ -1,60 +1,65 @@
-package frc.robot.Subsystems.Climber;
+// package frc.robot.Subsystems.Climber;
 
-import com.revrobotics.sim.SparkMaxSim;
-import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.system.plant.LinearSystemId;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.simulation.DCMotorSim;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import static frc.robot.Subsystems.Climber.ClimberConstants.GOINGOUT_SPEED;
+// import static frc.robot.Subsystems.Climber.ClimberConstants.COMINGIN_SPEED;
 
-public class ClimberSim extends Climber {
+// import com.revrobotics.sim.SparkMaxSim;
+// import edu.wpi.first.math.system.plant.DCMotor;
+// import edu.wpi.first.math.system.plant.LinearSystemId;
+// import edu.wpi.first.wpilibj.XboxController;
+// import edu.wpi.first.wpilibj.simulation.DCMotorSim;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-	private static ClimberSim instance;
-	private SparkMaxSim motorSim;
-	private DCMotorSim climberSim;
-	private XboxController controller;
+// public class ClimberSim extends Climber {
 
-	public static ClimberSim getInstance() {
-		if (instance == null) {
-			instance = new ClimberSim();
-		}
+// 	private static ClimberSim instance;
+// 	private SparkMaxSim motorSim;
+// 	private DCMotorSim climberSim;
+// 	private XboxController controller;
 
-		return instance;
-	}
+// 	public static ClimberSim getInstance() {
+// 		if (instance == null) {
+// 			instance = new ClimberSim();
+// 		}
 
-	public ClimberSim() {
-		state = ClimberStates.IDLE;
-		motorSim = new SparkMaxSim(motor, DCMotor.getNEO(1));
-		climberSim = new DCMotorSim(LinearSystemId.createDCMotorSystem(DCMotor.getNEO(1), 1, 1), DCMotor.getNEO(1));
-		controller = new XboxController(0);
-	}
+// 		return instance;
+// 	}
 
-	public void setState(ClimberStates state) {
-		this.state = state;
-	}
+// 	public ClimberSim() {
+// 		state = ClimberStates.IDLE;
+// 		motorSim = new SparkMaxSim(motor, DCMotor.getNEO(1));
+// 		climberSim = new DCMotorSim(LinearSystemId.createDCMotorSystem(DCMotor.getNEO(1), 1, 1), DCMotor.getNEO(1));
+// 		controller = new XboxController(0);
+// 	}
 
-	public void periodic() {
-		if (state == ClimberStates.IDLE) {
-			climberSim.setInputVoltage(0);
-		} else {
-			climberSim.setInputVoltage(12 * motorcontroller.calculate(motor.getEncoder().getPosition(), state.getPosition()));
-		}
+// 	public void setState(ClimberStates state) {
+// 		this.state = state;
+// 	}
 
-		if (controller.getYButtonPressed()) {
-			state = ClimberStates.L1;
-		} else if (controller.getXButtonPressed()) {
-			state = ClimberStates.L2;
-		} else if (controller.getAButtonPressed()) {
-			state = ClimberStates.DEPLOY;
-		} else if (controller.getBButtonPressed()) {
-			state = ClimberStates.IDLE;
-		}
+// 	public void periodic() {
+// 		if (state == ClimberStates.IDLE) {
+// 			climberSim.setInputVoltage(0);
+// 		} else if(state ==ClimberStates.GOINGOUT) {
+// 			climberSim.setInputVoltage(GOINGOUT_SPEED);
+// 		} else {
+// 			climberSim.setInputVoltage(COMINGIN_SPEED);
+// 		}
 
-		climberSim.update(0.02);
-		motorSim.setPosition(climberSim.getAngularPositionRotations());
-		motorSim.setVelocity(climberSim.getAngularVelocityRPM());
-		SmartDashboard.putNumber("Climber sim position", climberSim.getAngularPositionRotations());
-		SmartDashboard.putNumber("Climber sim setpoint", state.getPosition());
-		SmartDashboard.putString("Climber sim state", state.getStateString());
-	}
-}
+// 		if (controller.getYButtonPressed()) {
+// 			state = ClimberStates.L1;
+// 		} else if (controller.getXButtonPressed()) {
+// 			state = ClimberStates.L2;
+// 		} else if (controller.getAButtonPressed()) {
+// 			state = ClimberStates.DEPLOY;
+// 		} else if (controller.getBButtonPressed()) {
+// 			state = ClimberStates.IDLE;
+// 		}
+
+// 		climberSim.update(0.02);
+// 		motorSim.setPosition(climberSim.getAngularPositionRotations());
+// 		motorSim.setVelocity(climberSim.getAngularVelocityRPM());
+// 		SmartDashboard.putNumber("Climber sim position", climberSim.getAngularPositionRotations());
+// 		SmartDashboard.putNumber("Climber sim setpoint", state.getPosition());
+// 		SmartDashboard.putString("Climber sim state", state.getStateString());
+// 	}
+// }
