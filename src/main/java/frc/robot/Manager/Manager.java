@@ -47,48 +47,77 @@ public class Manager {
 	}
 
     public void periodic() {
-        // SHOOTING
-    if (driverController.getRightTriggerAxis() > 0.1) {
-        robotstate = FIXEDSHOT;
-    } else if (driverController.getRightTriggerAxis() < 0.1) {
+
+
+        //IDLE All
+    if(driverController.getYButtonPressed()) {
         robotstate = IDLE;
+ }
+    
+        // SHOOTING Fixed
+    if (driverController.getLeftBumperButtonPressed()) {
+        if(robotstate == IDLE) {
+            robotstate = FIXEDSHOT;
+        }
+        else if(robotstate == FIXEDSHOT) {
+            robotstate = IDLE;
+        }
+    }
+    // SHOOTING DYNAMIC
+    if (driverController.getAButtonPressed()) {
+        if(robotstate == IDLE) {
+            robotstate = DYNAMICSHOT;
+        }
+        else if(robotstate == DYNAMICSHOT) {
+            robotstate = IDLE;
+        }
     }
 
-    if (driverController.getLeftTriggerAxis() > 0.11) {
-        robotstate = DYNAMICSHOT;
-    } else if (driverController.getLeftTriggerAxis() < 0.1) {
-        robotstate = IDLE;
-    }
-
+    // SHOOTING LONG
     if (driverController.getRightBumperButtonPressed()) {
-        robotstate = LONGSHOT;
-    } else if (driverController.getRightBumperButtonReleased()) {
-        robotstate = IDLE;
+        if(robotstate == IDLE) {
+            robotstate = LONGSHOT;
+        }
+        else if(robotstate == LONGSHOT) {
+            robotstate = IDLE;
+        }
     }
 
     // INTAKING 
-    if (driverController.getXButton()) {
-        robotstate = INTAKING;
-    } else if (driverController.getXButton()) {
-        robotstate = IDLE;
-    }
+    if (driverController.getXButtonPressed()) {
+        if(robotstate == IDLE) {
+            robotstate = INTAKING;
+        }
+        else if(robotstate == INTAKING) {
+            robotstate = IDLE;
+        }
+    } 
 
-    if (operatorController.getXButton()) {
-        robotstate = INTAKEOUT;
-    } else if (operatorController.getXButton()) {
-        robotstate = IDLE;
-    }
+    //OPERATOR OVERRIDE INTAKE OUT
+    if (operatorController.getBButtonPressed()) {
+        if(robotstate == IDLE) {
+            robotstate = INIDLE;
+        }
+        else if(robotstate == INIDLE) {
+            robotstate = IDLE;
+        }
+    } 
 
     // CLIMBING
-    if (operatorController.getYButton()) {
-        robotstate = CLIMBPREP;
-    } else if (operatorController.getYButton()) {
-        robotstate = CLIMBLV1;
-    } else if (operatorController.getYButton()) {
-        robotstate = CLIMBLV2;
-    }
-
-
+    if (operatorController.getYButtonPressed()) {
+        if(robotstate == IDLE) {
+            robotstate = CLIMBPREP;
+        }
+        else if(robotstate == CLIMBPREP) {
+            robotstate = CLIMBLV1;
+        }
+        else if(robotstate == CLIMBLV1) {
+            robotstate = CLIMBLV2;
+        }
+        else if(robotstate == CLIMBLV2) {
+            robotstate = IDLE;
+        }
+    } 
 
 
 
