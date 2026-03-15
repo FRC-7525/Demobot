@@ -21,7 +21,7 @@ public class PassthroughConstants {
 	public static final int GEARING = 1;
 
 	public static final double JKG_METERS_SQUARED = 0.0001;
-	public static final double PASS_VOLTAGE = 12;
+	public static final double PASS_VOLTAGE = 13;
 	public static final double CAN_BUS_VOLTAGE = 12;
 
 	public static final double DT_SECONDS = 0.02;

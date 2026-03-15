@@ -58,7 +58,8 @@ public class Shooter {
         SmartDashboard.putNumber("kS", feedforward.getKs());
 
 		if (state == ShooterStates.IDLE) {
-			leaderrightMotor.set(IDLE_SPEED_OR_VOLTAGE);
+            leaderrightMotor.set(1);
+			//leaderrightMotor.set(IDLE_SPEED_OR_VOLTAGE);
 		} else {
 			leaderrightMotor.set(motorcontrollerright.calculate(leaderrightMotor.getEncoder().getVelocity(), state.getShooterRPS().in(Units.RadiansPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR) + feedforward.calculate(state.getShooterRPS().in(Units.RadiansPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR));
 		}

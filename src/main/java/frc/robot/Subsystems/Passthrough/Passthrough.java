@@ -41,10 +41,11 @@ public class Passthrough {
 
 
 		if (state == IDLE) {
-			mainmotor.set(SPEED);
+			mainmotor.set(1);
+			//mainmotor.set(SPEED);
 		} else if (state == PASS) {
 			//mainmotor.set(mainmotorcontroller.calculate(mainmotor.getEncoder().getVelocity(), PASSTHROUGH_MAINMOTOR_RPS * RPS_TO_RPM));
-			mainmotor.set(1);
+			mainmotor.set(0);
 		}
 	}
 }

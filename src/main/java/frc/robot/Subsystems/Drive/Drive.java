@@ -12,6 +12,8 @@ import java.io.File;
 import swervelib.SwerveDrive;
 import swervelib.SwerveInputStream;
 import swervelib.parser.SwerveParser;
+import swervelib.telemetry.SwerveDriveTelemetry;
+import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
 public class Drive {
     
@@ -40,8 +42,8 @@ public class Drive {
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to create SwerveDrive", e);
 		}
-		swerveDrive.setMotorIdleMode(true);
-
+		swerveDrive.setMotorIdleMode(false);
+		SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
 		swerveInputs = SwerveInputStream.of(swerveDrive, () -> DRIVER_CONTROLLER.getLeftY(), () -> DRIVER_CONTROLLER.getLeftX()).withControllerRotationAxis(() -> -DRIVER_CONTROLLER.getRightX()).allianceRelativeControl(true).driveToPoseEnabled(false);
 	}
 

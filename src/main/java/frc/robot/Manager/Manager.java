@@ -12,6 +12,8 @@ import static frc.robot.Manager.ManagerConstants.*;
 
 import static frc.robot.Manager.ManagerStates.*;
 
+import javax.sql.rowset.RowSetProvider;
+
 import org.littletonrobotics.junction.Logger;
 public class Manager {
     Climber climber;
@@ -33,7 +35,7 @@ public class Manager {
         passthrough = Passthrough.getInstance();
         shooter = Shooter.getInstance();
 
-        robotstate = IDLEINTAKEOUT;
+        robotstate = IDLE;
         intakeOut = false;
     }
 
@@ -45,58 +47,53 @@ public class Manager {
 	}
 
     public void periodic() {
-        //Intaking * change driver controller to operator controller
-        // if (operatorController.getYButtonPressed()) {
-        //     intakeOut = !intakeOut;
-        // }
-
-        // if (intakeOut) {
-        //     robotstate = IDLEINTAKEOUT;
-        // } else if (intakeOut == false) {
-        //     robotstate = IDLE;
-        // }
-
-        if (operatorController.getXButtonPressed()) {
-        robotstate = INTAKING;
-    } else if (operatorController.getXButtonReleased()) {
-        robotstate = IDLEINTAKEOUT;
-    }
-        
-
-        //Shooting
-    // if (operatorController.getLeftTriggerAxis() > 0.1) {
-    //     robotstate = DYNAMICSHOT;
-    // } else if (operatorController.getLeftTriggerAxis() < 0.1) {
-    //     robotstate = IDLE;
-    // }
-    // if (operatorController.getRightTriggerAxis() > 0.1) {
-    //     robotstate = LONGSHOT;
-    // } else if (operatorController.getRightTriggerAxis() < 0.1) {
-    //     robotstate = IDLE;
-
-    // }
-    if (operatorController.getRightBumperButtonPressed()) {
+        // SHOOTING
+    if (driverController.getRightTriggerAxis() > 0.1) {
         robotstate = FIXEDSHOT;
-    } else if (operatorController.getRightBumperButtonReleased()) {
-        robotstate = IDLEINTAKEOUT;
+    } else if (driverController.getRightTriggerAxis() < 0.1) {
+        robotstate = IDLE;
     }
-    //Climbing
-    // if (driverController.getYButtonPressed()) {
-    //     robotstate = CLIMBPREP;
-    // } else if (driverController.getYButtonReleased()) {
-    //     robotstate = CLIMBLV1;
-    // }else if (driverController.getAButtonPressed()) {
-    //     robotstate = CLIMBLV2;
-    // }
-    //  else if (driverController.getYButtonPressed() || driverController.getAButtonReleased()) {
-    //     robotstate = IDLE;
-    // }
-    //AutoAlign
-    // if(driverController.getLeftBumperButtonPressed()) {
-        
-    // } else if (driverController.getLeftBumperButtonReleased()) {
-    //     robotstate = IDLE;
-    // }
+
+    if (driverController.getLeftTriggerAxis() > 0.11) {
+        robotstate = DYNAMICSHOT;
+    } else if (driverController.getLeftTriggerAxis() < 0.1) {
+        robotstate = IDLE;
+    }
+
+    if (driverController.getRightBumperButtonPressed()) {
+        robotstate = LONGSHOT;
+    } else if (driverController.getRightBumperButtonReleased()) {
+        robotstate = IDLE;
+    }
+
+    // INTAKING 
+    if (driverController.getXButton()) {
+        robotstate = INTAKING;
+    } else if (driverController.getXButton()) {
+        robotstate = IDLE;
+    }
+
+    if (operatorController.getXButton()) {
+        robotstate = INTAKEOUT;
+    } else if (operatorController.getXButton()) {
+        robotstate = IDLE;
+    }
+
+    // CLIMBING
+    if (operatorController.getYButton()) {
+        robotstate = CLIMBPREP;
+    } else if (operatorController.getYButton()) {
+        robotstate = CLIMBLV1;
+    } else if (operatorController.getYButton()) {
+        robotstate = CLIMBLV2;
+    }
+
+
+
+
+
+
+
         intake.setState(getState().getIntakeState());
         passthrough.setState(getState().getPassthroughState());
         shooter.setState(getState().getShooterState());
@@ -105,7 +102,7 @@ public class Manager {
         Logger.recordOutput("Manager State", robotstate.getStateString());
         // Logger.recordOutput("AutoAlign State", autoalign.getInstance().getAutoAlignState());
 
-        Intake.getInstance().periodic();
+        //Intake.getInstance().periodic();
         Passthrough.getInstance().periodic();
         Shooter.getInstance().periodic();
         Climber.getInstance().periodic();
