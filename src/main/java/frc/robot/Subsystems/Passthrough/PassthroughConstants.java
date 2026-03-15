@@ -28,7 +28,7 @@ public class PassthroughConstants {
 
 	public static final double SET_INPUT_VOLTS = 0;
 
-	public static final int SPEED = 0;
+	public static final int SPEED = 1;
 
 	public static final double RPS_TO_RPM = 60;
 }

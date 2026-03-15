@@ -55,33 +55,39 @@ public class Manager {
  }
     
         // SHOOTING Fixed
-    if (driverController.getLeftBumperButtonPressed()) {
+    if (driverController.getAButtonPressed()) {
         if(robotstate == IDLE) {
-            robotstate = FIXEDSHOT;
+            robotstate = WINDUP;
         }
         else if(robotstate == FIXEDSHOT) {
             robotstate = IDLE;
         }
+        if (robotstate == WINDUP) {
+            robotstate = FIXEDSHOT;
+        }
+    }
+    if (robotstate == WINDUP && shooter.atSpeed()) {
+        robotstate = FIXEDSHOT;
     }
     // SHOOTING DYNAMIC
-    if (driverController.getAButtonPressed()) {
-        if(robotstate == IDLE) {
-            robotstate = DYNAMICSHOT;
-        }
-        else if(robotstate == DYNAMICSHOT) {
-            robotstate = IDLE;
-        }
-    }
+    // if (driverController.getAButtonPressed()) {
+    //     if(robotstate == IDLE) {
+    //         robotstate = DYNAMICSHOT;
+    //     }
+    //     else if(robotstate == DYNAMICSHOT) {
+    //         robotstate = IDLE;
+    //     }
+    // }
 
-    // SHOOTING LONG
-    if (driverController.getRightBumperButtonPressed()) {
-        if(robotstate == IDLE) {
-            robotstate = LONGSHOT;
-        }
-        else if(robotstate == LONGSHOT) {
-            robotstate = IDLE;
-        }
-    }
+    // // SHOOTING LONG
+    // if (driverController.getRightBumperButtonPressed()) {
+    //     if(robotstate == IDLE) {
+    //         robotstate = LONGSHOT;
+    //     }
+    //     else if(robotstate == LONGSHOT) {
+    //         robotstate = IDLE;
+    //     }
+    // }
 
     // INTAKING 
     if (driverController.getXButtonPressed()) {
@@ -95,25 +101,23 @@ public class Manager {
 
     //OPERATOR OVERRIDE INTAKE OUT
     if (operatorController.getBButtonPressed()) {
-        if(robotstate == IDLE) {
-            robotstate = INIDLE;
-        }
-        else if(robotstate == INIDLE) {
+        if(robotstate == INIDLE) {
             robotstate = IDLE;
-        }
+        } else {robotstate = IDLE;}
     } 
 
-    // CLIMBING
-    if (operatorController.getRightTriggerAxis() > 0.1) {
-        robotstate = CLIMBOUT;
-    } else if(operatorController.getRightTriggerAxis() < 0.1 && robotstate == CLIMBOUT) {
-        robotstate = IDLE;
-    }
     
-     if (operatorController.getLeftTriggerAxis() > 0.1) {
+     if (operatorController.getLeftTriggerAxis() > 0.1 || operatorController.getRightTriggerAxis() > 0.1) {
         robotstate = CLIMBIN;
-    } else if(operatorController.getLeftTriggerAxis() < 0.1 && robotstate == CLIMBIN) {
-        robotstate = IDLE;
+    }
+    if (robotstate == CLIMBIN) {
+        if (operatorController.getLeftTriggerAxis() > 0.1) {
+            climber.setSpeed(-1);
+        } else if (operatorController.getRightTriggerAxis() > 0.1) {
+            climber.setSpeed(1);
+        } else {
+            climber.setSpeed(0);
+        }
     }
 
 
@@ -125,7 +129,7 @@ public class Manager {
         Logger.recordOutput("Manager State", robotstate.getStateString());
         // Logger.recordOutput("AutoAlign State", autoalign.getInstance().getAutoAlignState());
 
-        //Intake.getInstance().periodic();
+        Intake.getInstance().periodic();
         Passthrough.getInstance().periodic();
         Shooter.getInstance().periodic();
         Climber.getInstance().periodic();

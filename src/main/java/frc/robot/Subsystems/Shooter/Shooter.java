@@ -43,11 +43,14 @@ public class Shooter {
     public void setState(ShooterStates state) {
         this.state = state;
     }
+    public boolean atSpeed() {
+        return Math.abs(followerleftMotor.getEncoder().getVelocity()-(state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR)) < 60;
+    }
 
 	public void periodic() {
 
-        SmartDashboard.putNumber("Shooter/Current Speed (RPM)", leaderrightMotor.getEncoder().getVelocity());
-        SmartDashboard.putNumber("Shooter/Target Speed (RPM)", state.getShooterRPS().in(Units.RadiansPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR);
+        SmartDashboard.putNumber("Shooter/Current Speed (RPM)", followerleftMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Shooter/Target Speed (RPM)", state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR);
         SmartDashboard.putData("Shooter/PID Controller", motorcontrollerright);
 
         feedforward.setKa(SmartDashboard.getNumber("kA", feedforward.getKa()));
@@ -58,10 +61,10 @@ public class Shooter {
         SmartDashboard.putNumber("kS", feedforward.getKs());
 
 		if (state == ShooterStates.IDLE) {
-            leaderrightMotor.set(1);
+            leaderrightMotor.set(0);
 			//leaderrightMotor.set(IDLE_SPEED_OR_VOLTAGE);
 		} else {
-			leaderrightMotor.set(motorcontrollerright.calculate(leaderrightMotor.getEncoder().getVelocity(), state.getShooterRPS().in(Units.RadiansPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR) + feedforward.calculate(state.getShooterRPS().in(Units.RadiansPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR));
+			leaderrightMotor.setVoltage(motorcontrollerright.calculate(followerleftMotor.getEncoder().getVelocity(), state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR) + feedforward.calculate(state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR));
 		}
 	}
 }

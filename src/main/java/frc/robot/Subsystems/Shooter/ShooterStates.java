@@ -6,9 +6,9 @@ import edu.wpi.first.units.measure.AngularVelocity;
 
 public enum ShooterStates {
 	IDLE(IDLE_RPS),
-	FIXEDSHOOT(FIXED_SHOOT_RPS),
-	DYNAMICSHOOT(FIXED_SHOOT_RPS),
-	LONGPASS(LONG_PASS_RPS);
+	FIXEDSHOOT(FIXED_SHOOT_RPS);
+	// DYNAMICSHOOT(FIXED_SHOOT_RPS),
+	// LONGPASS(LONG_PASS_RPS);
 
 	private String stateString;
 	private AngularVelocity shooterSpeed;

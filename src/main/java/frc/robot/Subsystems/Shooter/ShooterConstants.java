@@ -9,9 +9,8 @@ import java.util.function.Supplier;
 
 public final class ShooterConstants {
 
-	public static final AngularVelocity IDLE_RPS = Units.RadiansPerSecond.of(0);
-	public static final AngularVelocity FIXED_SHOOT_RPS = Units.RadiansPerSecond.of(5);
-	public static final AngularVelocity LONG_PASS_RPS = Units.RadiansPerSecond.of(50);
+	public static final AngularVelocity IDLE_RPS = Units.RotationsPerSecond.of(0);
+	public static final AngularVelocity FIXED_SHOOT_RPS = Units.RotationsPerSecond.of(50);
 
 	public static final int LEFT_MOTOR_ID = 13;
 	public static final int RIGHT_MOTOR_ID = 12;
