@@ -95,11 +95,13 @@ public class Manager {
             }
         } 
 
+    
+
         //OPERATOR OVERRIDE INTAKE OUT
         if (operatorController.getBButtonPressed()) {
             if(robotstate == INIDLE) {
                 robotstate = IDLE;
-            } else {robotstate = IDLE;}
+            } else {robotstate = INIDLE;}
         } 
 
         
