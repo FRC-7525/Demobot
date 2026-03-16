@@ -3,9 +3,7 @@ package frc.robot.Subsystems.Intake;
 import static edu.wpi.first.units.Units.Degree;
 import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
-import static frc.robot.Subsystems.Intake.IntakeConstants.WHEEL_CONTROLLER;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.GlobalConstants;
 

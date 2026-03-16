@@ -6,10 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.Manager.Manager;
-// import frc.robot.Subsystems.AutoAlign.AutoAlign;
 import frc.robot.Subsystems.Drive.Drive;
-import frc.robot.Subsystems.Intake.Intake;
-import frc.robot.Subsystems.Passthrough.Passthrough;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -18,30 +15,20 @@ import frc.robot.Subsystems.Passthrough.Passthrough;
  */
 public class Robot extends TimedRobot {
     private final Manager manager = Manager.getInstance();
+	private final Drive drive = Drive.getInstance();
 
 	public static boolean isRedAlliance;
 	/**
 	 * This function is run when the robot is first started up and should be used for any
 	 * initialization code.
 	 */
-	// Drive drive;
-	// AutoAlign autoAlign;
-	// Intake intake;
 
-	public Robot() {
-		// drive = Drive.getInstance();
-		// autoAlign = AutoAlign.getInstance();
-		// intake = Intake.getInstance();
-	
-	}
+	public Robot() {}
 
 	@Override
 	public void robotPeriodic() {
-		// drive.periodic();
-		// autoAlign.periodic();
-		// intake.periodic();
 		manager.periodic();
-		
+		drive.periodic();
 	}
 
 	@Override

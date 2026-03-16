@@ -2,12 +2,7 @@ package frc.robot.Subsystems.Climber;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-import static frc.robot.Subsystems.Climber.ClimberConstants.COMINGIN_SPEED;
-import static frc.robot.Subsystems.Climber.ClimberConstants.GOINGOUT_SPEED;
-import static frc.robot.Subsystems.Climber.ClimberConstants.IDLE_SPEED;
-
 import com.revrobotics.spark.SparkMax;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climber {

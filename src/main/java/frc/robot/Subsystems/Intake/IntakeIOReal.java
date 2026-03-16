@@ -14,7 +14,6 @@ import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class IntakeIOReal implements IntakeIO {
 

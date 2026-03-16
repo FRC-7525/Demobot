@@ -2,19 +2,14 @@ package frc.robot.Manager;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import frc.robot.Subsystems.AutoAlign.AutoAlign;
 import frc.robot.Subsystems.Climber.Climber;
-import frc.robot.Subsystems.Drive.Drive;
 import frc.robot.Subsystems.Intake.Intake;
 import frc.robot.Subsystems.Passthrough.Passthrough;
 import frc.robot.Subsystems.Shooter.Shooter;
 import static frc.robot.Manager.ManagerConstants.*;
-
 import static frc.robot.Manager.ManagerStates.*;
-
-import javax.sql.rowset.RowSetProvider;
-
 import org.littletonrobotics.junction.Logger;
+
 public class Manager {
     Climber climber;
     Intake intake;
@@ -48,77 +43,78 @@ public class Manager {
 
     public void periodic() {
 
-
-        //IDLE All
-    if(driverController.getYButtonPressed()) {
-        robotstate = IDLE;
- }
-    
-        // SHOOTING Fixed
-    if (driverController.getAButtonPressed()) {
-        if(robotstate == IDLE) {
-            robotstate = WINDUP;
-        }
-        else if(robotstate == FIXEDSHOT) {
-            robotstate = IDLE;
-        }
-        if (robotstate == WINDUP) {
+        if (robotstate == WINDUP && shooter.atSpeed()) {
             robotstate = FIXEDSHOT;
         }
-    }
-    if (robotstate == WINDUP && shooter.atSpeed()) {
-        robotstate = FIXEDSHOT;
-    }
-    // SHOOTING DYNAMIC
-    // if (driverController.getAButtonPressed()) {
-    //     if(robotstate == IDLE) {
-    //         robotstate = DYNAMICSHOT;
-    //     }
-    //     else if(robotstate == DYNAMICSHOT) {
-    //         robotstate = IDLE;
-    //     }
-    // }
 
-    // // SHOOTING LONG
-    // if (driverController.getRightBumperButtonPressed()) {
-    //     if(robotstate == IDLE) {
-    //         robotstate = LONGSHOT;
-    //     }
-    //     else if(robotstate == LONGSHOT) {
-    //         robotstate = IDLE;
-    //     }
-    // }
-
-    // INTAKING 
-    if (driverController.getXButtonPressed()) {
-        if(robotstate == IDLE) {
-            robotstate = INTAKING;
-        }
-        else if(robotstate == INTAKING) {
+        // IDLE All
+        if(driverController.getYButtonPressed()) {
             robotstate = IDLE;
         }
-    } 
-
-    //OPERATOR OVERRIDE INTAKE OUT
-    if (operatorController.getBButtonPressed()) {
-        if(robotstate == INIDLE) {
-            robotstate = IDLE;
-        } else {robotstate = IDLE;}
-    } 
-
-    
-     if (operatorController.getLeftTriggerAxis() > 0.1 || operatorController.getRightTriggerAxis() > 0.1) {
-        robotstate = CLIMBIN;
-    }
-    if (robotstate == CLIMBIN) {
-        if (operatorController.getLeftTriggerAxis() > 0.1) {
-            climber.setSpeed(-1);
-        } else if (operatorController.getRightTriggerAxis() > 0.1) {
-            climber.setSpeed(1);
-        } else {
-            climber.setSpeed(0);
+        
+            // SHOOTING Fixed
+        if (driverController.getAButtonPressed()) {
+            if(robotstate == IDLE) {
+                robotstate = WINDUP;
+            }
+            else if(robotstate == FIXEDSHOT) {
+                robotstate = IDLE;
+            }
+            if (robotstate == WINDUP) {
+                robotstate = FIXEDSHOT;
+            }
         }
-    }
+        
+        // SHOOTING DYNAMIC
+        // if (driverController.getAButtonPressed()) {
+        //     if(robotstate == IDLE) {
+        //         robotstate = DYNAMICSHOT;
+        //     }
+        //     else if(robotstate == DYNAMICSHOT) {
+        //         robotstate = IDLE;
+        //     }
+        // }
+
+        // // SHOOTING LONG
+        // if (driverController.getRightBumperButtonPressed()) {
+        //     if(robotstate == IDLE) {
+        //         robotstate = LONGSHOT;
+        //     }
+        //     else if(robotstate == LONGSHOT) {
+        //         robotstate = IDLE;
+        //     }
+        // }
+
+        // INTAKING 
+        if (driverController.getXButtonPressed()) {
+            if(robotstate == IDLE) {
+                robotstate = INTAKING;
+            }
+            else if(robotstate == INTAKING) {
+                robotstate = IDLE;
+            }
+        } 
+
+        //OPERATOR OVERRIDE INTAKE OUT
+        if (operatorController.getBButtonPressed()) {
+            if(robotstate == INIDLE) {
+                robotstate = IDLE;
+            } else {robotstate = IDLE;}
+        } 
+
+        
+        if (operatorController.getLeftTriggerAxis() > 0.1 || operatorController.getRightTriggerAxis() > 0.1) {
+            robotstate = CLIMBIN;
+        }
+        if (robotstate == CLIMBIN) {
+            if (operatorController.getLeftTriggerAxis() > 0.1) {
+                climber.setSpeed(-1);
+            } else if (operatorController.getRightTriggerAxis() > 0.1) {
+                climber.setSpeed(1);
+            } else {
+                climber.setSpeed(0);
+            }
+        }
 
 
         intake.setState(getState().getIntakeState());
@@ -129,15 +125,12 @@ public class Manager {
         Logger.recordOutput("Manager State", robotstate.getStateString());
         // Logger.recordOutput("AutoAlign State", autoalign.getInstance().getAutoAlignState());
 
-        Intake.getInstance().periodic();
-        Passthrough.getInstance().periodic();
-        Shooter.getInstance().periodic();
-        Climber.getInstance().periodic();
-        Drive.getInstance().periodic();
+        intake.periodic();
+        passthrough.periodic();
+        shooter.periodic();
+        climber.periodic();
 
-        SmartDashboard.putString("Manager State", robotstate.getStateString());
-
-        
+        SmartDashboard.putString("Manager State", robotstate.getStateString());        
     }
 
     public ManagerStates getState() {

@@ -16,8 +16,6 @@ import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
 public class Drive {
-    
-
 	private static Drive instance;
 	private SwerveInputStream swerveInputs;
 	private SwerveDrive swerveDrive;

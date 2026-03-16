@@ -17,14 +17,14 @@ public final class ShooterConstants {
 
 	public static final Supplier<PIDController> WHEEL_PID = () ->
 		switch (GlobalConstants.ROBOT_MODE) {
-			case REAL -> new PIDController(0.01, 0, 0);
+			case REAL -> new PIDController(0.0, 0, 0);
 			case SIM -> new PIDController(1, 0, 0.01);
 			// default -> new PIDController(20, 1, 0);
 		};
 
 	public static final Supplier<SimpleMotorFeedforward> WHEEL_FEEDFORWARD = () ->
 		switch (GlobalConstants.ROBOT_MODE) {
-			case REAL -> new SimpleMotorFeedforward(0, 0, 0);
+			case REAL -> new SimpleMotorFeedforward(0.26, 0.00177, 0);
 			case SIM -> new SimpleMotorFeedforward(0, 0.001, 0);
 			// default -> new SimpleMotorFeedforward(0, 0.1, 0);
 		};
