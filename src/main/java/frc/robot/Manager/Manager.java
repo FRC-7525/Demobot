@@ -49,8 +49,14 @@ public class Manager {
 
         // IDLE All
         if(driverController.getYButtonPressed()) {
-            robotstate = IDLE;
+             if(robotstate == INIDLE) {
+                robotstate = IDLE;
+             } else {
+                robotstate = INIDLE;
+             }
         }
+        
+       
         
             // SHOOTING Fixed
         if (driverController.getAButtonPressed()) {
@@ -108,7 +114,8 @@ public class Manager {
         if (operatorController.getLeftTriggerAxis() > 0.1 || operatorController.getRightTriggerAxis() > 0.1) {
             robotstate = CLIMBIN;
         }
-        if (robotstate == CLIMBIN) {
+        if (robotstate
+             == CLIMBIN) {
             if (operatorController.getLeftTriggerAxis() > 0.1) {
                 climber.setSpeed(-1);
             } else if (operatorController.getRightTriggerAxis() > 0.1) {
