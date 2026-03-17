@@ -59,15 +59,15 @@ public class Manager {
        
         
             // SHOOTING Fixed
-        if (driverController.getAButtonPressed()) {
+        if (driverController.getXButtonPressed()) {
             if(robotstate == IDLE) {
                 robotstate = WINDUP;
             }
-            else if(robotstate == FIXEDSHOT) {
-                robotstate = IDLE;
-            }
-            if (robotstate == WINDUP) {
+            else if (robotstate == WINDUP) {
                 robotstate = FIXEDSHOT;
+            }
+            else{
+                robotstate = IDLE;
             }
         }
         
@@ -92,7 +92,7 @@ public class Manager {
         // }
 
         // INTAKING 
-        if (driverController.getXButtonPressed()) {
+        if (driverController.getAButtonPressed()) {
             if(robotstate == IDLE) {
                 robotstate = INTAKING;
             }

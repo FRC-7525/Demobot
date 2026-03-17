@@ -13,10 +13,12 @@ public enum ManagerStates {
     INIDLE(ClimberStates.IDLE, IntakeStates.IDLE, PassthroughStates.IDLE, ShooterStates.IDLE, "REALLYIDLE"),
     IDLE(ClimberStates.IDLE, IntakeStates.INTAKING_OUT, PassthroughStates.IDLE, ShooterStates.IDLE, "IDLE"),
     INTAKING(ClimberStates.IDLE, IntakeStates.INTAKING, PassthroughStates.IDLE, ShooterStates.IDLE, "INTAKING"),
-    // DYNAMICSHOT(ClimberStates.IDLE, IntakeStates.INTAKING_OUT, PassthroughStates.PASS, ShooterStates.DYNAMICSHOOT, "DYNAMICSHOT"),
+    // DYNAMICSHOT(ClimberStates.IDLE, In
+    // takeStates.INTAKING_OUT, PassthroughStates.PASS, ShooterStates.DYNAMICSHOOT, "DYNAMICSHOT"),
     // LONGSHOT(ClimberStates.IDLE, IntakeStates.INTAKING_OUT, PassthroughStates.PASS, ShooterStates.LONGPASS, "LONGPASS"),
+    // SPINUP(ClimberStates.IDLE, IntakeStates.INTAKING_OUT, PassthroughStates.IDLE, ShooterStates.FIXEDSHOOT, "SPINUP"),;
     FIXEDSHOT(ClimberStates.IDLE, IntakeStates.INTAKING_OUT, PassthroughStates.PASS, ShooterStates.FIXEDSHOOT, "FIXEDSHOOT"),
-    WINDUP(ClimberStates.IDLE, IntakeStates.INTAKING_OUT, PassthroughStates.PASS, ShooterStates.FIXEDSHOOT, "WINDUP");
+    WINDUP(ClimberStates.IDLE, IntakeStates.INTAKING_OUT, PassthroughStates.IDLE, ShooterStates.FIXEDSHOOT, "WINDUP");
 
 
     private final String stateString;
