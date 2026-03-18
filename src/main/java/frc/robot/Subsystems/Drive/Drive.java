@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.io.File;
+
+import com.ctre.phoenix6.swerve.jni.SwerveJNI.DriveState;
+
 import swervelib.SwerveDrive;
 import swervelib.SwerveInputStream;
 import swervelib.parser.SwerveParser;
@@ -22,6 +25,8 @@ public class Drive {
 	public final XboxController DRIVER_CONTROLLER;
 	private Field2d robot;
 	private boolean fieldRelative;
+	private double multiplier;
+	private boolean slow;
 
 	public static Drive getInstance() {
 		if (instance == null) {
@@ -55,6 +60,17 @@ public class Drive {
 			if (DRIVER_CONTROLLER.getBackButtonPressed()) {
 				fieldRelative = true;
 			}
+			if (slow) {
+			if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) slow = false;
+			swerveInputs.scaleTranslation(0.33);
+			swerveInputs.scaleRotation(0.33);
+		} else {
+			if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) slow = true;
+			swerveInputs.scaleTranslation(1);
+			swerveInputs.scaleRotation(1);
+		}
+
+
 			swerveDrive.drive(swerveInputs.get());
 		}
 
