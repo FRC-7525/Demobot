@@ -55,7 +55,14 @@ public class Manager {
                 robotstate = INIDLE;
              }
         }
-        
+        // REVERSE PASS
+        if(operatorController.getXButtonPressed()) {
+            if(robotstate == REVERSE_PASS) {
+                robotstate = IDLE;
+             } else {
+                robotstate = REVERSE_PASS;
+             }
+        }
        
         
             // SHOOTING Fixed

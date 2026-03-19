@@ -6,7 +6,8 @@ import edu.wpi.first.units.measure.AngularVelocity;
 
 public enum PassthroughStates {
 	IDLE(IDLE_SPEED),
-	PASS(PASS_SPEED);
+	PASS(PASS_SPEED),
+	REVERSE(REVERSE_SPEED);
 
 	AngularVelocity Speed;
 

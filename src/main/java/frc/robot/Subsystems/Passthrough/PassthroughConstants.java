@@ -16,6 +16,7 @@ public class PassthroughConstants {
 
 	public static final AngularVelocity IDLE_SPEED = RotationsPerSecond.of(0);
 	public static final AngularVelocity PASS_SPEED = RotationsPerSecond.of(15);
+	public static final AngularVelocity REVERSE_SPEED = RotationsPerSecond.of(-15);
 
 	public static final int NUM_MOTORS = 1;
 	public static final int GEARING = 1;
