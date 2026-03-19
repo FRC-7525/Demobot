@@ -4,9 +4,21 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.AitanAndJamesAreTheBestForSureAutos.AutoBuilderStuff;
+import frc.robot.AitanAndJamesAreTheBestForSureAutos.AutoCommands;
 import frc.robot.Manager.Manager;
+import frc.robot.Manager.ManagerStates;
 import frc.robot.Subsystems.Drive.Drive;
+import frc.robot.Subsystems.Drive.DriveStates;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -16,6 +28,8 @@ import frc.robot.Subsystems.Drive.Drive;
 public class Robot extends TimedRobot {
     private final Manager manager = Manager.getInstance();
 	private final Drive drive = Drive.getInstance();
+	private final AutoCommands autoCommands = AutoCommands.getInstance(); 
+	private SendableChooser<Command> autoChooser;
 
 	public static boolean isRedAlliance;
 	/**
@@ -23,22 +37,45 @@ public class Robot extends TimedRobot {
 	 * initialization code.
 	 */
 
-	public Robot() {}
+	public Robot() {
+		AutoBuilderStuff.setConfig();
+		DriverStation.silenceJoystickConnectionWarning(true);
+		CommandScheduler.getInstance().unregisterAllSubsystems();
+		NamedCommands.registerCommand("Deploy Intake", autoCommands.intakeDeploy());
+		NamedCommands.registerCommand("IDLE", autoCommands.returnToIdle());
+		NamedCommands.registerCommand("WindUp", autoCommands.startWindingUp());
+		NamedCommands.registerCommand("Shoot", autoCommands.shootFuel());
+		autoChooser = AutoBuilder.buildAutoChooser();
+		SmartDashboard.putData("Auto Chooser", autoChooser);
+	}
 
 	@Override
 	public void robotPeriodic() {
 		manager.periodic();
 		drive.periodic();
+		CommandScheduler.getInstance().run();
 	}
 
 	@Override
-	public void autonomousInit() {}
+	public void autonomousInit() {
+		drive.setState(DriveStates.Auto);
+		Command autoCommand = autoChooser.getSelected();
+		if (autoCommand != null) {
+			CommandScheduler.getInstance().schedule(autoCommand);
+		}	
+	}
 
 	@Override
-	public void autonomousPeriodic() {}
+	public void autonomousPeriodic() {
+		
+	}
 
 	@Override
-	public void teleopInit() {}
+	public void teleopInit() {
+		drive.setState(DriveStates.Manual);
+		CommandScheduler.getInstance().cancelAll();
+		manager.setState(ManagerStates.IDLE);
+	}
 
 	@Override
 	public void teleopPeriodic() {}

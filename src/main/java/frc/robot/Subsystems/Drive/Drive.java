@@ -4,28 +4,28 @@ import static frc.robot.Subsystems.Drive.DriveConstants.*;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import java.io.File;
-
-import com.ctre.phoenix6.swerve.jni.SwerveJNI.DriveState;
-
 import swervelib.SwerveDrive;
 import swervelib.SwerveInputStream;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
-public class Drive {
+public class Drive extends SubsystemBase {
 	private static Drive instance;
+	private DriveStates state;
 	private SwerveInputStream swerveInputs;
 	private SwerveDrive swerveDrive;
 	public final XboxController DRIVER_CONTROLLER;
 	private Field2d robot;
 	private boolean fieldRelative;
-	private double multiplier;
 	private boolean slow;
 
 	public static Drive getInstance() {
@@ -51,6 +51,9 @@ public class Drive {
 	}
 
 	public void periodic() {
+		if (state == DriveStates.Auto) {
+			return;
+		}
 		if (fieldRelative) {
 			if (DRIVER_CONTROLLER.getBackButtonPressed()) {
 				fieldRelative = false;
@@ -69,11 +72,28 @@ public class Drive {
 			swerveInputs.scaleTranslation(1);
 			swerveInputs.scaleRotation(1);
 		}
-
-
 			swerveDrive.drive(swerveInputs.get());
 		}
-
 		SmartDashboard.putData(robot);
+	}
+
+	public Pose2d getPose() {
+		return swerveDrive.getPose();
+	}
+
+	public void setPose(Pose2d newPose) {
+		swerveDrive.resetOdometry(newPose);
+	}
+
+	public ChassisSpeeds getRobotRelativeSpeeds() {
+		return swerveDrive.getRobotVelocity();
+	}
+
+	public void drive(ChassisSpeeds speeds) {
+		swerveDrive.drive(speeds);
+	}
+
+	public void setState(DriveStates state) {
+		this.state = state;
 	}
 }

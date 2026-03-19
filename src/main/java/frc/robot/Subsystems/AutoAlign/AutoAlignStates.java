@@ -11,7 +11,6 @@ public enum AutoAlignStates {
 	toDepot(new PosePair(new Pose2d(15.231, 2.093, new Rotation2d(Math.toRadians(0))), new Pose2d(1.277, 5.912, new Rotation2d(Math.toRadians(180)))), "toDepot");
 
 	private PosePair location;
-	private AutoAlignStates state;
 	private String stringName;
 
 	private AutoAlignStates(PosePair location, String stringName) {
