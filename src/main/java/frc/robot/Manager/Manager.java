@@ -42,6 +42,20 @@ public class Manager {
 	}
 
     public void periodic() {
+        intake.setState(getState().getIntakeState());
+        passthrough.setState(getState().getPassthroughState());
+        shooter.setState(getState().getShooterState());
+        climber.setState(getState().getClimberState());
+        // autoalign.getAutoAlignState();
+        Logger.recordOutput("Manager State", robotstate.getStateString());
+        // Logger.recordOutput("AutoAlign State", autoalign.getInstance().getAutoAlignState());
+
+        intake.periodic();
+        passthrough.periodic();
+        shooter.periodic();
+        climber.periodic();
+
+        SmartDashboard.putString("Manager State", robotstate.getStateString());
 
         if (robotstate == WINDUP && shooter.atSpeed()) {
             robotstate = FIXEDSHOT;
@@ -66,7 +80,7 @@ public class Manager {
        
         
             // SHOOTING Fixed
-        if (driverController.getRightTriggerAxis() > 0.1) {
+        if (driverController.getAButtonPressed()) {
             if(robotstate == IDLE) {
                 robotstate = WINDUP;
             }
@@ -99,13 +113,15 @@ public class Manager {
         // }
 
         // INTAKING 
-        if (driverController.getLeftTriggerAxis() > 0.1) {
+        if (driverController.getXButtonPressed()) {
             if(robotstate == IDLE) {
                 robotstate = INTAKING;
-            }
-            else if(robotstate == INTAKING) {
+                return;
+            } else if(robotstate == INTAKING) {
                 robotstate = IDLE;
+                return;
             }
+
         } 
 
     
@@ -130,23 +146,7 @@ public class Manager {
             } else {
                 climber.setSpeed(0);
             }
-        }
-
-
-        intake.setState(getState().getIntakeState());
-        passthrough.setState(getState().getPassthroughState());
-        shooter.setState(getState().getShooterState());
-        climber.setState(getState().getClimberState());
-        // autoalign.getAutoAlignState();
-        Logger.recordOutput("Manager State", robotstate.getStateString());
-        // Logger.recordOutput("AutoAlign State", autoalign.getInstance().getAutoAlignState());
-
-        intake.periodic();
-        passthrough.periodic();
-        shooter.periodic();
-        climber.periodic();
-
-        SmartDashboard.putString("Manager State", robotstate.getStateString());        
+        }        
     }
 
     public ManagerStates getState() {

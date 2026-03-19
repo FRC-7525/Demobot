@@ -51,6 +51,7 @@ public class Robot extends TimedRobot {
 		NamedCommands.registerCommand("Shoot", autoCommands.shootFuel());
 		autoChooser = AutoBuilder.buildAutoChooser();
 		SmartDashboard.putData("Auto Chooser", autoChooser);
+		drive.zeroGyro();
 	}
 
 	@Override
@@ -62,17 +63,16 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousInit() {
+		drive.zeroGyro();
 		drive.setState(DriveStates.Auto);
-		Command autoCommand = autoChooser.getSelected();
-		if (autoCommand != null) {
-			CommandScheduler.getInstance().schedule(autoCommand);
-		}	
+		// Command autoCommand = autoChooser.getSelected();
+		// if (autoCommand != null) {
+		// 	CommandScheduler.getInstance().schedule(autoCommand);
+		// }	
 	}
 
 	@Override
-	public void autonomousPeriodic() {
-		
-	}
+	public void autonomousPeriodic() {}
 
 	@Override
 	public void teleopInit() {
