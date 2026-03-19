@@ -66,7 +66,7 @@ public class Manager {
        
         
             // SHOOTING Fixed
-        if (driverController.getXButtonPressed()) {
+        if (driverController.getRightTriggerAxis() > 0.1) {
             if(robotstate == IDLE) {
                 robotstate = WINDUP;
             }
@@ -99,7 +99,7 @@ public class Manager {
         // }
 
         // INTAKING 
-        if (driverController.getAButtonPressed()) {
+        if (driverController.getLeftTriggerAxis() > 0.1) {
             if(robotstate == IDLE) {
                 robotstate = INTAKING;
             }
