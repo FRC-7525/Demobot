@@ -149,5 +149,4 @@ public class Manager {
     public void setState(ManagerStates newState) {
         robotstate = newState;
     }
-
 }

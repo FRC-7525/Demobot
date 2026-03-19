@@ -10,7 +10,6 @@ import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.DriverStation;
 import java.util.Optional;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,7 +17,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.AitanAndJamesAreTheBestForSureAutos.AutoBuilderStuff;
 import frc.robot.AitanAndJamesAreTheBestForSureAutos.AutoCommands;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Manager.Manager;
 import frc.robot.Manager.ManagerStates;
 import frc.robot.Subsystems.Drive.Drive;
@@ -58,7 +56,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putString("Match Info/Match Type", DriverStation.getMatchType().toString());
 		SmartDashboard.putString("Match Info/Event Name", DriverStation.getEventName());
 		SmartDashboard.putBoolean("Match Info/redHubActive", true);
-		Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
+		// Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
 	}
 
 	@Override
