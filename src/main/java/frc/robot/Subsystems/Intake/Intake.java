@@ -64,8 +64,8 @@ public class Intake {
 		SmartDashboard.putString("Intake/CurrentState", currentState.getStateString());
 		SmartDashboard.putNumber("Intake/targetSpeed (RPS)", currentState.getWheelSpeed().in(RotationsPerSecond));
 		SmartDashboard.putNumber("Intake/targetAngle (DEG)", currentState.getTargetAngle().in(Degrees));
-		SmartDashboard.putNumber("Intake/currentAngle (DEG)", io.getCurrentAngle().in(Degree));
-		SmartDashboard.putNumber("Intake/currentWheelSpeed (RPS)", io.getCurrentWheelSpeed().in(RotationsPerSecond));
+		SmartDashboard.putNumber("Intake/Intake DEG", io.getCurrentAngle().in(Degree));
+		SmartDashboard.putNumber("Intake/Intake RPS", io.getCurrentWheelSpeed().in(RotationsPerSecond));
 		SmartDashboard.putNumber("Intake/wheelmotorcurrent", io.getWheelMotorCurrent());
 		SmartDashboard.putNumber("Intake/pivotMotorCurrent", io.getPivotMotorCurrent());
 		// SmartDashboard.putNumber("Intake/P Value", WHEEL_CONTROLLER.getP());

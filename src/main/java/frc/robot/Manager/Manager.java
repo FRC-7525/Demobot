@@ -48,7 +48,7 @@ public class Manager {
         }
 
         // IDLE All
-        if(driverController.getYButtonPressed()) {
+        if(operatorController.getYButtonPressed()) {
              if(robotstate == INIDLE) {
                 robotstate = IDLE;
              } else {

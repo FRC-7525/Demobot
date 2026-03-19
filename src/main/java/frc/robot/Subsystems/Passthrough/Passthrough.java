@@ -35,7 +35,7 @@ public class Passthrough {
 	}
 
 	public void periodic() {
-		SmartDashboard.putNumber("Passthrough/Current Speed (RPM)", mainmotor.getEncoder().getVelocity());
+		SmartDashboard.putNumber("Passthrough/Pass RPM", mainmotor.getEncoder().getVelocity());
         SmartDashboard.putNumber("Passthrough/Target Speed (RPM)", state.getSpeed().in(Units.RadiansPerSecond) * RPS_TO_RPM);
         SmartDashboard.putData("Passthrough/PID Controller", mainmotorcontroller);
 

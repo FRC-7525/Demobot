@@ -49,7 +49,7 @@ public class Shooter {
 
 	public void periodic() {
 
-        SmartDashboard.putNumber("Shooter/Current Speed (RPM)", followerleftMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Shooter/Shooter RPM", followerleftMotor.getEncoder().getVelocity());
         SmartDashboard.putNumber("Shooter/Target Speed (RPM)", state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR);
         SmartDashboard.putData("Shooter/PID Controller", motorcontrollerright);
 

@@ -40,6 +40,6 @@ public class Climber {
 			motor.set(driverRequestSpeed);
 		}
 
-		SmartDashboard.putNumber("Climber rot", motor.getAbsoluteEncoder().getPosition());
+		SmartDashboard.putNumber("Climber DEG", motor.getAbsoluteEncoder().getPosition());
 	}
 }
