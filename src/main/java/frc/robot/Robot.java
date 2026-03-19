@@ -4,13 +4,25 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import java.util.Optional;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.AitanAndJamesAreTheBestForSureAutos.AutoBuilderStuff;
+import frc.robot.AitanAndJamesAreTheBestForSureAutos.AutoCommands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Manager.Manager;
+import frc.robot.Manager.ManagerStates;
 import frc.robot.Subsystems.Drive.Drive;
+import frc.robot.Subsystems.Drive.DriveStates;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -20,16 +32,25 @@ import frc.robot.Subsystems.Drive.Drive;
 public class Robot extends TimedRobot {
     private final Manager manager = Manager.getInstance();
 	private final Drive drive = Drive.getInstance();
+	private final AutoCommands autoCommands = AutoCommands.getInstance(); 
+	private SendableChooser<Command> autoChooser;
 
 	public static boolean isRedAllianceInactive;
 	/**
 	 * This function is run when the robot is first started up and should be used for any
 	 * initialization code.
 	 */
-	
-
 
 	public Robot() {
+		AutoBuilderStuff.setConfig();
+		DriverStation.silenceJoystickConnectionWarning(true);
+		CommandScheduler.getInstance().unregisterAllSubsystems();
+		NamedCommands.registerCommand("Deploy Intake", autoCommands.intakeDeploy());
+		NamedCommands.registerCommand("IDLE", autoCommands.returnToIdle());
+		NamedCommands.registerCommand("WindUp", autoCommands.startWindingUp());
+		NamedCommands.registerCommand("Shoot", autoCommands.shootFuel());
+		autoChooser = AutoBuilder.buildAutoChooser();
+		SmartDashboard.putData("Auto Chooser", autoChooser);
 
 		SmartDashboard.putNumber("Match Info/Match Number", DriverStation.getMatchNumber());
 		SmartDashboard.putBoolean("Robot State/isEnabled", DriverStation.isEnabled());
@@ -38,25 +59,23 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putString("Match Info/Event Name", DriverStation.getEventName());
 		SmartDashboard.putBoolean("Match Info/redHubActive", true);
 		Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
-
-
-
-		if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
-			SmartDashboard.putString("Match Info/Alliance Color", "Red");
-		} else if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Blue) {
-			SmartDashboard.putString("Match Info/Alliance Color", "Blue");
-		}
 	}
 
 	@Override
 	public void robotPeriodic() {
 		manager.periodic();
 		drive.periodic();
+		CommandScheduler.getInstance().run();
 		SmartDashboard.putNumber("Match Info/Time Left in Match", DriverStation.getMatchTime());
 	}
 
 	@Override
 	public void autonomousInit() {
+		drive.setState(DriveStates.Auto);
+		Command autoCommand = autoChooser.getSelected();
+		if (autoCommand != null) {
+			CommandScheduler.getInstance().schedule(autoCommand);
+		}	
 		SmartDashboard.putBoolean("Robot State/isAutonomous", DriverStation.isAutonomous());
 		SmartDashboard.putBoolean("Robot State/isEnabled", DriverStation.isEnabled());
 		SmartDashboard.putString("Match Info/Match Phase", "Autonomous");
@@ -72,6 +91,9 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+		drive.setState(DriveStates.Manual);
+		CommandScheduler.getInstance().cancelAll();
+		manager.setState(ManagerStates.IDLE);
 		SmartDashboard.putBoolean("Robot State/isAutonomous", DriverStation.isAutonomous());
 		SmartDashboard.putBoolean("Robot State/isEnabled", DriverStation.isEnabled());
 		SmartDashboard.putString("Match Info/Match Phase", "Teleoperated");
