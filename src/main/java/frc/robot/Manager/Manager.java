@@ -80,7 +80,7 @@ public class Manager {
        
         
             // SHOOTING Fixed
-        if (driverController.getAButtonPressed()) {
+        if (driverController.getRightBumperButtonPressed()) {
             if(robotstate == IDLE) {
                 robotstate = WINDUP;
             }

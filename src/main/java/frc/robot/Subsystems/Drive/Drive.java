@@ -54,15 +54,15 @@ public class Drive extends SubsystemBase {
 	}
 
 	public void periodic() {
-		if (fieldRelative) {
-			if (DRIVER_CONTROLLER.getBackButtonPressed()) {
-				fieldRelative = false;
-			}
-			swerveDrive.driveFieldOriented(swerveInputs.get());
-		} else {
-			if (DRIVER_CONTROLLER.getBackButtonPressed()) {
-				fieldRelative = true;
-			}
+		// if (fieldRelative) {
+		// 	if (DRIVER_CONTROLLER.getBackButtonPressed()) {
+		// 		fieldRelative = false;
+		// 	}
+		// 	swerveDrive.driveFieldOriented(swerveInputs.get());
+		// } else {
+		// 	if (DRIVER_CONTROLLER.getBackButtonPressed()) {
+		// 		fieldRelative = true;
+		// 	}
 			if (slow) {
 			if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) { 
 				slow = false;
@@ -84,13 +84,19 @@ public class Drive extends SubsystemBase {
 
 			swerveDrive.driveFieldOriented(swerveInputs.get());
 			SmartDashboard.putData(robot);
+			if (DRIVER_CONTROLLER.getBButtonPressed()) {
+				zeroGyro();
+			}
+
+			SmartDashboard.putData(robot);
+
 			
 		}
 		
 		
 
 	
-	}
+
 		public void zeroGyro() {
 		swerveDrive.resetOdometry(
 			new Pose2d(
