@@ -4,28 +4,28 @@ import static frc.robot.Subsystems.Drive.DriveConstants.*;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import java.io.File;
-
-import com.ctre.phoenix6.swerve.jni.SwerveJNI.DriveState;
-
 import swervelib.SwerveDrive;
 import swervelib.SwerveInputStream;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
-public class Drive {
+public class Drive extends SubsystemBase {
 	private static Drive instance;
+	private DriveStates state;
 	private SwerveInputStream swerveInputs;
 	private SwerveDrive swerveDrive;
 	public final XboxController DRIVER_CONTROLLER;
 	private Field2d robot;
 	private boolean fieldRelative;
-	private double multiplier;
 	private boolean slow;
 
 	public static Drive getInstance() {
@@ -51,16 +51,15 @@ public class Drive {
 	}
 
 	public void periodic() {
-		// if (fieldRelative) {
-		// 	if (DRIVER_CONTROLLER.getBackButtonPressed()) {
-		// 		fieldRelative = false;
-		// 	}
-		// 	swerveDrive.driveFieldOriented(swerveInputs.get());
-		// } else {
-		// 	if (DRIVER_CONTROLLER.getBackButtonPressed()) {
-		// 		fieldRelative = true;
-		// 	}
-		// }
+		if (fieldRelative) {
+			if (DRIVER_CONTROLLER.getBackButtonPressed()) {
+				fieldRelative = false;
+			}
+			swerveDrive.driveFieldOriented(swerveInputs.get());
+		} else {
+			if (DRIVER_CONTROLLER.getBackButtonPressed()) {
+				fieldRelative = true;
+			}
 			if (slow) {
 			if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) slow = false;
 			swerveInputs.scaleTranslation(0.33);
@@ -70,13 +69,13 @@ public class Drive {
 			swerveInputs.scaleTranslation(1);
 			swerveInputs.scaleRotation(1);
 		}
+		// 	swerveDrive.drive(swerveInputs.get());
+		// }
 
 
-			swerveDrive.driveFieldOriented(swerveInputs.get());
-			SmartDashboard.putData(robot);
+			swerveDrive.drive(swerveInputs.get());
 		}
 
-		
-
-		
+		SmartDashboard.putData(robot);
+	}
 }

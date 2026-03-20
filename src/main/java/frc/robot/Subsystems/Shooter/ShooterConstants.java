@@ -11,6 +11,7 @@ public final class ShooterConstants {
 
 	public static final AngularVelocity IDLE_RPS = Units.RotationsPerSecond.of(0);
 	public static final AngularVelocity FIXED_SHOOT_RPS = Units.RotationsPerSecond.of(75);
+	public static final AngularVelocity REVERSE_SHOOT_RPS = Units.RotationsPerSecond.of(-75);
 
 	public static final int LEFT_MOTOR_ID = 13;
 	public static final int RIGHT_MOTOR_ID = 12;

@@ -1,9 +1,8 @@
 package frc.robot.Subsystems.Drive;
 
-import com.ctre.phoenix6.swerve.jni.SwerveJNI.DriveState;
-
 public enum DriveStates {
-	Manual("Manual");
+	Manual("Manual"),
+	Auto("Auto");
 
 	public String stateString;
 
