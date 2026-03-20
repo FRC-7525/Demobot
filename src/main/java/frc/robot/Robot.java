@@ -65,10 +65,10 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		drive.zeroGyro();
 		drive.setState(DriveStates.Auto);
-		// Command autoCommand = autoChooser.getSelected();
-		// if (autoCommand != null) {
-		// 	CommandScheduler.getInstance().schedule(autoCommand);
-		// }	
+		Command autoCommand = autoChooser.getSelected();
+		if (autoCommand != null) {
+			CommandScheduler.getInstance().schedule(autoCommand);
+		}	
 	}
 
 	@Override

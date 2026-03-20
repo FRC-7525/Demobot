@@ -99,6 +99,15 @@ public class Drive extends SubsystemBase {
 	public Pose2d getPose() {
 		return swerveDrive.getPose();
 	}
+
+	public void setPose(Pose2d pose) {
+		swerveDrive.resetOdometry(pose);
+	}
+
+	public void drive(ChassisSpeeds speeds) {
+		speeds = new ChassisSpeeds(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond, 0);
+		swerveDrive.drive(speeds);
+	}
 	public ChassisSpeeds getRobotRelativeSpeeds() {
 		return swerveDrive.getRobotVelocity();
 	}
