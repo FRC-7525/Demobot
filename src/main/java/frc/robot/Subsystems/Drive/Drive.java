@@ -27,9 +27,11 @@ public class Drive extends SubsystemBase {
 	private SwerveInputStream swerveInputs;
 	private SwerveDrive swerveDrive;
 	public final XboxController DRIVER_CONTROLLER;
+	public final XboxController operatorController;
 	private Field2d robot;
 	private boolean fieldRelative;
 	private boolean slow;
+	private double invert;
 
 	public static Drive getInstance() {
 		if (instance == null) {
@@ -41,6 +43,7 @@ public class Drive extends SubsystemBase {
 	private Drive() {
 		robot = new Field2d();
 		DRIVER_CONTROLLER = new XboxController(0);
+		operatorController = new XboxController(1);
 
 		try {
 			File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
@@ -48,9 +51,10 @@ public class Drive extends SubsystemBase {
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to create SwerveDrive", e);
 		}
+		invert = 1;
 		swerveDrive.setMotorIdleMode(false);
 		SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
-		swerveInputs = SwerveInputStream.of(swerveDrive, () -> -DRIVER_CONTROLLER.getLeftY(), () -> -DRIVER_CONTROLLER.getLeftX()).withControllerRotationAxis(() -> -DRIVER_CONTROLLER.getRightX()).allianceRelativeControl(true).driveToPoseEnabled(false);
+		swerveInputs = SwerveInputStream.of(swerveDrive, () -> invert * -DRIVER_CONTROLLER.getLeftY(), () -> invert * -DRIVER_CONTROLLER.getLeftX()).withControllerRotationAxis(() -> -DRIVER_CONTROLLER.getRightX()).allianceRelativeControl(true).driveToPoseEnabled(false);
 	}
 
 	public void periodic() {
@@ -63,6 +67,13 @@ public class Drive extends SubsystemBase {
 		// 	if (DRIVER_CONTROLLER.getBackButtonPressed()) {
 		// 		fieldRelative = true;
 		// 	}
+			if (operatorController.getPOV() == 0) {
+				invert= -1;
+			} 
+			if (operatorController.getPOV() == 180) {
+				invert = 1;
+			}
+
 			if (slow) {
 			if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) { 
 				slow = false;
@@ -89,22 +100,14 @@ public class Drive extends SubsystemBase {
 			}
 
 			SmartDashboard.putData(robot);
-
-			
 		}
 		
 		
 
 	
 
-		public void zeroGyro() {
-		swerveDrive.resetOdometry(
-			new Pose2d(
-				swerveDrive.getPose().getX(),
-				swerveDrive.getPose().getY(),
-				Rotation2d.fromDegrees(180)
-			)
-		);
+	public void zeroGyro() {
+		swerveDrive.zeroGyro();
 	}
 
 	public void setState(DriveStates auto) {

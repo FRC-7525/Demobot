@@ -14,13 +14,17 @@ import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.wpilibj.XboxController;
+
 
 public class IntakeIOReal implements IntakeIO {
+	private boolean intakeON;
 
 	private SparkMax pivotMotor;
 	private SparkMax wheelMotor;
 	private PIDController pivotController;
 	private PIDController wheelSpeedController;
+	private XboxController operatorController;
 
 	public IntakeIOReal() {
 		this.pivotMotor = new SparkMax(PIVOT_MOTOR_ID, MotorType.kBrushless);
@@ -28,16 +32,35 @@ public class IntakeIOReal implements IntakeIO {
 		this.pivotController = IntakeConstants.PIVOT_CONTROLLER.get();
 		this.wheelSpeedController = IntakeConstants.WHEEL_CONTROLLER.get();
 		wheelMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+
+		operatorController = new XboxController(1);
 	}
 
 	@Override
 	public void setWheelSpeed(AngularVelocity wheelSpeed) {
-		wheelMotor.setVoltage(wheelSpeedController.calculate(getCurrentWheelSpeed().in(RotationsPerSecond), wheelSpeed.in(RotationsPerSecond)));
+		if (operatorController.getRightBumperButtonPressed()) {
+			if (intakeON == true) {
+				intakeON = false;
+			} else {
+				intakeON = true;
+			}
+
+
+		} 
+		if (intakeON) {
+			wheelMotor.set(1);
+		} else {
+			wheelMotor.set(0);
+		}
 	}
 
 	@Override
 	public void setTargetAngle(Angle targetAngle) {
-		pivotMotor.setVoltage(pivotController.calculate(getCurrentAngle().in(Degrees), targetAngle.in(Degrees)));
+		if (targetAngle.in(Degrees) == 0) {
+			pivotMotor.set(0.09);
+		} else {
+			pivotMotor.set(-0.09);
+		}
 	}
 
 	@Override

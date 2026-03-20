@@ -62,13 +62,13 @@ public class Manager {
         }
 
         // IDLE All
-        if(operatorController.getYButtonPressed()) {
-             if(robotstate == INIDLE) {
-                robotstate = IDLE;
-             } else {
-                robotstate = INIDLE;
-             }
-        }
+        // if(operatorController.getYButtonPressed()) {
+        //      if(robotstate == INIDLE) {
+        //         robotstate = IDLE;
+        //      } else {
+        //         robotstate = INIDLE;
+        //      }
+        // }
         // REVERSE PASS
         if(operatorController.getXButtonPressed()) {
             if(robotstate == REVERSE_PASS) {
@@ -113,16 +113,7 @@ public class Manager {
         // }
 
         // INTAKING 
-        if (operatorController.getRightTriggerAxis() > 0.1) {
-            if(robotstate == IDLE) {
-                robotstate = INTAKING;
-                return;
-            } else if(robotstate == INTAKING) {
-                robotstate = IDLE;
-                return;
-            }
 
-        } 
 
     
 
@@ -134,19 +125,19 @@ public class Manager {
         } 
 
         
-        if (operatorController.getLeftTriggerAxis() > 0.1 || operatorController.getRightTriggerAxis() > 0.1) {
-            robotstate = CLIMBIN;
-        }
-        if (robotstate
-             == CLIMBIN) {
-            if (operatorController.getLeftTriggerAxis() > 0.1) {
-                climber.setSpeed(-1);
-            } else if (operatorController.getRightTriggerAxis() > 0.1) {
-                climber.setSpeed(1);
-            } else {
-                climber.setSpeed(0);
-            }
-        }        
+        // if (operatorController.getLeftTriggerAxis() > 0.1 || operatorController.getRightTriggerAxis() > 0.1) {
+        //     robotstate = CLIMBIN;
+        // }
+        // if (robotstate
+        //      == CLIMBIN) {
+        //     if (operatorController.getLeftTriggerAxis() > 0.1) {
+        //         climber.setSpeed(-1);
+        //     } else if (operatorController.getRightTriggerAxis() > 0.1) {
+        //         climber.setSpeed(1);
+        //     } else {
+        //         climber.setSpeed(0);
+        //     }
+        // }        
     }
 
     public ManagerStates getState() {

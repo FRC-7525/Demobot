@@ -6,17 +6,17 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 
 public enum IntakeStates {
-	IDLE("IDLE", OFF_WHEEL_SPEED, IN_ANGLE),
-	INTAKING("INTAKING", INTAKING_WHEEL_SPEED, OUT_ANGLE),
-	INTAKING_OUT("INTAKINGNOROLLER", OFF_WHEEL_SPEED, OUT_ANGLE);
+	IDLE("IDLE", IN_ANGLE),
+	INTAKING("INTAKING", OUT_ANGLE),
+	INTAKING_OUT("INTAKINGNOROLLER", OUT_ANGLE);
 
 	String stateString;
-	AngularVelocity wheelSpeed;
+
 	Angle targetAngle;
 
-	private IntakeStates(String stateString, AngularVelocity wheelSpeed, Angle targetAngle) {
+	private IntakeStates(String stateString, Angle targetAngle) {
 		this.stateString = stateString;
-		this.wheelSpeed = wheelSpeed;
+
 		this.targetAngle = targetAngle;
 	}
 
@@ -24,9 +24,7 @@ public enum IntakeStates {
 		return stateString;
 	}
 
-	public AngularVelocity getWheelSpeed() {
-		return wheelSpeed;
-	}
+
 
 	public Angle getTargetAngle() {
 		return targetAngle;

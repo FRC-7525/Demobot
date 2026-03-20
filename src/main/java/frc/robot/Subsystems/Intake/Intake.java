@@ -2,6 +2,7 @@ package frc.robot.Subsystems.Intake;
 
 import static edu.wpi.first.units.Units.Degree;
 import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.DegreesPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -48,7 +49,7 @@ public class Intake {
 		// 	setState(IntakeStates.IDLE);
 		// }
 		io.setTargetAngle(currentState.getTargetAngle());
-		io.setWheelSpeed(currentState.getWheelSpeed());
+		io.setWheelSpeed(DegreesPerSecond.of(1));
 		SmartDashboard.putNumber("Intake/Pivot Angle", io.getIntakeAngle());
 		logData();
         if (currentState == IntakeStates.INTAKING) {
@@ -67,7 +68,7 @@ public class Intake {
 
 	private void logData() {
 		SmartDashboard.putString("Intake/CurrentState", currentState.getStateString());
-		SmartDashboard.putNumber("Intake/targetSpeed (RPS)", currentState.getWheelSpeed().in(RotationsPerSecond));
+
 		SmartDashboard.putNumber("Intake/targetAngle (DEG)", currentState.getTargetAngle().in(Degrees));
 		SmartDashboard.putNumber("Intake/Intake DEG", io.getCurrentAngle().in(Degree));
 		SmartDashboard.putNumber("Intake/Intake RPS", io.getCurrentWheelSpeed().in(RotationsPerSecond));
