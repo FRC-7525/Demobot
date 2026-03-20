@@ -51,6 +51,11 @@ public class Intake {
 		io.setWheelSpeed(currentState.getWheelSpeed());
 		SmartDashboard.putNumber("Intake/Pivot Angle", io.getIntakeAngle());
 		logData();
+        if (currentState == IntakeStates.INTAKING) {
+            SmartDashboard.putBoolean("Intake/Roller On", true);
+        } else {
+            SmartDashboard.putBoolean("Intake/Roller On", false);
+        }
 
 	}
 	public void setState(IntakeStates newState) {

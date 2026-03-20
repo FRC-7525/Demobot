@@ -59,7 +59,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("Robot State/isAutonomous", DriverStation.isAutonomous());
 		SmartDashboard.putString("Match Info/Match Type", DriverStation.getMatchType().toString());
 		SmartDashboard.putString("Match Info/Event Name", DriverStation.getEventName());
-		SmartDashboard.putBoolean("Match Info/redHubActive", true);
 		// Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
 
 		SmartDashboard.putBoolean("Shooter/Shoot.On", false);
@@ -77,9 +76,15 @@ public class Robot extends TimedRobot {
 		CommandScheduler.getInstance().run();
 		SmartDashboard.putNumber("Match Info/Time Left in Match", DriverStation.getMatchTime());
 		if (manager.getState() == ManagerStates.INIDLE || manager.getState() == ManagerStates.CLIMBIN || manager.getState() == ManagerStates.CLIMBOUT) {
-            SmartDashboard.putString("Intake/Intake Pivot", "IN");
+            SmartDashboard.putBoolean("Intake/Intake Pivot In", true);
 		} else {
-			SmartDashboard.putString("Intake/Intake Pivot", "OUT");
+			SmartDashboard.putBoolean("Intake/Intake Pivot In", false);
+		}
+
+		if (manager.getState() == ManagerStates.CLIMBIN ||  manager.getState() == ManagerStates.CLIMBOUT) {
+            SmartDashboard.putBoolean("Climber/isRobotInAClimberState", true);
+		} else {
+			SmartDashboard.putBoolean("Climber/isRobotInAClimberState", false);
 		}
 	}
 

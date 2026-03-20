@@ -113,7 +113,7 @@ public class Manager {
         // }
 
         // INTAKING 
-        if (driverController.getXButtonPressed()) {
+        if (operatorController.getRightTriggerAxis() > 0.1) {
             if(robotstate == IDLE) {
                 robotstate = INTAKING;
                 return;
