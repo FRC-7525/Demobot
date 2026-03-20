@@ -7,6 +7,7 @@ package frc.robot;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import java.util.Optional;
 
@@ -40,6 +41,9 @@ public class Robot extends TimedRobot {
 	 */
 
 	public Robot() {
+		DataLogManager.start();
+		DataLogManager.logNetworkTables(true);
+		DataLogManager.logConsoleOutput(true);
 		AutoBuilderStuff.setConfig();
 		DriverStation.silenceJoystickConnectionWarning(true);
 		CommandScheduler.getInstance().unregisterAllSubsystems();
@@ -49,7 +53,7 @@ public class Robot extends TimedRobot {
 		NamedCommands.registerCommand("Shoot", autoCommands.shootFuel());
 		autoChooser = AutoBuilder.buildAutoChooser();
 		SmartDashboard.putData("Auto Chooser", autoChooser);
-
+		drive.zeroGyro();
 		SmartDashboard.putNumber("Match Info/Match Number", DriverStation.getMatchNumber());
 		SmartDashboard.putBoolean("Robot State/isEnabled", DriverStation.isEnabled());
 		SmartDashboard.putBoolean("Robot State/isAutonomous", DriverStation.isAutonomous());
@@ -81,6 +85,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousInit() {
+		drive.zeroGyro();
 		drive.setState(DriveStates.Auto);
 		Command autoCommand = autoChooser.getSelected();
 		if (autoCommand != null) {

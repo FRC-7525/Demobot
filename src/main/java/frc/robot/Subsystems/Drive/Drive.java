@@ -50,13 +50,10 @@ public class Drive extends SubsystemBase {
 		}
 		swerveDrive.setMotorIdleMode(false);
 		SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
-		swerveInputs = SwerveInputStream.of(swerveDrive, () -> DRIVER_CONTROLLER.getLeftY(), () -> DRIVER_CONTROLLER.getLeftX()).withControllerRotationAxis(() -> -DRIVER_CONTROLLER.getRightX()).allianceRelativeControl(true).driveToPoseEnabled(false);
+		swerveInputs = SwerveInputStream.of(swerveDrive, () -> -DRIVER_CONTROLLER.getLeftY(), () -> -DRIVER_CONTROLLER.getLeftX()).withControllerRotationAxis(() -> -DRIVER_CONTROLLER.getRightX()).allianceRelativeControl(true).driveToPoseEnabled(false);
 	}
 
 	public void periodic() {
-		if (state == DriveStates.Auto) {
-			return;
-		}
 		if (fieldRelative) {
 			if (DRIVER_CONTROLLER.getBackButtonPressed()) {
 				fieldRelative = false;
@@ -81,28 +78,13 @@ public class Drive extends SubsystemBase {
 			swerveInputs.scaleTranslation(1);
 			swerveInputs.scaleRotation(1);
 		}
+		// 	swerveDrive.drive(swerveInputs.get());
+		// }
+
+
 			swerveDrive.drive(swerveInputs.get());
 		}
+
 		SmartDashboard.putData(robot);
-	}
-
-	public Pose2d getPose() {
-		return swerveDrive.getPose();
-	}
-
-	public void setPose(Pose2d newPose) {
-		swerveDrive.resetOdometry(newPose);
-	}
-
-	public ChassisSpeeds getRobotRelativeSpeeds() {
-		return swerveDrive.getRobotVelocity();
-	}
-
-	public void drive(ChassisSpeeds speeds) {
-		swerveDrive.drive(speeds);
-	}
-
-	public void setState(DriveStates state) {
-		this.state = state;
 	}
 }
