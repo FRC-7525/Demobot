@@ -73,9 +73,33 @@ public class Drive extends SubsystemBase {
 		// }
 
 
-			swerveDrive.drive(swerveInputs.get());
+			swerveDrive.driveFieldOriented(swerveInputs.get());
+			SmartDashboard.putData(robot);
+			
 		}
+		
+		
 
-		SmartDashboard.putData(robot);
+	
+	}
+		public void zeroGyro() {
+		swerveDrive.resetOdometry(
+			new Pose2d(
+				swerveDrive.getPose().getX(),
+				swerveDrive.getPose().getY(),
+				Rotation2d.fromDegrees(0)
+			)
+		);
+	}
+
+	public void setState(DriveStates auto) {
+		this.state = DriveStates.Auto;
+	}
+
+	public Pose2d getPose() {
+		return swerveDrive.getPose();
+	}
+	public ChassisSpeeds getRobotRelativeSpeeds() {
+		return swerveDrive.getRobotVelocity();
 	}
 }
