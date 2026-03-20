@@ -57,9 +57,9 @@ public class IntakeIOReal implements IntakeIO {
 	@Override
 	public void setTargetAngle(Angle targetAngle) {
 		if (targetAngle.in(Degrees) == 0) {
-			pivotMotor.set(0.09);
+			pivotMotor.set(0.14);
 		} else {
-			pivotMotor.set(-0.09);
+			pivotMotor.set(-0.1);
 		}
 	}
 
