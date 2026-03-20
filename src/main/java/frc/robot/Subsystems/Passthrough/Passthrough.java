@@ -3,8 +3,13 @@ package frc.robot.Subsystems.Passthrough;
 import static frc.robot.Subsystems.Passthrough.PassthroughConstants.*;
 import static frc.robot.Subsystems.Passthrough.PassthroughStates.*;
 
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,6 +33,7 @@ public class Passthrough {
 		state = IDLE;
 		mainmotorcontroller = new PIDController(MOTOR_PROPORTION, MOTOR_INTEGRAL, MOTOR_DERIVATIVE);
 		mainmotor = new SparkMax(MAIN_MOTOR_ID, MotorType.kBrushless);
+		mainmotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 	}
 
 	public void setState(PassthroughStates state) {
@@ -46,6 +52,7 @@ public class Passthrough {
 		} else if (state == PASS) {
 			//mainmotor.set(mainmotorcontroller.calculate(mainmotor.getEncoder().getVelocity(), PASSTHROUGH_MAINMOTOR_RPS * RPS_TO_RPM));
 			mainmotor.set(SPEED);
+			SmartDashboard.putBoolean("Passthrough/On", true);
 		}
 	}
 }

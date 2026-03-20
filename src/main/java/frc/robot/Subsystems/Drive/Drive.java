@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.io.File;
+
+import com.ctre.phoenix6.swerve.jni.SwerveJNI.DriveState;
+
 import swervelib.SwerveDrive;
 import swervelib.SwerveInputStream;
 import swervelib.parser.SwerveParser;
@@ -64,11 +67,17 @@ public class Drive extends SubsystemBase {
 				fieldRelative = true;
 			}
 			if (slow) {
-			if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) slow = false;
+			if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) { 
+				slow = false;
+				SmartDashboard.putBoolean("Drive/Slow Mode", false);
+			}
 			swerveInputs.scaleTranslation(0.33);
 			swerveInputs.scaleRotation(0.33);
 		} else {
-			if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) slow = true;
+			if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) { 
+				slow = true;
+				SmartDashboard.putBoolean("Drive/Slow Mode", true);
+			}
 			swerveInputs.scaleTranslation(1);
 			swerveInputs.scaleRotation(1);
 		}

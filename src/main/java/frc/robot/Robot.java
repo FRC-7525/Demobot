@@ -57,6 +57,13 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putString("Match Info/Event Name", DriverStation.getEventName());
 		SmartDashboard.putBoolean("Match Info/redHubActive", true);
 		// Optional<DriverStation.Alliance> alliance = DriverStation.getAlliance();
+
+		SmartDashboard.putBoolean("Shooter/Shoot.On", false);
+		SmartDashboard.putBoolean("Passthrough/Pass.On", false);
+		SmartDashboard.putBoolean("Climber/Climb.On", false);
+
+		SmartDashboard.putBoolean("Drive/Slow Mode", false);
+
 	}
 
 	@Override
@@ -65,6 +72,11 @@ public class Robot extends TimedRobot {
 		drive.periodic();
 		CommandScheduler.getInstance().run();
 		SmartDashboard.putNumber("Match Info/Time Left in Match", DriverStation.getMatchTime());
+		if (manager.getState() == ManagerStates.INIDLE || manager.getState() == ManagerStates.CLIMBIN || manager.getState() == ManagerStates.CLIMBOUT) {
+            SmartDashboard.putString("Intake/Intake Pivot", "IN");
+		} else {
+			SmartDashboard.putString("Intake/Intake Pivot", "OUT");
+		}
 	}
 
 	@Override
@@ -103,6 +115,7 @@ public class Robot extends TimedRobot {
 			SmartDashboard.putBoolean("Match Info/redHubActive", true);
 			SmartDashboard.putBoolean("Match Info/blueHubActive", true);
 		} else if (DriverStation.getMatchTime() <= 130 & DriverStation.getMatchTime() > 105) {
+
 			if (DriverStation.getGameSpecificMessage().charAt(0) == 'R') {
 				isRedAllianceInactive = true;
 			} else if (DriverStation.getGameSpecificMessage().charAt(0) == 'B') {

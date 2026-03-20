@@ -6,6 +6,7 @@ import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -38,6 +39,8 @@ public class Shooter {
         followerConfig.follow(leaderrightMotor, true);
         followerleftMotor.configure(followerConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
         feedforward = WHEEL_FEEDFORWARD.get();
+        leaderrightMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+        followerleftMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     }
     
     public void setState(ShooterStates state) {
@@ -65,6 +68,7 @@ public class Shooter {
 			//leaderrightMotor.set(IDLE_SPEED_OR_VOLTAGE);
 		} else {
 			leaderrightMotor.setVoltage(motorcontrollerright.calculate(followerleftMotor.getEncoder().getVelocity(), state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR) + feedforward.calculate(state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR));
+            SmartDashboard.putBoolean("Shooter/On", true);
 		}
 	}
 }
