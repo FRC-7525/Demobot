@@ -47,19 +47,20 @@ public class Drive {
 		}
 		swerveDrive.setMotorIdleMode(false);
 		SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
-		swerveInputs = SwerveInputStream.of(swerveDrive, () -> DRIVER_CONTROLLER.getLeftY(), () -> DRIVER_CONTROLLER.getLeftX()).withControllerRotationAxis(() -> -DRIVER_CONTROLLER.getRightX()).allianceRelativeControl(true).driveToPoseEnabled(false);
+		swerveInputs = SwerveInputStream.of(swerveDrive, () -> -DRIVER_CONTROLLER.getLeftY(), () -> -DRIVER_CONTROLLER.getLeftX()).withControllerRotationAxis(() -> -DRIVER_CONTROLLER.getRightX()).allianceRelativeControl(true).driveToPoseEnabled(false);
 	}
 
 	public void periodic() {
-		if (fieldRelative) {
-			if (DRIVER_CONTROLLER.getBackButtonPressed()) {
-				fieldRelative = false;
-			}
-			swerveDrive.driveFieldOriented(swerveInputs.get());
-		} else {
-			if (DRIVER_CONTROLLER.getBackButtonPressed()) {
-				fieldRelative = true;
-			}
+		// if (fieldRelative) {
+		// 	if (DRIVER_CONTROLLER.getBackButtonPressed()) {
+		// 		fieldRelative = false;
+		// 	}
+		// 	swerveDrive.driveFieldOriented(swerveInputs.get());
+		// } else {
+		// 	if (DRIVER_CONTROLLER.getBackButtonPressed()) {
+		// 		fieldRelative = true;
+		// 	}
+		// }
 			if (slow) {
 			if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) slow = false;
 			swerveInputs.scaleTranslation(0.33);
@@ -71,9 +72,11 @@ public class Drive {
 		}
 
 
-			swerveDrive.drive(swerveInputs.get());
+			swerveDrive.driveFieldOriented(swerveInputs.get());
+			SmartDashboard.putData(robot);
 		}
 
-		SmartDashboard.putData(robot);
-	}
+		
+
+		
 }
