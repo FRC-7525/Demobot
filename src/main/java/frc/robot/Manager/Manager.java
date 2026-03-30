@@ -41,7 +41,7 @@ public class Manager {
 		return instance;
 	}
 
-    public void periodic() {
+    public void periodic() {  
         intake.setState(getState().getIntakeState());
         passthrough.setState(getState().getPassthroughState());
         shooter.setState(getState().getShooterState());
@@ -57,8 +57,24 @@ public class Manager {
 
         SmartDashboard.putString("Manager State", robotstate.getStateString());
 
-        if (robotstate == WINDUP && shooter.atSpeed()) {
-            robotstate = FIXEDSHOT;
+        switch (robotstate)) {
+            case IDLE:
+                robotstate = IDLE;
+
+                break;
+        
+            case INTAKING:
+
+                break;
+            case REVERSE_PASS:
+                break;
+            case WINDUP:
+                break;
+            case FIXEDSHOT:
+                break;
+            case INIDLE:
+                break;
+                
         }
 
         // IDLE All
