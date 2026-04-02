@@ -87,11 +87,6 @@ public class Manager {
                 if (operatorController.getRightTriggerAxis() > 0.1) {
                     robotstate = CLIMBOUT;
                 }
-
-                if (driverController.getAButtonPressed()) {
-                    robotstate = IDLE;
-                }
-
                 break;
         
             case INTAKING:
