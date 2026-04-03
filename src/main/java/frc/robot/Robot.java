@@ -75,7 +75,7 @@ public class Robot extends TimedRobot {
 		drive.periodic();
 		CommandScheduler.getInstance().run();
 		SmartDashboard.putNumber("Match Info/Time Left in Match", DriverStation.getMatchTime());
-		if (manager.getState() == ManagerStates.INIDLE || manager.getState() == ManagerStates.CLIMBIN || manager.getState() == ManagerStates.CLIMBOUT) {
+		if (manager.isIntakeOut()) {
             SmartDashboard.putBoolean("Intake/Intake Pivot In", true);
 		} else {
 			SmartDashboard.putBoolean("Intake/Intake Pivot In", false);
