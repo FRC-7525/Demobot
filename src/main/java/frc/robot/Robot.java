@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
 		DriverStation.silenceJoystickConnectionWarning(true);
 		CommandScheduler.getInstance().unregisterAllSubsystems();
 		NamedCommands.registerCommand("Deploy Intake", autoCommands.intakeDeploy());
-		NamedCommands.registerCommand("IDLE", autoCommands.returnToIdle());
+		// NamedCommands.registerCommand("IDLE", autoCommands.returnToIdle());
 		NamedCommands.registerCommand("WindUp", autoCommands.startWindingUp());
 		NamedCommands.registerCommand("Shoot", autoCommands.shootFuel());
 		autoChooser = AutoBuilder.buildAutoChooser();

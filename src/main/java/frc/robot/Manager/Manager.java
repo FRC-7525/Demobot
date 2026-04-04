@@ -63,12 +63,9 @@ public class Manager {
             case IDLE:
                 robotstate = IDLE;
 
-                if (operatorController.getBButtonPressed()) {
-                    // robotstate = INIDLE;
-                }
-
                 if (driverController.getYButtonPressed()) {
                     robotstate = INTAKING;
+
                 }
 
                 if (operatorController.getXButtonPressed()) {
@@ -136,6 +133,8 @@ public class Manager {
         if (operatorController.getBButtonPressed()) {
             intakeOut = !intakeOut;
         }
+
+        SmartDashboard.putBoolean("Intake Out", intakeOut);
     }
 
     public ManagerStates getState() {

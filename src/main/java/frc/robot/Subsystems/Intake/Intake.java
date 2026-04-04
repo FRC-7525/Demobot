@@ -44,6 +44,10 @@ public class Intake {
 		return instance;
 	}
 
+	// public IntakeIO getIO() {
+    //     return io;
+    // }
+
 
 	public void periodic() {
 		// if (controller.getAButtonPressed()) {
