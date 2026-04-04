@@ -66,6 +66,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("Climber/Climb.On", false);
 
 		SmartDashboard.putBoolean("Drive/Slow Mode", false);
+		SmartDashboard.putBoolean("Intake/intakeOn",false);
 
 	}
 
@@ -76,9 +77,9 @@ public class Robot extends TimedRobot {
 		CommandScheduler.getInstance().run();
 		SmartDashboard.putNumber("Match Info/Time Left in Match", DriverStation.getMatchTime());
 		if (manager.isIntakeOut()) {
-            SmartDashboard.putBoolean("Intake/Intake Pivot In", true);
+            SmartDashboard.putBoolean("Intake/IntakeOut", true);
 		} else {
-			SmartDashboard.putBoolean("Intake/Intake Pivot In", false);
+			SmartDashboard.putBoolean("Intake/IntakeOut", false);
 		}
 
 		if (manager.getState() == ManagerStates.CLIMBIN ||  manager.getState() == ManagerStates.CLIMBOUT) {

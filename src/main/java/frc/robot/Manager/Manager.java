@@ -63,10 +63,10 @@ public class Manager {
             case IDLE:
                 robotstate = IDLE;
 
-                if (driverController.getYButtonPressed()) {
-                    robotstate = INTAKING;
+                // if (driverController.getYButtonPressed()) {
+                //     robotstate = INTAKING;
 
-                }
+                // }
 
                 if (operatorController.getXButtonPressed()) {
                     robotstate = REVERSE_PASS;
@@ -85,12 +85,12 @@ public class Manager {
                 }
                 break;
         
-            case INTAKING:
-                if (driverController.getYButtonPressed()) {
-                    robotstate = IDLE;
-                }
+            // case INTAKING:
+            //     if (driverController.getYButtonPressed()) {
+            //         robotstate = IDLE;
+            //     }
 
-                break;
+            //     break;
             case REVERSE_PASS:
                 if (operatorController.getXButtonPressed()) {
                     robotstate = IDLE;
@@ -134,7 +134,7 @@ public class Manager {
             intakeOut = !intakeOut;
         }
 
-        SmartDashboard.putBoolean("Intake Out", intakeOut);
+        // SmartDashboard.putBoolean("Intake/Intake Out", intakeOut);
     }
 
     public ManagerStates getState() {
