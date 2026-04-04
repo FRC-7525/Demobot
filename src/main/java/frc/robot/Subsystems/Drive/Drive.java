@@ -10,11 +10,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.Robot;
 import java.io.File;
-
-import com.ctre.phoenix6.swerve.jni.SwerveJNI.DriveState;
-
 import swervelib.SwerveDrive;
 import swervelib.SwerveInputStream;
 import swervelib.parser.SwerveParser;
@@ -27,9 +24,8 @@ public class Drive extends SubsystemBase {
 	private SwerveInputStream swerveInputs;
 	private SwerveDrive swerveDrive;
 	public final XboxController DRIVER_CONTROLLER;
-	public final XboxController operatorController;
+	public final XboxController OPERATOR_CONTROLLER;
 	private Field2d robot;
-	private boolean fieldRelative;
 	private boolean slow;
 	private double invert;
 
@@ -43,7 +39,8 @@ public class Drive extends SubsystemBase {
 	private Drive() {
 		robot = new Field2d();
 		DRIVER_CONTROLLER = new XboxController(0);
-		operatorController = new XboxController(1);
+		OPERATOR_CONTROLLER = new XboxController(1);
+		invert = 1;
 
 		try {
 			File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
@@ -51,30 +48,14 @@ public class Drive extends SubsystemBase {
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to create SwerveDrive", e);
 		}
-		invert = 1;
 		swerveDrive.setMotorIdleMode(false);
 		SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
-		swerveInputs = SwerveInputStream.of(swerveDrive, () -> invert * -DRIVER_CONTROLLER.getLeftY(), () -> invert * -DRIVER_CONTROLLER.getLeftX()).withControllerRotationAxis(() -> -DRIVER_CONTROLLER.getRightX()).allianceRelativeControl(true).driveToPoseEnabled(false);
+		state = DriveStates.Manual;
+		swerveInputs = SwerveInputStream.of(swerveDrive, () -> invert * -DRIVER_CONTROLLER.getLeftY(), () -> invert * -DRIVER_CONTROLLER.getLeftX()).withControllerRotationAxis(() -> -DRIVER_CONTROLLER.getRightX()).allianceRelativeControl(true);
 	}
 
 	public void periodic() {
-		// if (fieldRelative) {
-		// 	if (DRIVER_CONTROLLER.getBackButtonPressed()) {
-		// 		fieldRelative = false;
-		// 	}
-		// 	swerveDrive.driveFieldOriented(swerveInputs.get());
-		// } else {
-		// 	if (DRIVER_CONTROLLER.getBackButtonPressed()) {
-		// 		fieldRelative = true;
-		// 	}
-			if (operatorController.getPOV() == 0) {
-				invert= -1;
-			} 
-			if (operatorController.getPOV() == 180) {
-				invert = 1;
-			}
-
-			if (slow) {
+		if (slow) {
 			if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) { 
 				slow = false;
 				SmartDashboard.putBoolean("Drive/Slow Mode", false);
@@ -89,29 +70,29 @@ public class Drive extends SubsystemBase {
 			swerveInputs.scaleTranslation(1);
 			swerveInputs.scaleRotation(1);
 		}
-		// 	swerveDrive.drive(swerveInputs.get());
-		// }
-
-
-			swerveDrive.driveFieldOriented(swerveInputs.get());
-			SmartDashboard.putData(robot);
-			if (DRIVER_CONTROLLER.getBButtonPressed()) {
-				zeroGyro();
-			}
-
-			SmartDashboard.putData(robot);
+		swerveDrive.driveFieldOriented(swerveInputs.get());
+		SmartDashboard.putData(robot);
+		if (DRIVER_CONTROLLER.getBButtonPressed()) {
+			zeroGyro();
 		}
-		
-		
-
-	
+		if (OPERATOR_CONTROLLER.getPOV() == 0) {
+			invert = invert == -1 ? 1 : -1;
+		}
+		SmartDashboard.putData(robot);
+	}
 
 	public void zeroGyro() {
 		swerveDrive.zeroGyro();
+		if (Robot.isRedAlliance) {
+			swerveDrive.resetOdometry(swerveDrive.getPose().transformBy(RED_TRANSFORM));
+		}
 	}
 
 	public void setState(DriveStates auto) {
 		this.state = DriveStates.Auto;
+	}
+	public DriveStates getDriveState() {
+		return state;
 	}
 
 	public Pose2d getPose() {

@@ -9,8 +9,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
-import java.util.Optional;
-
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,6 +20,7 @@ import frc.robot.AitanAndJamesAreTheBestForSureAutos.AutoCommands;
 import frc.robot.Manager.Manager;
 import frc.robot.Manager.ManagerStates;
 import frc.robot.Subsystems.Drive.Drive;
+import frc.robot.Subsystems.Drive.DriveConstants;
 import frc.robot.Subsystems.Drive.DriveStates;
 
 /**
@@ -29,6 +29,7 @@ import frc.robot.Subsystems.Drive.DriveStates;
  * this project, you must also update the Main.java file in the project.
  */
 public class Robot extends TimedRobot {
+	public static boolean isRedAlliance = false;
     private final Manager manager = Manager.getInstance();
 	private final Drive drive = Drive.getInstance();
 	private final AutoCommands autoCommands = AutoCommands.getInstance(); 
@@ -156,7 +157,15 @@ public class Robot extends TimedRobot {
 	}
 
 	@Override
-	public void disabledPeriodic() {}
+	public void disabledPeriodic() {
+		isRedAlliance = DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red;
+	}
+
+	@Override
+	public void disabledExit() {
+		isRedAlliance = DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red;
+		drive.setPose(isRedAlliance ? DriveConstants.RED_START : DriveConstants.BLUE_START);
+	}
 
 	@Override
 	public void testInit() {}

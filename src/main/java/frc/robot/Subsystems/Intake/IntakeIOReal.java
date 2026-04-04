@@ -11,7 +11,6 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkMax;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.XboxController;
@@ -23,15 +22,12 @@ public class IntakeIOReal implements IntakeIO {
 
 	private SparkMax pivotMotor;
 	private SparkMax wheelMotor;
-	private PIDController pivotController;
-	private PIDController wheelSpeedController;
 	private XboxController operatorController;
 
 	public IntakeIOReal() {
 		this.pivotMotor = new SparkMax(PIVOT_MOTOR_ID, MotorType.kBrushless);
+		this.pivotMotor.configure(new SparkMaxConfig().smartCurrentLimit(25), ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 		this.wheelMotor = new SparkMax(WHEEL_MOTOR_ID, MotorType.kBrushless);
-		this.pivotController = IntakeConstants.PIVOT_CONTROLLER.get();
-		this.wheelSpeedController = IntakeConstants.WHEEL_CONTROLLER.get();
 		wheelMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 
 		operatorController = new XboxController(1);
