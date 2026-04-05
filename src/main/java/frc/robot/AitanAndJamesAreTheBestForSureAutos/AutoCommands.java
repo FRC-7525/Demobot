@@ -6,8 +6,6 @@ import frc.robot.Manager.Manager;
 import frc.robot.Manager.ManagerStates;
 import frc.robot.Subsystems.Drive.Drive;
 import frc.robot.Subsystems.Drive.DriveStates;
-import frc.robot.Subsystems.Intake.Intake;
-import frc.robot.Subsystems.Intake.IntakeIO;
 
 public class AutoCommands {
     private static AutoCommands instance;
@@ -22,12 +20,12 @@ public class AutoCommands {
 	public AutoCommands() {}
 
 	public Command intakeDeploy() {
-		return new InstantCommand(() -> {Manager.getInstance().setState(ManagerStates.IDLE);});
+		return new InstantCommand(() -> {Manager.getInstance().setIntakeOut(true);});
 	}
 
-	// public Command returnToIdle() {
-	// 	return new InstantCommand(() -> {Intake.getInstance().getIO().setTargetAngle();});
-	// }
+	public Command returnToIdle() {
+		return new InstantCommand(() -> {Manager.getInstance().setState(ManagerStates.IDLE); Drive.getInstance().setState(DriveStates.Manual);});
+	}
 
 	public Command startWindingUp() {
 		return new InstantCommand(() -> Manager.getInstance().setState(ManagerStates.WINDUP_AUTO));
