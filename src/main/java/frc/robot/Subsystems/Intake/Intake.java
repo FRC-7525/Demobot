@@ -77,6 +77,9 @@ public class Intake {
 		}
 
 	}
+	public void setIntakeOn(boolean intakeOn) {
+		io.setIntakeOn(intakeOn);
+	}
 	// public void setState(IntakeStates newState) {
 	// 	currentState = newState;
 	// }

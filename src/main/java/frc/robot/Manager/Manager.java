@@ -128,9 +128,12 @@ public class Manager {
 
         if (driverController.getAButtonPressed() || operatorController.getStartButtonPressed()) {
             robotstate = IDLE;
+            intake.setIntakeOn(false);
+            intakeOut = false;
         }
 
         if (operatorController.getBButtonPressed()) {
+            intake.setIntakeOn(false);
             intakeOut = !intakeOut;
         }
 

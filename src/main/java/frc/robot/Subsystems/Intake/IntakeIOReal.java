@@ -15,10 +15,12 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Manager.Manager;
 
 
 public class IntakeIOReal implements IntakeIO {
 	private boolean intakeON;
+	private boolean intakeReverse;
 
 	private SparkMax pivotMotor;
 	private SparkMax wheelMotor;
@@ -35,7 +37,7 @@ public class IntakeIOReal implements IntakeIO {
 
 	@Override
 	public void setWheelSpeed(AngularVelocity wheelSpeed) {
-		if (operatorController.getRightBumperButtonPressed()) {
+		if (operatorController.getRightBumperButtonPressed() && Manager.getInstance().isIntakeOut()) {
 			if (intakeON == true) {
 				intakeON = false;
 				SmartDashboard.putBoolean("Intake/intakeOn",intakeON);
@@ -48,8 +50,16 @@ public class IntakeIOReal implements IntakeIO {
 		} 
 		if (intakeON) {
 			wheelMotor.set(1);
+		}  else if (intakeReverse) {
+			wheelMotor.set(-1);
 		} else {
 			wheelMotor.set(0);
+		}
+
+		if (operatorController.getXButton() && Manager.getInstance().isIntakeOut()) {
+			intakeReverse = true;
+		} else {
+			intakeReverse = false;
 		}
 	}
 
@@ -86,4 +96,10 @@ public class IntakeIOReal implements IntakeIO {
 	public double getIntakeAngle() {
 		return getCurrentAngle().in(Degrees);
 	}
+
+	@Override
+	public void setIntakeOn(boolean intakeOn) {
+		this.intakeON = intakeOn;
+	}
 }
+
