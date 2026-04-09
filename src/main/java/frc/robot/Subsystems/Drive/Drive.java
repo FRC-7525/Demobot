@@ -56,14 +56,14 @@ public class Drive extends SubsystemBase {
 
 	public void periodic() {
 		if (slow) {
-			if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) { 
+			if (DRIVER_CONTROLLER.getAButtonPressed()) { 
 				slow = false;
 				SmartDashboard.putBoolean("Drive/Slow Mode", false);
 			}
 			swerveInputs.scaleTranslation(0.33);
 			swerveInputs.scaleRotation(0.33);
 		} else {
-			if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) { 
+			if (DRIVER_CONTROLLER.getAButtonPressed()) { 
 				slow = true;
 				SmartDashboard.putBoolean("Drive/Slow Mode", true);
 			}

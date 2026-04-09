@@ -25,7 +25,7 @@ public class AutoBuilderStuff extends SubsystemBase {
                     new PIDConstants(0, 0.0, 0.0)
                 ),
                 config, // The robot configuration
-                () -> {
+                () -> { 
                 var alliance = DriverStation.getAlliance();
                 if (alliance.isPresent()) {
                     return alliance.get() == DriverStation.Alliance.Red;

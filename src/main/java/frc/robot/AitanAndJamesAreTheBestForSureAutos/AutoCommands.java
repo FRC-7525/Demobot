@@ -29,6 +29,8 @@ public class AutoCommands {
 	// 	return new InstantCommand(() -> {Intake.getInstance().getIO().setTargetAngle();});
 	// }
 
+
+	
 	public Command startWindingUp() {
 		return new InstantCommand(() -> Manager.getInstance().setState(ManagerStates.WINDUP_AUTO));
 	}

@@ -61,9 +61,8 @@ public class Manager {
 
         switch (robotstate) {
             case IDLE:
-                robotstate = IDLE;
 
-                // if (driverController.getYButtonPressed()) {
+                // if (yS.getYButtonPressed()) {
                 //     robotstate = INTAKING;
 
                 // }
@@ -97,7 +96,7 @@ public class Manager {
                 }
                 break;
             case WINDUP:
-                if (driverController.getRightBumperButtonPressed()) {
+                if (driverController.getRightBumperButtonPressed() || shooter.atSpeed()) {
                     robotstate = FIXEDSHOT;
                 }
                 break;
@@ -112,11 +111,15 @@ public class Manager {
             //     }
             //     break;
             case CLIMBIN:
+                intakeOut = false;
+                climber.setSpeed(-0.15);
                 if (operatorController.getLeftTriggerAxis() < 0.1) {
                     robotstate = IDLE;
                 }
                 break;
             case CLIMBOUT:
+                intakeOut = false;
+                climber.setSpeed(0.15);
                 if (operatorController.getRightTriggerAxis() < 0.1) {
                     robotstate = IDLE;
                 }
@@ -130,7 +133,7 @@ public class Manager {
             robotstate = IDLE;
         }
 
-        if (operatorController.getBButtonPressed()) {
+        if (operatorController.getBButtonPressed() || driverController.getYButtonPressed()) {
             intakeOut = !intakeOut;
         }
 
