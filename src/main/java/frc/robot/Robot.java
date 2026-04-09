@@ -45,13 +45,13 @@ public class Robot extends TimedRobot {
 		DataLogManager.start();
 		DataLogManager.logNetworkTables(true);
 		DataLogManager.logConsoleOutput(true);
-		AutoBuilderStuff.setConfig();
 		DriverStation.silenceJoystickConnectionWarning(true);
 		CommandScheduler.getInstance().unregisterAllSubsystems();
 		NamedCommands.registerCommand("Deploy Intake", autoCommands.intakeDeploy());
 		//NamedCommands.registerCommand("IDLE", autoCommands.returnToIdle());
 		NamedCommands.registerCommand("WindUp", autoCommands.startWindingUp());
 		NamedCommands.registerCommand("Shoot", autoCommands.shootFuel());
+		AutoBuilderStuff.setConfig();
 		autoChooser = AutoBuilder.buildAutoChooser();
 		SmartDashboard.putData("Auto Chooser", autoChooser);
 		drive.zeroGyro();

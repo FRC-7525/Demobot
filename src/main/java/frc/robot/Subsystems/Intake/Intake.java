@@ -38,7 +38,8 @@ public class Intake {
 		if (instance == null) {
 			switch (GlobalConstants.ROBOT_MODE) {
 				case REAL -> instance = new Intake(new IntakeIOReal());
-				case SIM -> instance = new Intake(new IntakeIOSim());
+				default -> instance = new Intake(new IntakeIOReal());
+				// case SIM -> instance = new Intake(new IntakeIOSim());
 			}
 		}
 		return instance;
@@ -76,6 +77,9 @@ public class Intake {
 			targetAngle = IN_ANGLE;
 		}
 
+	}
+	public void setIntakeOn(boolean intakeOn) {
+		io.setIntakeOn(intakeOn);
 	}
 	// public void setState(IntakeStates newState) {
 	// 	currentState = newState;

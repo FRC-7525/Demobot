@@ -125,12 +125,14 @@ public class Manager {
                 }
                 break;
             default:
-                robotstate = IDLE;
+                //robotstate = IDLE;
                 break;
         } 
 
         if (driverController.getAButtonPressed() || operatorController.getStartButtonPressed()) {
             robotstate = IDLE;
+            intake.setIntakeOn(false);
+            intakeOut = false;
         }
 
         if (operatorController.getBButtonPressed() || driverController.getYButtonPressed()) {
@@ -146,5 +148,8 @@ public class Manager {
 
     public void setState(ManagerStates newState) {
         robotstate = newState;
+    }
+    public void setIntakeOut(boolean isOut) {
+        intakeOut = isOut;
     }
 }
