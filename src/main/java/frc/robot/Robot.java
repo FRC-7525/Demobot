@@ -8,7 +8,6 @@ import com.ctre.phoenix6.SignalLogger;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.revrobotics.util.StatusLogger;
-
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -31,22 +30,24 @@ import frc.robot.Subsystems.Drive.DriveStates;
  * this project, you must also update the Main.java file in the project.
  */
 public class Robot extends TimedRobot {
+
 	public static boolean isRedAlliance = false;
-    private final Manager manager = Manager.getInstance();
+	private final Manager manager = Manager.getInstance();
 	private final Drive drive = Drive.getInstance();
-	private final AutoCommands autoCommands = AutoCommands.getInstance(); 
+	private final AutoCommands autoCommands = AutoCommands.getInstance();
 	private SendableChooser<Command> autoChooser;
 
 	public static boolean isRedAllianceInactive;
+
 	/**
 	 * This function is run when the robot is first started up and should be used for any
 	 * initialization code.
 	 */
 
 	public Robot() {
-	// 	DataLogManager.start();
-	// 	DataLogManager.logNetworkTables(true);
-	// 	DataLogManager.logConsoleOutput(true);
+		// 	DataLogManager.start();
+		// 	DataLogManager.logNetworkTables(true);
+		// 	DataLogManager.logConsoleOutput(true);
 		SignalLogger.enableAutoLogging(false);
 		StatusLogger.disableAutoLogging();
 		DriverStation.silenceJoystickConnectionWarning(true);
@@ -71,8 +72,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putBoolean("Climber/Climb.On", false);
 
 		SmartDashboard.putBoolean("Drive/Slow Mode", false);
-		SmartDashboard.putBoolean("Intake/intakeOn",false);
-
+		SmartDashboard.putBoolean("Intake/intakeOn", false);
 	}
 
 	@Override
@@ -82,13 +82,13 @@ public class Robot extends TimedRobot {
 		CommandScheduler.getInstance().run();
 		SmartDashboard.putNumber("Match Info/Time Left in Match", DriverStation.getMatchTime());
 		if (manager.isIntakeOut()) {
-            SmartDashboard.putBoolean("Intake/IntakeOut", true);
+			SmartDashboard.putBoolean("Intake/IntakeOut", true);
 		} else {
 			SmartDashboard.putBoolean("Intake/IntakeOut", false);
 		}
 
-		if (manager.getState() == ManagerStates.CLIMBIN ||  manager.getState() == ManagerStates.CLIMBOUT) {
-            SmartDashboard.putBoolean("Climber/isRobotInAClimberState", true);
+		if (manager.getState() == ManagerStates.CLIMBIN || manager.getState() == ManagerStates.CLIMBOUT) {
+			SmartDashboard.putBoolean("Climber/isRobotInAClimberState", true);
 		} else {
 			SmartDashboard.putBoolean("Climber/isRobotInAClimberState", false);
 		}
@@ -101,7 +101,7 @@ public class Robot extends TimedRobot {
 		Command autoCommand = autoChooser.getSelected();
 		if (autoCommand != null) {
 			CommandScheduler.getInstance().schedule(autoCommand);
-		}	
+		}
 		SmartDashboard.putBoolean("Robot State/isAutonomous", DriverStation.isAutonomous());
 		SmartDashboard.putBoolean("Robot State/isEnabled", DriverStation.isEnabled());
 		SmartDashboard.putString("Match Info/Match Phase", "Autonomous");

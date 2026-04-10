@@ -46,9 +46,8 @@ public class Intake {
 	}
 
 	// public IntakeIO getIO() {
-    //     return io;
-    // }
-
+	//     return io;
+	// }
 
 	public void periodic() {
 		// if (controller.getAButtonPressed()) {
@@ -65,28 +64,26 @@ public class Intake {
 		io.setWheelSpeed(DegreesPerSecond.of(1));
 		SmartDashboard.putNumber("Intake/Pivot Angle", io.getIntakeAngle());
 		logData();
-        // if (currentState == IntakeStates.INTAKING) {
-        //     SmartDashboard.putBoolean("Intake/Roller On", true);
-        // } else {
-        //     SmartDashboard.putBoolean("Intake/Roller On", false);
-        // }
+		// if (currentState == IntakeStates.INTAKING) {
+		//     SmartDashboard.putBoolean("Intake/Roller On", true);
+		// } else {
+		//     SmartDashboard.putBoolean("Intake/Roller On", false);
+		// }
 
 		if (Manager.getInstance().isIntakeOut()) {
 			targetAngle = OUT_ANGLE;
 		} else {
 			targetAngle = IN_ANGLE;
 		}
-
 	}
+
 	public void setIntakeOn(boolean intakeOn) {
 		io.setIntakeOn(intakeOn);
 	}
+
 	// public void setState(IntakeStates newState) {
 	// 	currentState = newState;
 	// }
-
-
-
 
 	private void logData() {
 		//SmartDashboard.putString("Intake/CurrentState", currentState.getStateString());
