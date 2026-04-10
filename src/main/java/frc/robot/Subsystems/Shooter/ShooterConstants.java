@@ -4,28 +4,37 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.GlobalConstants;
 import java.util.function.Supplier;
 
 public final class ShooterConstants {
 
 	public static final AngularVelocity IDLE_RPS = Units.RotationsPerSecond.of(0);
-	public static final AngularVelocity FIXED_SHOOT_RPS = Units.RotationsPerSecond.of(80);
+	public static final AngularVelocity FIXED_SHOOT_RPS = Units.RotationsPerSecond.of(73);
 	public static final AngularVelocity REVERSE_SHOOT_RPS = Units.RotationsPerSecond.of(-75);
 
 	public static final int LEFT_MOTOR_ID = 13;
 	public static final int RIGHT_MOTOR_ID = 12;
 
+	public static final double KP = SmartDashboard.getNumber("KP", 0.0);
+	public static final double KI = SmartDashboard.getNumber("KI", 0.0);
+	public static final double KD = SmartDashboard.getNumber("KD", 0.0);
+
+
+
 	public static final Supplier<PIDController> WHEEL_PID = () ->
 		switch (GlobalConstants.ROBOT_MODE) {
-			case REAL -> new PIDController(0.00067, 0, 0);
+			case REAL -> new PIDController(KP, KI, KD);
 			case SIM -> new PIDController(1, 0, 0.01);
 			// default -> new PIDController(20, 1, 0);
 		};
 
 	public static final Supplier<SimpleMotorFeedforward> WHEEL_FEEDFORWARD = () ->
 		switch (GlobalConstants.ROBOT_MODE) {
+			//case REAL -> new SimpleMotorFeedforward(0.26, 0.00207, 0);
 			case REAL -> new SimpleMotorFeedforward(0.26, 0.00207, 0);
+
 			case SIM -> new SimpleMotorFeedforward(0, 0.001, 0);
 			// default -> new SimpleMotorFeedforward(0, 0.1, 0);
 		};

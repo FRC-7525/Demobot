@@ -9,8 +9,9 @@ import frc.robot.Subsystems.Shooter.ShooterStates;
 public enum ManagerStates {
     // climber should have intake in 
     CLIMBOUT(ClimberStates.GOINGOUT, PassthroughStates.IDLE, ShooterStates.IDLE, "CLIMBOUT"),
-    CLIMBIN(ClimberStates.COMINGIN, PassthroughStates.IDLE, ShooterStates.IDLE, "CLIMBIN"),
-    // INIDLE(ClimberStates.IDLE, PassthroughStates.IDLE, ShooterStates.IDLE, "REALLYIDLE"),
+    CLIMBIN(ClimberStates.COMINGIN, 
+    PassthroughStates.IDLE, ShooterStates.IDLE, "CLIMBIN"),
+    INIDLE(ClimberStates.GOINGOUT, PassthroughStates.IDLE, ShooterStates.IDLE, "REALLYIDLE"),
     IDLE(ClimberStates.IDLE, PassthroughStates.IDLE, ShooterStates.IDLE, "IDLE"),
     INTAKING(ClimberStates.IDLE, PassthroughStates.IDLE, ShooterStates.IDLE, "INTAKING"),
     // DYNAMICSHOT(ClimberStates.IDLE, In

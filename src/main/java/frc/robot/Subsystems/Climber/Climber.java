@@ -29,7 +29,7 @@ public class Climber {
 		state = ClimberStates.IDLE;
 		driverRequestSpeed = 0;
 		motor = new SparkMax(11, MotorType.kBrushless);
-		motor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+		motor.configure(new SparkMaxConfig().idleMode(IdleMode.kBrake), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 	}
 
 	public void setState(ClimberStates state) {

@@ -4,8 +4,10 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.SignalLogger;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.revrobotics.util.StatusLogger;
 
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -42,13 +44,15 @@ public class Robot extends TimedRobot {
 	 */
 
 	public Robot() {
-		DataLogManager.start();
-		DataLogManager.logNetworkTables(true);
-		DataLogManager.logConsoleOutput(true);
+	// 	DataLogManager.start();
+	// 	DataLogManager.logNetworkTables(true);
+	// 	DataLogManager.logConsoleOutput(true);
+		SignalLogger.enableAutoLogging(false);
+		StatusLogger.disableAutoLogging();
 		DriverStation.silenceJoystickConnectionWarning(true);
 		CommandScheduler.getInstance().unregisterAllSubsystems();
 		NamedCommands.registerCommand("Deploy Intake", autoCommands.intakeDeploy());
-		//NamedCommands.registerCommand("IDLE", autoCommands.returnToIdle());
+		NamedCommands.registerCommand("IDLE", autoCommands.returnToIdle());
 		NamedCommands.registerCommand("WindUp", autoCommands.startWindingUp());
 		NamedCommands.registerCommand("Shoot", autoCommands.shootFuel());
 		AutoBuilderStuff.setConfig();
@@ -123,31 +127,31 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopPeriodic() {
-		if (DriverStation.getMatchTime() <= 140 & DriverStation.getMatchTime() > 130) {
-			SmartDashboard.putBoolean("Match Info/redHubActive", true);
-			SmartDashboard.putBoolean("Match Info/blueHubActive", true);
-		} else if (DriverStation.getMatchTime() <= 130 & DriverStation.getMatchTime() > 105) {
-
-			if (DriverStation.getGameSpecificMessage().charAt(0) == 'R') {
-				isRedAllianceInactive = true;
-			} else if (DriverStation.getGameSpecificMessage().charAt(0) == 'B') {
-				isRedAllianceInactive = false;
-			}
-			SmartDashboard.putBoolean("Match Info/redHubActive", !isRedAllianceInactive);
-			SmartDashboard.putBoolean("Match Info/blueHubActive", isRedAllianceInactive);
-		} else if (DriverStation.getMatchTime() <= 105 & DriverStation.getMatchTime() > 80) {
-			SmartDashboard.putBoolean("Match Info/redHubActive", isRedAllianceInactive);
-			SmartDashboard.putBoolean("Match Info/blueHubActive", !isRedAllianceInactive);
-		} else if (DriverStation.getMatchTime() <= 80 & DriverStation.getMatchTime() > 55) {
-			SmartDashboard.putBoolean("Match Info/redHubActive", !isRedAllianceInactive);
-			SmartDashboard.putBoolean("Match Info/blueHubActive", isRedAllianceInactive);
-		} else if (DriverStation.getMatchTime() <= 55 & DriverStation.getMatchTime() > 30) {
-			SmartDashboard.putBoolean("Match Info/redHubActive", isRedAllianceInactive);
-			SmartDashboard.putBoolean("Match Info/blueHubActive", !isRedAllianceInactive);
-		} else if (DriverStation.getMatchTime() <= 30) {
-			SmartDashboard.putBoolean("Match Info/redHubActive", true);
-			SmartDashboard.putBoolean("Match Info/blueHubActive", true);
-		}
+		// if (DriverStation.getMatchTime() <= 140 & DriverStation.getMatchTime() > 130) {
+		// 	SmartDashboard.putBoolean("Match Info/redHubActive", true);
+		// 	SmartDashboard.putBoolean("Match Info/blueHubActive", true);
+		// } else if (DriverStation.getMatchTime() <= 130 & DriverStation.getMatchTime() > 105) {
+		// 	DriverStation.getGameSpecificMessage().isBlank();
+		// 	if (DriverStation.getGameSpecificMessage().charAt(0) == 'R') {
+		// 		isRedAllianceInactive = true;
+		// 	} else if (DriverStation.getGameSpecificMessage().charAt(0) == 'B') {
+		// 		isRedAllianceInactive = false;
+		// 	}
+		// 	SmartDashboard.putBoolean("Match Info/redHubActive", !isRedAllianceInactive);
+		// 	SmartDashboard.putBoolean("Match Info/blueHubActive", isRedAllianceInactive);
+		// } else if (DriverStation.getMatchTime() <= 105 & DriverStation.getMatchTime() > 80) {
+		// 	SmartDashboard.putBoolean("Match Info/redHubActive", isRedAllianceInactive);
+		// 	SmartDashboard.putBoolean("Match Info/blueHubActive", !isRedAllianceInactive);
+		// } else if (DriverStation.getMatchTime() <= 80 & DriverStation.getMatchTime() > 55) {
+		// 	SmartDashboard.putBoolean("Match Info/redHubActive", !isRedAllianceInactive);
+		// 	SmartDashboard.putBoolean("Match Info/blueHubActive", isRedAllianceInactive);
+		// } else if (DriverStation.getMatchTime() <= 55 & DriverStation.getMatchTime() > 30) {
+		// 	SmartDashboard.putBoolean("Match Info/redHubActive", isRedAllianceInactive);
+		// 	SmartDashboard.putBoolean("Match Info/blueHubActive", !isRedAllianceInactive);
+		// } else if (DriverStation.getMatchTime() <= 30) {
+		// 	SmartDashboard.putBoolean("Match Info/redHubActive", true);
+		// 	SmartDashboard.putBoolean("Match Info/blueHubActive", true);
+		// }
 	}
 
 	@Override
