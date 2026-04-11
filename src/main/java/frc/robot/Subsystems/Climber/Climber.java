@@ -30,6 +30,7 @@ public class Climber {
 		driverRequestSpeed = 0;
 		motor = new SparkMax(11, MotorType.kBrushless);
 		motor.configure(new SparkMaxConfig().idleMode(IdleMode.kBrake), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+		motor.getEncoder().setPosition(0);
 	}
 
 	public void setState(ClimberStates state) {
@@ -47,6 +48,6 @@ public class Climber {
 			SmartDashboard.putBoolean("Climber/On", true);
 		}
 
-		SmartDashboard.putNumber("Climber DEG", motor.getAbsoluteEncoder().getPosition());
+		SmartDashboard.putNumber("Climber DEG", motor.getEncoder().getPosition());
 	}
 }
