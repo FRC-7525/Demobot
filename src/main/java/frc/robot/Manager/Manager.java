@@ -32,7 +32,7 @@ public class Manager {
 		shooter = Shooter.getInstance();
 
 		robotstate = IDLE;
-		intakeOut = false;
+		intakeOut = true;
 	}
 
 	public static Manager getInstance() {
@@ -123,6 +123,9 @@ public class Manager {
 					robotstate = INIDLE;
 				}
 				break;
+            case CLIMBAUTO:
+                intakeOut = true;
+                break;
 			case CLIMBOUT:
 				intakeOut = true;
 				climber.setSpeed(0.25);

@@ -49,4 +49,8 @@ public class Climber {
 
 		SmartDashboard.putNumber("Climber DEG", motor.getEncoder().getPosition());
 	}
+
+	public double getPosition() {
+		return motor.getEncoder().getPosition();
+	}
 }

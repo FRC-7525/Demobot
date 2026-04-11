@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.AitanAndJamesAreTheBestForSureAutos.AutoBuilderStuff;
 import frc.robot.AitanAndJamesAreTheBestForSureAutos.AutoCommands;
+import frc.robot.AitanAndJamesAreTheBestForSureAutos.ClimbGoCommand;
+import frc.robot.AitanAndJamesAreTheBestForSureAutos.ClimbPrepCommand;
 import frc.robot.Manager.Manager;
 import frc.robot.Manager.ManagerStates;
 import frc.robot.Subsystems.Drive.Drive;
@@ -56,6 +58,8 @@ public class Robot extends TimedRobot {
 		NamedCommands.registerCommand("IDLE", autoCommands.returnToIdle());
 		NamedCommands.registerCommand("WindUp", autoCommands.startWindingUp());
 		NamedCommands.registerCommand("Shoot", autoCommands.shootFuel());
+		NamedCommands.registerCommand("Climb Prep", new ClimbPrepCommand());
+		NamedCommands.registerCommand("Climb", new ClimbGoCommand());
 		AutoBuilderStuff.setConfig();
 		autoChooser = AutoBuilder.buildAutoChooser();
 		SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -99,6 +103,7 @@ public class Robot extends TimedRobot {
 		drive.zeroGyro();
 		drive.setState(DriveStates.Auto);
 		Command autoCommand = autoChooser.getSelected();
+		System.out.println("Auto selected: " + autoCommand);
 		if (autoCommand != null) {
 			CommandScheduler.getInstance().schedule(autoCommand);
 		}
