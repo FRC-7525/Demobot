@@ -8,16 +8,11 @@ public enum DriveStates {
 
 	public DriveStates driveState;
 
-
-
-	DriveStates( String stateString) {
+	DriveStates(String stateString) {
 		this.stateString = stateString;
 	}
 
 	public String getStateString() {
 		return stateString;
 	}
-
-
-
 }

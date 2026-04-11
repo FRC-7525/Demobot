@@ -3,11 +3,9 @@ package frc.robot.Subsystems.Climber;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climber {
@@ -29,12 +27,14 @@ public class Climber {
 		state = ClimberStates.IDLE;
 		driverRequestSpeed = 0;
 		motor = new SparkMax(11, MotorType.kBrushless);
-		motor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+		motor.configure(new SparkMaxConfig().idleMode(IdleMode.kBrake), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+		motor.getEncoder().setPosition(0);
 	}
 
 	public void setState(ClimberStates state) {
 		this.state = state;
 	}
+
 	public void setSpeed(double speed) {
 		driverRequestSpeed = speed;
 	}
@@ -47,6 +47,6 @@ public class Climber {
 			SmartDashboard.putBoolean("Climber/On", true);
 		}
 
-		SmartDashboard.putNumber("Climber DEG", motor.getAbsoluteEncoder().getPosition());
+		SmartDashboard.putNumber("Climber DEG", motor.getEncoder().getPosition());
 	}
 }

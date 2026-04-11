@@ -30,7 +30,6 @@ public class PassthroughSim extends Passthrough {
 		mainmotorSim.setBusVoltage(CAN_BUS_VOLTAGE);
 		mainWheel.update(DT_SECONDS);
 
-
 		// Logging
 
 		SmartDashboard.putNumber("Passthrough/Current MainSpeed (RPM)", mainWheel.getAngularVelocityRPM());
