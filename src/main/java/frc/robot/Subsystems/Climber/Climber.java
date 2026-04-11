@@ -3,11 +3,9 @@ package frc.robot.Subsystems.Climber;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climber {
@@ -36,6 +34,7 @@ public class Climber {
 	public void setState(ClimberStates state) {
 		this.state = state;
 	}
+
 	public void setSpeed(double speed) {
 		driverRequestSpeed = speed;
 	}

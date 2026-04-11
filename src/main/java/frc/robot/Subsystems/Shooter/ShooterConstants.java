@@ -21,8 +21,6 @@ public final class ShooterConstants {
 	public static final double KI = SmartDashboard.getNumber("KI", 0.0);
 	public static final double KD = SmartDashboard.getNumber("KD", 0.0);
 
-
-
 	public static final Supplier<PIDController> WHEEL_PID = () ->
 		switch (GlobalConstants.ROBOT_MODE) {
 			case REAL -> new PIDController(KP, KI, KD);
@@ -34,7 +32,6 @@ public final class ShooterConstants {
 		switch (GlobalConstants.ROBOT_MODE) {
 			//case REAL -> new SimpleMotorFeedforward(0.26, 0.00207, 0);
 			case REAL -> new SimpleMotorFeedforward(0.26, 0.00207, 0);
-
 			case SIM -> new SimpleMotorFeedforward(0, 0.001, 0);
 			// default -> new SimpleMotorFeedforward(0, 0.1, 0);
 		};

@@ -27,43 +27,41 @@ public enum ManagerStates {
     REVERSE_PASS(ClimberStates.IDLE, PassthroughStates.REVERSE, ShooterStates.IDLE, "REVERSE_PASS");
 
 
-    private final String stateString;
-    // private final IntakeStates intakeState;
-    private final ShooterStates shooterState;
-    private final ClimberStates climberState;
-    private final PassthroughStates passthroughState;
+	private final String stateString;
+	// private final IntakeStates intakeState;
+	private final ShooterStates shooterState;
+	private final ClimberStates climberState;
+	private final PassthroughStates passthroughState;
 
-    ManagerStates(ClimberStates climberState, PassthroughStates passthroughState, ShooterStates shooterState, String stateString) {
-        this.climberState = climberState;
-        // this.intakeState = intakeState;
-        this.passthroughState = passthroughState;
-        this.shooterState = shooterState;
-        this.stateString = stateString;
+	ManagerStates(ClimberStates climberState, PassthroughStates passthroughState, ShooterStates shooterState, String stateString) {
+		this.climberState = climberState;
+		// this.intakeState = intakeState;
+		this.passthroughState = passthroughState;
+		this.shooterState = shooterState;
+		this.stateString = stateString;
+	}
 
-    }
+	public ClimberStates getClimberState() {
+		return climberState;
+	}
 
-    public ClimberStates getClimberState() {
-        return climberState;
-    }
+	// public IntakeStates getIntakeState() {
+	//     return intakeState;
+	// }
 
-    // public IntakeStates getIntakeState() {
-    //     return intakeState;
-    // }
+	public PassthroughStates getPassthroughState() {
+		return passthroughState;
+	}
 
-    public PassthroughStates getPassthroughState() {
-        return passthroughState;
-    }
+	public ShooterStates getShooterState() {
+		return shooterState;
+	}
 
-    public ShooterStates getShooterState() {
-        return shooterState;
-    }
+	// public AutoAlign getAutoAlignState() {
+	//     return autoalign;
+	// }
 
-    // public AutoAlign getAutoAlignState() {
-    //     return autoalign;
-    // }
-
-    public String getStateString() {
-        return stateString;
-    }
-
+	public String getStateString() {
+		return stateString;
+	}
 }

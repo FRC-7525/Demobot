@@ -19,6 +19,7 @@ import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
 public class Drive extends SubsystemBase {
+
 	private static Drive instance;
 	private DriveStates state;
 	private SwerveInputStream swerveInputs;
@@ -56,14 +57,14 @@ public class Drive extends SubsystemBase {
 
 	public void periodic() {
 		if (slow) {
-			if (DRIVER_CONTROLLER.getAButtonPressed()) { 
+			if (DRIVER_CONTROLLER.getAButtonPressed()) {
 				slow = false;
 				SmartDashboard.putBoolean("Drive/Slow Mode", false);
 			}
 			swerveInputs.scaleTranslation(0.33);
 			swerveInputs.scaleRotation(0.33);
 		} else {
-			if (DRIVER_CONTROLLER.getAButtonPressed()) { 
+			if (DRIVER_CONTROLLER.getAButtonPressed()) {
 				slow = true;
 				SmartDashboard.putBoolean("Drive/Slow Mode", true);
 			}
@@ -91,6 +92,7 @@ public class Drive extends SubsystemBase {
 	public void setState(DriveStates auto) {
 		this.state = DriveStates.Auto;
 	}
+
 	public DriveStates getDriveState() {
 		return state;
 	}
@@ -107,6 +109,7 @@ public class Drive extends SubsystemBase {
 		speeds = new ChassisSpeeds(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond, 0);
 		swerveDrive.drive(speeds);
 	}
+
 	public ChassisSpeeds getRobotRelativeSpeeds() {
 		return swerveDrive.getRobotVelocity();
 	}

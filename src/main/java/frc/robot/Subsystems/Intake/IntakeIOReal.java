@@ -5,20 +5,20 @@ import static edu.wpi.first.units.Units.Rotations;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static frc.robot.Subsystems.Intake.IntakeConstants.*;
 
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Manager.Manager;
 
-
 public class IntakeIOReal implements IntakeIO {
+
 	private boolean intakeON;
 	private boolean intakeReverse;
 
@@ -41,17 +41,15 @@ public class IntakeIOReal implements IntakeIO {
 		if (operatorController.getRightBumperButtonPressed() || driverController.getLeftBumperButtonPressed()) {
 			if (intakeON == true) {
 				intakeON = false;
-				SmartDashboard.putBoolean("Intake/intakeOn",intakeON);
+				SmartDashboard.putBoolean("Intake/intakeOn", intakeON);
 			} else {
 				intakeON = true;
-				SmartDashboard.putBoolean("Intake/intakeOn",intakeON);
+				SmartDashboard.putBoolean("Intake/intakeOn", intakeON);
 			}
-
-
-		} 
+		}
 		if (intakeON) {
 			wheelMotor.set(1);
-		}  else if (intakeReverse) {
+		} else if (intakeReverse) {
 			wheelMotor.set(-1);
 		} else {
 			wheelMotor.set(0);
@@ -103,4 +101,3 @@ public class IntakeIOReal implements IntakeIO {
 		this.intakeON = intakeOn;
 	}
 }
-
