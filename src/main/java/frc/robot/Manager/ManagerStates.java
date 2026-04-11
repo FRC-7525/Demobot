@@ -13,7 +13,7 @@ public enum ManagerStates {
 	INIDLE(ClimberStates.IDLE, PassthroughStates.IDLE, ShooterStates.IDLE, "REALLYIDLE"),
 	IDLE(ClimberStates.IDLE, PassthroughStates.IDLE, ShooterStates.IDLE, "IDLE"),
 	INTAKING(ClimberStates.IDLE, PassthroughStates.IDLE, ShooterStates.IDLE, "INTAKING"),
-    CLIMBAUTO(ClimberStates.GOINGOUT, PassthroughStates.IDLE, ShooterStates.IDLE, "CLIMBAUTO"),
+	CLIMBAUTO(ClimberStates.GOINGOUT, PassthroughStates.IDLE, ShooterStates.IDLE, "CLIMBAUTO"),
 	// DYNAMICSHOT(ClimberStates.IDLE, In
 	// takeStates.INTAKING_OUT, PassthroughStates.PASS, ShooterStates.DYNAMICSHOOT, "DYNAMICSHOT"),
 	// LONGSHOT(ClimberStates.IDLE, IntakeStates.INTAKING_OUT, PassthroughStates.PASS, ShooterStates.LONGPASS, "LONGPASS"),

@@ -123,9 +123,9 @@ public class Manager {
 					robotstate = INIDLE;
 				}
 				break;
-            case CLIMBAUTO:
-                intakeOut = true;
-                break;
+			case CLIMBAUTO:
+				intakeOut = true;
+				break;
 			case CLIMBOUT:
 				intakeOut = true;
 				climber.setSpeed(0.25);
