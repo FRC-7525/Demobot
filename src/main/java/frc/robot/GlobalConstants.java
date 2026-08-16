@@ -9,17 +9,11 @@ import java.util.Arrays;
 
 public class GlobalConstants {
 
-	public enum RobotMode {
-		REAL,
-		SIM,
-	}
 
 	public static final LinearAcceleration GRAVITY = MetersPerSecondPerSecond.of(9.81);
 	public static final double SIMULATION_PERIOD = 0.02;
 
 	public static final Field2d FIELD = new Field2d();
-
-	public static final RobotMode ROBOT_MODE = "Crash".equals(System.getenv("CI_NAME")) || !Robot.isReal() ? RobotMode.SIM : RobotMode.REAL;
 
 	public static class FaultManagerConstants {
 

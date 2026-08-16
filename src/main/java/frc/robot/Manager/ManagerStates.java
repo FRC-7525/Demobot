@@ -17,12 +17,12 @@ public enum ManagerStates {
 	// DYNAMICSHOT(ClimberStates.IDLE, In
 	// takeStates.INTAKING_OUT, PassthroughStates.PASS, ShooterStates.DYNAMICSHOOT, "DYNAMICSHOT"),
 	// LONGSHOT(ClimberStates.IDLE, IntakeStates.INTAKING_OUT, PassthroughStates.PASS, ShooterStates.LONGPASS, "LONGPASS"),
-	// SPINUP(ClimberStates.IDLE, IntakeStates.INTAKING_OUT, PassthroughStates.IDLE, ShooterStates.FIXEDSHOOT, "SPINUP"),;
-	FIXEDSHOT(ClimberStates.IDLE, PassthroughStates.PASS, ShooterStates.FIXEDSHOOT, "FIXEDSHOOT"),
-	WINDUP(ClimberStates.IDLE, PassthroughStates.IDLE, ShooterStates.FIXEDSHOOT, "WINDUP"),
+	// SPINUP(ClimberStates.IDLE, IntakeStates.INTAKING_OUT, PassthroughStates.IDLE, ShooterStates.MIDSHOOT, "SPINUP"),;
+	FIXEDSHOT(ClimberStates.IDLE, PassthroughStates.PASS, ShooterStates.MIDSHOOT, "MIDSHOOT"),
+	WINDUP(ClimberStates.IDLE, PassthroughStates.IDLE, ShooterStates.MIDSHOOT, "WINDUP"),
 	// -------------------------------------------------------- AUTO STATES --------------------------------------------------------
-	SHOOT_AUTO(ClimberStates.IDLE, PassthroughStates.PASS, ShooterStates.FIXEDSHOOT, "SHOOT_AUTO"),
-	WINDUP_AUTO(ClimberStates.IDLE, PassthroughStates.IDLE, ShooterStates.FIXEDSHOOT, "WINDUP_AUTO"),
+	SHOOT_AUTO(ClimberStates.IDLE, PassthroughStates.PASS, ShooterStates.MIDSHOOT, "SHOOT_AUTO"),
+	WINDUP_AUTO(ClimberStates.IDLE, PassthroughStates.IDLE, ShooterStates.MIDSHOOT, "WINDUP_AUTO"),
 	// REVERSE_SHOOT(ClimberStates.IDLE, IntakeStates.INTAKING_OUT, PassthroughStates.IDLE, ShooterStates.REVERSESHOOT, "REVERSE_SHOOT");
 	REVERSE_PASS(ClimberStates.IDLE, PassthroughStates.REVERSE, ShooterStates.IDLE, "REVERSE_PASS");
 
