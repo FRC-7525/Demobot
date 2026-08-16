@@ -24,6 +24,7 @@ public class Shooter {
 	protected SimpleMotorFeedforward feedforward;
 
 	// makes sure that there is only one instance of the Shooter class, and if there isn't, it creates a new one (this is a singleton pattern)
+	// makes sure that there is only one instance of the Shooter class, and if there isn't, it creates a new one (this is a singleton pattern)
 	public static Shooter getInstance() {
 		if (instance == null) {
 			instance = new Shooter();
@@ -34,7 +35,7 @@ public class Shooter {
 
 	public Shooter() {
 		state = ShooterStates.IDLE;
-
+		
 		motorcontrollerright = new PIDController(KP, KI, KD);
 		feedforward = new SimpleMotorFeedforward(0.26, 0.00207, 0);
 
@@ -66,11 +67,11 @@ public class Shooter {
 		SmartDashboard.putNumber("Shooter/Target Speed (RPM)", state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR);
 		SmartDashboard.putData("Shooter/PID Controller", motorcontrollerright);
 		
-		// Check if Spark MAXes are connected to the CAN bus
+		// Check if Sparkmaxes are connected to CANBus
 		SmartDashboard.putBoolean("ShooterSpark13", followerleftMotor.getLastError() == com.revrobotics.REVLibError.kOk);
 		SmartDashboard.putBoolean("ShooterSpark12", leaderrightMotor.getLastError() == com.revrobotics.REVLibError.kOk);
 
-		// Whatever is on the SmartDashboard (Elastic) will be used to set the feedforward values, and then the values will be put back onto the SmartDashboard for logging
+		// What ever is on the SmartDashboard (Elastic) will be used to set the feedforward values, and then the values will be put back onto the SmartDashboard for logging
 		feedforward.setKa(SmartDashboard.getNumber("kA", feedforward.getKa()));
 		SmartDashboard.putNumber("kA", feedforward.getKa());
 		feedforward.setKv(SmartDashboard.getNumber("kV", feedforward.getKv()));
@@ -81,7 +82,7 @@ public class Shooter {
         // States change speed of motors
 		if (state == ShooterStates.IDLE) {
 			leaderrightMotor.set(0);
-		} else if (state == ShooterStates.MIDSHOOT || state == ShooterStates.LOWSHOOT || state == ShooterStates.HIGHSHOOT) {
+		} else if (state == ShooterStates.MIDSHOOT || state == ShooterStates.LOWSHOOT || state == ShooterStates.HIGHSHOOT){
 			leaderrightMotor.setVoltage(
 				motorcontrollerright.calculate(followerleftMotor.getEncoder().getVelocity(), state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR) + feedforward.calculate(state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR)
 			);

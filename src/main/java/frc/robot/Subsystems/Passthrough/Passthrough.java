@@ -39,7 +39,7 @@ public class Passthrough {
 
 	public void periodic() {
 		SmartDashboard.putNumber("Passthrough/Pass RPM", mainmotor.getEncoder().getVelocity());
-		SmartDashboard.putNumber("Passthrough/Target Speed (RPM)", state.getSpeed().in(Units.RotationsPerSecond) * RPS_TO_RPM);
+		SmartDashboard.putNumber("Passthrough/Target Speed (RPM)", state.getSpeed().in(Units.RadiansPerSecond) * RPS_TO_RPM);
 
 		// Check if Sparkmax is connected to CANBus
 		SmartDashboard.putBoolean("PassthroughSpark14", mainmotor.getLastError() == com.revrobotics.REVLibError.kOk);
