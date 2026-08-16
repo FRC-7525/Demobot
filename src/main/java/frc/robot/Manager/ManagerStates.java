@@ -24,7 +24,7 @@ public enum ManagerStates {
 	SHOOT_AUTO(ClimberStates.IDLE, PassthroughStates.PASS, ShooterStates.MIDSHOOT, "SHOOT_AUTO"),
 	WINDUP_AUTO(ClimberStates.IDLE, PassthroughStates.IDLE, ShooterStates.MIDSHOOT, "WINDUP_AUTO"),
 	// REVERSE_SHOOT(ClimberStates.IDLE, IntakeStates.INTAKING_OUT, PassthroughStates.IDLE, ShooterStates.REVERSESHOOT, "REVERSE_SHOOT");
-	REVERSE_PASS(ClimberStates.IDLE, PassthroughStates.REVERSE, ShooterStates.IDLE, "REVERSE_PASS");
+	REVERSE_PASS(ClimberStates.IDLE, PassthroughStates.PASS, ShooterStates.IDLE, "REVERSE_PASS");
 
 	private final String stateString;
 	// private final IntakeStates intakeState;

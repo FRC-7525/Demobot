@@ -1,12 +1,9 @@
 package frc.robot.Subsystems.Drive;
 
-import static frc.robot.Subsystems.Drive.DriveConstants.*;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,18 +14,17 @@ import swervelib.SwerveInputStream;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
+import static frc.robot.Subsystems.Drive.DriveConstants.*;
+import static frc.robot.GlobalConstants.Controllers.DRIVER_CONTROLLER;
 
 public class Drive extends SubsystemBase {
-
 	private static Drive instance;
 	private DriveStates state;
 	private SwerveInputStream swerveInputs;
 	private SwerveDrive swerveDrive;
-	public final XboxController DRIVER_CONTROLLER;
-	public final XboxController OPERATOR_CONTROLLER;
-	private Field2d robot;
-	private boolean slow;
-	private double invert;
+	private Field2d field;
+	private boolean isDisableRequested = false;
+	private boolean isDemoRequested = false;
 
 	public static Drive getInstance() {
 		if (instance == null) {
@@ -38,48 +34,59 @@ public class Drive extends SubsystemBase {
 	}
 
 	private Drive() {
-		robot = new Field2d();
-		DRIVER_CONTROLLER = new XboxController(0);
-		OPERATOR_CONTROLLER = new XboxController(1);
-		invert = 1;
-
+		field = new Field2d();
 		try {
 			File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
 			swerveDrive = new SwerveParser(swerveJsonDirectory).createSwerveDrive(MAX_SPEED, new Pose2d(9.9, 4.0, Rotation2d.fromDegrees(0)));
 		} catch (Exception e) {
 			throw new RuntimeException("Failed to create SwerveDrive", e);
 		}
-		swerveDrive.setMotorIdleMode(false);
 		SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
-		state = DriveStates.Manual;
-		swerveInputs = SwerveInputStream.of(swerveDrive, () -> invert * -DRIVER_CONTROLLER.getLeftY(), () -> invert * -DRIVER_CONTROLLER.getLeftX()).withControllerRotationAxis(() -> -DRIVER_CONTROLLER.getRightX()).allianceRelativeControl(true);
+		swerveDrive.setMotorIdleMode(true);
+		swerveInputs = SwerveInputStream.of(swerveDrive, () -> -DRIVER_CONTROLLER.getLeftY(), () -> -DRIVER_CONTROLLER.getLeftX()).withControllerRotationAxis(() -> -DRIVER_CONTROLLER.getRightX()).allianceRelativeControl(true);
+		state = DriveStates.MANUAL;
 	}
 
 	public void periodic() {
-		if (slow) {
-			if (DRIVER_CONTROLLER.getAButtonPressed()) {
-				slow = false;
-				SmartDashboard.putBoolean("Drive/Slow Mode", false);
-			}
-			swerveInputs.scaleTranslation(0.33);
-			swerveInputs.scaleRotation(0.33);
-		} else {
-			if (DRIVER_CONTROLLER.getAButtonPressed()) {
-				slow = true;
-				SmartDashboard.putBoolean("Drive/Slow Mode", true);
-			}
-			swerveInputs.scaleTranslation(1);
-			swerveInputs.scaleRotation(1);
-		}
-		swerveDrive.driveFieldOriented(swerveInputs.get());
-		SmartDashboard.putData(robot);
+		isDisableRequested = SmartDashboard.getBoolean("Disable Drive", false);
+		isDemoRequested = SmartDashboard.getBoolean("Enable Demo Mode", false);
+
+		// Independent Action: Zero Gyro (separated so it doesn't block state changes)
 		if (DRIVER_CONTROLLER.getBButtonPressed()) {
 			zeroGyro();
 		}
-		if (OPERATOR_CONTROLLER.getPOV() == 0) {
-			invert = invert == -1 ? 1 : -1;
+
+		// State Transition Logic
+		if (isDisableRequested) {
+			// Highest priority: Force to DISABLED if dashboard switch is on
+			if (state != DriveStates.DISABLED) {
+				setState(DriveStates.DISABLED);
+			}
+		} else if (isDemoRequested) {
+			// Second priority: Force to DEMO if requested (and not disabled)
+			if (state != DriveStates.DEMO) {
+				setState(DriveStates.DEMO);
+			}
+		} else if (state == DriveStates.DISABLED && !isDisableRequested) {
+			// Exiting DISABLED mode -> return to default MANUAL state
+			setState(DriveStates.MANUAL);
+		} else if (state == DriveStates.DEMO && !isDemoRequested) {
+			// Exiting DEMO mode -> return to default MANUAL state
+			setState(DriveStates.MANUAL);
+		} else if (state != DriveStates.DISABLED && state != DriveStates.DEMO) {
+			// Controller transitions: Only allowed if not in an override state
+			if (DRIVER_CONTROLLER.getRightBumperButtonPressed() && state != DriveStates.SLOW) {
+				setState(DriveStates.SLOW);
+			} else if (DRIVER_CONTROLLER.getLeftBumperButtonPressed() && state != DriveStates.MANUAL) {
+				setState(DriveStates.MANUAL);
+			}
 		}
-		SmartDashboard.putData(robot);
+		state.drive();
+		field.setRobotPose(swerveDrive.getPose());
+		SmartDashboard.putString("Drive/Current State", state.getStateString());
+		SmartDashboard.putData("Drive/Field", field);
+		SmartDashboard.putBoolean("Disable Drive", isDisableRequested);
+		SmartDashboard.putBoolean("Enable Demo Mode", isDemoRequested);
 	}
 
 	public void zeroGyro() {
@@ -89,8 +96,8 @@ public class Drive extends SubsystemBase {
 		}
 	}
 
-	public void setState(DriveStates auto) {
-		this.state = DriveStates.Auto;
+	public void setState(DriveStates state) {
+		this.state = state;
 	}
 
 	public DriveStates getDriveState() {
@@ -101,16 +108,19 @@ public class Drive extends SubsystemBase {
 		return swerveDrive.getPose();
 	}
 
-	public void setPose(Pose2d pose) {
+	public void resetPose(Pose2d pose) {
 		swerveDrive.resetOdometry(pose);
-	}
-
-	public void drive(ChassisSpeeds speeds) {
-		speeds = new ChassisSpeeds(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond, 0);
-		swerveDrive.drive(speeds);
 	}
 
 	public ChassisSpeeds getRobotRelativeSpeeds() {
 		return swerveDrive.getRobotVelocity();
+	}
+
+	public SwerveInputStream getSwerveInputs() {
+		return swerveInputs;
+	}
+
+	public SwerveDrive getSwerveDrive() {
+		return swerveDrive;
 	}
 }
