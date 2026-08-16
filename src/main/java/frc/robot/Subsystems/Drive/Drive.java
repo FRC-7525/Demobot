@@ -23,8 +23,8 @@ public class Drive extends SubsystemBase {
 	private SwerveInputStream swerveInputs;
 	private SwerveDrive swerveDrive;
 	private Field2d field;
-	boolean isDisableRequested = false;
-	boolean isDemoRequested = false;
+	private boolean isDisableRequested = false;
+	private boolean isDemoRequested = false;
 
 	public static Drive getInstance() {
 		if (instance == null) {

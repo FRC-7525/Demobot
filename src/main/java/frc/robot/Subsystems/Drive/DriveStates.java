@@ -13,8 +13,8 @@ public enum DriveStates {
 	}),
 	DEMO("Demo", () -> {
 		if (OPERATOR_CONTROLLER.getAButton()) {
-			Drive.getInstance().getSwerveInputs().scaleTranslation(0);
-			Drive.getInstance().getSwerveInputs().scaleRotation(0);
+			Drive.getInstance().getSwerveInputs().scaleTranslation(0.2);
+			Drive.getInstance().getSwerveInputs().scaleRotation(0.2);
 			Drive.getInstance().getSwerveDrive().driveFieldOriented(Drive.getInstance().getSwerveInputs().get());
 		} else {
 			Drive.getInstance().getSwerveDrive().driveFieldOriented(ChassisSpeeds.fromRobotRelativeSpeeds(0,0,0, Rotation2d.fromDegrees(0)));
@@ -29,8 +29,8 @@ public enum DriveStates {
 		Drive.getInstance().getSwerveDrive().driveFieldOriented(Drive.getInstance().getSwerveInputs().get());
 	});
 
-	private String stateString;
-	private Runnable driveCommand;
+	private final String stateString;
+	private final Runnable driveCommand;
 
 	DriveStates(String stateString, Runnable driveCommand) {
 		this.stateString = stateString;
