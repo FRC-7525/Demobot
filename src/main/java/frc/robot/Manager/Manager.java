@@ -15,7 +15,7 @@ public class Manager {
 
 	Climber climber;
 	Intake intake;
-	Passthrough passthrough;
+	// Passthrough passthrough;
 	Shooter shooter;
 	ManagerStates robotstate;
 	private boolean intakeOut;
@@ -28,7 +28,7 @@ public class Manager {
 	private Manager() {
 		climber = Climber.getInstance();
 		intake = Intake.getInstance();
-		passthrough = Passthrough.getInstance();
+		// passthrough = Passthrough.getInstance();
 		shooter = Shooter.getInstance();
 
 		robotstate = IDLE;
@@ -48,13 +48,13 @@ public class Manager {
 
 	public void periodic() {
 		// intake.setState(getState().getIntakeState());
-		passthrough.setState(getState().getPassthroughState());
+		// passthrough.setState(getState().getPassthroughState());
 		shooter.setState(getState().getShooterState());
 		climber.setState(getState().getClimberState());
 		Logger.recordOutput("Manager State", robotstate.getStateString());
 
 		intake.periodic();
-		passthrough.periodic();
+		// passthrough.periodic();
 		shooter.periodic();
 		climber.periodic();
 
