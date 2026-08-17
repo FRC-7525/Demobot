@@ -17,7 +17,6 @@ import swervelib.SwerveInputStream;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
-// Sluaccelerator
 
 public class Drive extends SubsystemBase {
 
