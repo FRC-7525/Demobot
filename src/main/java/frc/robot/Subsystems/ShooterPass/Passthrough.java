@@ -1,7 +1,7 @@
-package frc.robot.Subsystems.Passthrough;
+package frc.robot.Subsystems.ShooterPass;
 
-import static frc.robot.Subsystems.Passthrough.PassthroughConstants.*;
-import static frc.robot.Subsystems.Passthrough.PassthroughStates.*;
+import static frc.robot.Subsystems.ShooterPass.PassthroughConstants.*;
+import static frc.robot.Subsystems.ShooterPass.PassthroughStates.*;
 
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
@@ -9,7 +9,6 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Passthrough {
@@ -39,7 +38,6 @@ public class Passthrough {
 
 	public void periodic() {
 		SmartDashboard.putNumber("Passthrough/Pass RPM", mainmotor.getEncoder().getVelocity());
-		SmartDashboard.putNumber("Passthrough/Target Speed (RPM)", state.getSpeed().in(Units.RadiansPerSecond) * RPS_TO_RPM);
 
 		// Check if Sparkmax is connected to CANBus
 		SmartDashboard.putBoolean("PassthroughSpark14", mainmotor.getLastError() == com.revrobotics.REVLibError.kOk);
@@ -50,6 +48,8 @@ public class Passthrough {
 		} else if (state == PASS) {
 			mainmotor.set(SPEED);
 			SmartDashboard.putBoolean("Passthrough/On", true);
+		} else {
+			mainmotor.set(0);
 		}
 	}
 }

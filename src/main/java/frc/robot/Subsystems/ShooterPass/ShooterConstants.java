@@ -1,4 +1,4 @@
-package frc.robot.Subsystems.Shooter;
+package frc.robot.Subsystems.ShooterPass;
 
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.AngularVelocity;
