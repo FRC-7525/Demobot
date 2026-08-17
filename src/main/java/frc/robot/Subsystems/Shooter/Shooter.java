@@ -24,7 +24,6 @@ public class Shooter {
 	protected SimpleMotorFeedforward feedforward;
 
 	// makes sure that there is only one instance of the Shooter class, and if there isn't, it creates a new one (this is a singleton pattern)
-	// makes sure that there is only one instance of the Shooter class, and if there isn't, it creates a new one (this is a singleton pattern)
 	public static Shooter getInstance() {
 		if (instance == null) {
 			instance = new Shooter();
@@ -35,7 +34,7 @@ public class Shooter {
 
 	public Shooter() {
 		state = ShooterStates.IDLE;
-		
+
 		motorcontrollerright = new PIDController(KP, KI, KD);
 		feedforward = new SimpleMotorFeedforward(0.26, 0.00207, 0);
 
