@@ -1,28 +1,30 @@
-package frc.robot.Subsystems.Intake;
+// package frc.robot.Subsystems.Intake;
 
-import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.units.measure.AngularVelocity;
+// import static frc.robot.Subsystems.Intake.IntakeConstants.*;
 
-public enum IntakeStates {
-    INTAKE(IntakeConstants.INTAKE_SPEED, IntakeConstants.ARM_ANGLE_INTAKE),
-    OUTTAKE(IntakeConstants.OUTTAKE_SPEED, IntakeConstants.ARM_ANGLE_OUTTAKE),
-    IDLE(IntakeConstants.IDLE_SPEED, IntakeConstants.ARM_ANGLE_IDLE);
-    
-    private AngularVelocity wheelSpeed;
-    private Angle armAngle;
+// import edu.wpi.first.units.measure.Angle;
+// import edu.wpi.first.units.measure.AngularVelocity;
 
-    IntakeStates(AngularVelocity wheelSpeed, Angle armAngle) {
-        this.wheelSpeed = wheelSpeed;
-        this.armAngle = armAngle;
-    }
+// public enum IntakeStates {
+// 	IDLE("IDLE", IN_ANGLE),
+// 	INTAKING("INTAKING", OUT_ANGLE),
+// 	INTAKING_OUT("INTAKINGNOROLLER", OUT_ANGLE);
 
-    public AngularVelocity getWheelSpeed() {
-        return wheelSpeed;
-    }
+// 	String stateString;
 
-    public Angle getArmAngle() {
-        return armAngle;
-    }
-}
+// 	// Angle targetAngle;
 
+// 	private IntakeStates(String stateString, Angle targetAngle) {
+// 		this.stateString = stateString;
 
+// 		this.targetAngle = targetAngle;
+// 	}
+
+// 	public String getStateString() {
+// 		return stateString;
+// 	}
+
+// 	public Angle getTargetAngle() {
+// 		return targetAngle;
+// 	}
+// }
