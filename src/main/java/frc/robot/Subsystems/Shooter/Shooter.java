@@ -66,7 +66,7 @@ public class Shooter {
 		SmartDashboard.putNumber("Shooter/Target Speed (RPM)", state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR);
 		SmartDashboard.putData("Shooter/PID Controller", motorcontrollerright);
 		
-		// Check if Sparkmaxes are connected to CANBus
+		// Check if Spark MAXes are connected to the CAN bus
 		SmartDashboard.putBoolean("ShooterSpark13", followerleftMotor.getLastError() == com.revrobotics.REVLibError.kOk);
 		SmartDashboard.putBoolean("ShooterSpark12", leaderrightMotor.getLastError() == com.revrobotics.REVLibError.kOk);
 
