@@ -2,8 +2,8 @@ package frc.robot.Manager;
 
 // import frc.robot.Subsystems.AutoAlign.AutoAlign;
 import frc.robot.Subsystems.Climber.ClimberStates;
-import frc.robot.Subsystems.ShooterPass.PassthroughStates;
-import frc.robot.Subsystems.ShooterPass.ShooterStates;
+import frc.robot.Subsystems.Shooter.PassthroughStates;
+import frc.robot.Subsystems.Shooter.ShooterStates;
 
 public enum ManagerStates {
 	// climber should have intake in

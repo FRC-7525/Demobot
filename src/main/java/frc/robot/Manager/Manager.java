@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Subsystems.Climber.Climber;
 import frc.robot.Subsystems.Intake.Intake;
-import frc.robot.Subsystems.ShooterPass.Passthrough;
-import frc.robot.Subsystems.ShooterPass.Shooter;
+import frc.robot.Subsystems.Shooter.Passthrough;
+import frc.robot.Subsystems.Shooter.Shooter;
 
 import org.littletonrobotics.junction.Logger;
 
