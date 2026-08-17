@@ -70,15 +70,15 @@ public class Manager {
 					robotstate = WINDUP;
 				}
 
-				if (operatorController.getLeftTriggerAxis() > 0.1) {
-					robotstate = CLIMBIN;
-					intakeOut = true;
-				}
+				// if (operatorController.getLeftTriggerAxis() > 0.1) {
+				// 	robotstate = CLIMBIN;
+				// 	intakeOut = true;
+				// }
 
-				if (operatorController.getRightTriggerAxis() > 0.1) {
-					robotstate = CLIMBOUT;
-					intakeOut = true;
-				}
+				// if (operatorController.getRightTriggerAxis() > 0.1) {
+				// 	robotstate = CLIMBOUT;
+				// 	intakeOut = true;
+				// }
 				break;
 			// case INTAKING:
 			//     if (driverController.getYButtonPressed()) {
@@ -106,33 +106,33 @@ public class Manager {
 				if (operatorController.getBButtonPressed()) {
 					robotstate = IDLE;
 				}
-				if (operatorController.getLeftTriggerAxis() > 0.1) {
-					robotstate = CLIMBIN;
-					intakeOut = true;
-				}
+				// if (operatorController.getLeftTriggerAxis() > 0.1) {
+				// 	robotstate = CLIMBIN;
+				// 	intakeOut = true;
+				// }
 
-				if (operatorController.getRightTriggerAxis() > 0.1) {
-					robotstate = CLIMBOUT;
-					intakeOut = true;
-				}
+				// if (operatorController.getRightTriggerAxis() > 0.1) {
+				// 	robotstate = CLIMBOUT;
+				// 	intakeOut = true;
+				// }
 				break;
-			case CLIMBIN:
-				intakeOut = true;
-				climber.setSpeed(-0.25);
-				if (operatorController.getLeftTriggerAxis() < 0.1) {
-					robotstate = INIDLE;
-				}
-				break;
-			case CLIMBAUTO:
-				intakeOut = true;
-				break;
-			case CLIMBOUT:
-				intakeOut = true;
-				climber.setSpeed(0.25);
-				if (operatorController.getRightTriggerAxis() < 0.1) {
-					robotstate = INIDLE;
-				}
-				break;
+			// case CLIMBIN:
+			// 	intakeOut = true;
+			// 	climber.setSpeed(-0.25);
+			// 	if (operatorController.getLeftTriggerAxis() < 0.1) {
+			// 		robotstate = INIDLE;
+			// 	}
+			// 	break;
+			// case CLIMBAUTO:
+			// 	intakeOut = true;
+			// 	break;
+			// case CLIMBOUT:
+			// 	intakeOut = true;
+			// 	climber.setSpeed(0.25);
+			// 	if (operatorController.get RightTriggerAxis() < 0.1) {
+			// 		robotstate = INIDLE;
+			// // 	}
+			// 	break;
 			default:
 				//robotstate = IDLE;
 				break;
