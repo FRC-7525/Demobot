@@ -70,7 +70,7 @@ public class Shooter {
 		SmartDashboard.putBoolean("ShooterSpark13", followerleftMotor.getLastError() == com.revrobotics.REVLibError.kOk);
 		SmartDashboard.putBoolean("ShooterSpark12", leaderrightMotor.getLastError() == com.revrobotics.REVLibError.kOk);
 
-		// What ever is on the SmartDashboard (Elastic) will be used to set the feedforward values, and then the values will be put back onto the SmartDashboard for logging
+		// Whatever is on the SmartDashboard (Elastic) will be used to set the feedforward values, and then the values will be put back onto the SmartDashboard for logging
 		feedforward.setKa(SmartDashboard.getNumber("kA", feedforward.getKa()));
 		SmartDashboard.putNumber("kA", feedforward.getKa());
 		feedforward.setKv(SmartDashboard.getNumber("kV", feedforward.getKv()));
