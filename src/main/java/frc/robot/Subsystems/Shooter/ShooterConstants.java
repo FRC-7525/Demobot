@@ -20,7 +20,6 @@ public final class ShooterConstants {
 	public static final double KD = SmartDashboard.getNumber("KD", 0.0);
 
 	public static final int PASS_SPEED = 1;
-	
-	public static final int RPS_TO_RPM_CONVERSION_FACTOR = 60;
 
+	public static final int RPS_TO_RPM_CONVERSION_FACTOR = 60;
 }

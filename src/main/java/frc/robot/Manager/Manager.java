@@ -9,7 +9,6 @@ import frc.robot.Subsystems.Climber.Climber;
 import frc.robot.Subsystems.Intake.Intake;
 import frc.robot.Subsystems.Shooter.Passthrough;
 import frc.robot.Subsystems.Shooter.Shooter;
-
 import org.littletonrobotics.junction.Logger;
 
 public class Manager {
