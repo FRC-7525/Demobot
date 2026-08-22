@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Subsystems.Climber.Climber;
 import frc.robot.Subsystems.Intake.Intake;
-import frc.robot.Subsystems.Shooter.Passthrough;
+import frc.robot.Subsystems.Intake.IntakeStates;
 import frc.robot.Subsystems.Shooter.Shooter;
 import org.littletonrobotics.junction.Logger;
 
@@ -15,7 +15,7 @@ public class Manager {
 
 	Climber climber;
 	Intake intake;
-	Passthrough passthrough;
+	IntakeStates passthrough;
 	Shooter shooter;
 	ManagerStates robotstate;
 	private boolean intakeOut;
@@ -28,7 +28,6 @@ public class Manager {
 	private Manager() {
 		climber = Climber.getInstance();
 		intake = Intake.getInstance();
-		passthrough = Passthrough.getInstance();
 		shooter = Shooter.getInstance();
 
 		robotstate = IDLE;
@@ -48,13 +47,13 @@ public class Manager {
 
 	public void periodic() {
 		// intake.setState(getState().getIntakeState());
-		passthrough.setState(getState().getPassthroughState());
+		intake.setState(getState().getIntakeState());
 		shooter.setState(getState().getShooterState());
 		climber.setState(getState().getClimberState());
 		Logger.recordOutput("Manager State", robotstate.getStateString());
 
 		intake.periodic();
-		passthrough.periodic();
+		intake.periodic();
 		shooter.periodic();
 		climber.periodic();
 
@@ -70,22 +69,34 @@ public class Manager {
 					robotstate = WINDUP;
 				}
 
-				if (operatorController.getLeftTriggerAxis() > 0.1) {
-					robotstate = CLIMBIN;
-					intakeOut = true;
+				if (driverController.getYButtonPressed()) {
+					robotstate = INTAKING;
 				}
 
-				if (operatorController.getRightTriggerAxis() > 0.1) {
-					robotstate = CLIMBOUT;
-					intakeOut = true;
+				if (operatorController.getAButtonPressed()) {
+					robotstate = INIDLE;
+				}
+				// if (operatorController.getLeftTriggerAxis() > 0.1) {
+				// 	robotstate = CLIMBIN;
+				// 	intakeOut = true;
+				// }
+
+				// if (operatorController.getRightTriggerAxis() > 0.1) {
+				// 	robotstate = CLIMBOUT;
+				// 	intakeOut = true;
+				// }
+				break;
+			case OUTTAKE:
+				if (operatorController.getBButtonPressed()) {
+					robotstate = IDLE;
 				}
 				break;
-			// case INTAKING:
-			//     if (driverController.getYButtonPressed()) {
-			//         robotstate = IDLE;
-			//     }
+			case INTAKING:
+				if (driverController.getYButtonPressed()) {
+					robotstate = IDLE;
+				}
 
-			//     break;
+				break;
 			case REVERSE_PASS:
 				if (operatorController.getXButtonPressed()) {
 					robotstate = IDLE;
@@ -106,46 +117,36 @@ public class Manager {
 				if (operatorController.getBButtonPressed()) {
 					robotstate = IDLE;
 				}
-				if (operatorController.getLeftTriggerAxis() > 0.1) {
-					robotstate = CLIMBIN;
-					intakeOut = true;
-				}
+				// 	if (operatorController.getLeftTriggerAxis() > 0.1) {
+				// 		robotstate = CLIMBIN;
+				// 		intakeOut = true;
+				// 	}
 
-				if (operatorController.getRightTriggerAxis() > 0.1) {
-					robotstate = CLIMBOUT;
-					intakeOut = true;
-				}
-				break;
-			case CLIMBIN:
-				intakeOut = true;
-				climber.setSpeed(-0.25);
-				if (operatorController.getLeftTriggerAxis() < 0.1) {
-					robotstate = INIDLE;
-				}
-				break;
-			case CLIMBAUTO:
-				intakeOut = true;
-				break;
-			case CLIMBOUT:
-				intakeOut = true;
-				climber.setSpeed(0.25);
-				if (operatorController.getRightTriggerAxis() < 0.1) {
-					robotstate = INIDLE;
-				}
+				// 	if (operatorController.getRightTriggerAxis() > 0.1) {
+				// 		robotstate = CLIMBOUT;
+				// 		intakeOut = true;
+				// 	}
+				// 	break;
+				// case CLIMBIN:
+				// 	intakeOut = true;
+				// 	climber.setSpeed(-0.25);
+				// 	if (operatorController.getLeftTriggerAxis() < 0.1) {
+				// 		robotstate = INIDLE;
+				// 	}
+				// 	break;
+				// case CLIMBAUTO:
+				// 	intakeOut = true;
+				// 	break;
+				// case CLIMBOUT:
+				// 	intakeOut = true;
+				// 	climber.setSpeed(0.25);
+				// 	if (operatorController.getRightTriggerAxis() < 0.1) {
+				// 		robotstate = INIDLE;
+				// 	}
 				break;
 			default:
 				//robotstate = IDLE;
 				break;
-		}
-
-		if (driverController.getAButtonPressed() || operatorController.getStartButtonPressed()) {
-			robotstate = IDLE;
-			intake.setIntakeOn(false);
-			intakeOut = true;
-		}
-
-		if (operatorController.getBButtonPressed() || driverController.getYButtonPressed()) {
-			intakeOut = !intakeOut;
 		}
 		// SmartDashboard.putBoolean("Intake/Intake Out", intakeOut);
 	}

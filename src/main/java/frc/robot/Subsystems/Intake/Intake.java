@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Intake {
 
+	private static Intake instance;
 	private final SparkMax wheelMotor;
 	private final SparkMax armMotor;
 
@@ -30,6 +31,14 @@ public class Intake {
 		agitateTimer = new Timer();
 
 		armPIDController = new PIDController(ARM_P, ARM_I, ARM_D);
+	}
+
+	public static Intake getInstance() {
+		if (instance == null) {
+			instance = new Intake();
+		}
+
+		return instance;
 	}
 
 	public void setState(IntakeStates state) {
