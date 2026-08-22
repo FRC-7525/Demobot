@@ -17,6 +17,7 @@ The Demobot uses:
 - Ensure FRC Driver Station is installed
 - Ensure the laptop Wi-Fi works
 - Keep the robot on blocks or in a safe area before enabling
+- Use a charged battery and confirm main breaker access
 
 ## 1) Open WPILib VS Code
 
@@ -40,6 +41,7 @@ The Demobot uses:
 1. Press **Ctrl+Shift+P**.
 2. Run **WPILib: Build Robot Code**.
 3. Confirm you get a successful build message.
+4. If build fails, open [Troubleshooting Guide](./troubleshooting.md) and use **Build fails in WPILib VS Code**.
 
 **Picture placeholder:** Terminal or WPILib status showing a successful build.
 
@@ -48,6 +50,7 @@ The Demobot uses:
 1. Power on the robot and wait for full boot.
 2. Connect the laptop to Wi-Fi network **Demobot**.
 3. Use the team-provided Wi-Fi password.
+4. Disable VPN during deploy and driver station use.
 
 **Picture placeholder:** Windows Wi-Fi panel connected to the Demobot SSID.
 
@@ -66,14 +69,28 @@ The Demobot uses:
 2. Run **WPILib: Deploy Robot Code**.
 3. Wait for deploy to complete.
 4. If deploy appears stuck for several minutes, cancel and retry once.
+5. If retry fails, use [Troubleshooting Guide](./troubleshooting.md) and see **Deploy fails or hangs**.
 
 **Picture placeholder:** Deploy command output showing successful deployment to roboRIO.
 
-## 7) Post-deploy quick checks
+## 7) Validation after first deploy
 
 - Robot remains connected in Driver Station
-- Correct project appears deployed
-- No new major CAN or power warnings
+- Code indicator remains green
 - Dashboard values update as expected
+- No new major CAN or power warnings
+- Robot can safely enable/disable once on blocks
 
 **Picture placeholder:** Dashboard showing live robot telemetry values after deploy.
+
+## 8) If setup fails
+
+1. Do not keep retrying random steps.
+2. Capture Driver Station status screenshot.
+3. Save build/deploy error output.
+4. Use [Troubleshooting Guide](./troubleshooting.md) section matching your symptom.
+5. Escalate with collected evidence.
+
+## Next step
+
+After setup is complete, continue with the [Operations Guide](./operations-guide.md).
