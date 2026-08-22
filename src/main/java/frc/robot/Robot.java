@@ -26,6 +26,7 @@ public class Robot extends TimedRobot {
 	public static boolean isRedAlliance = false;
 	private final Manager manager = Manager.getInstance();
 	private final Drive drive = Drive.getInstance();
+
 	/**
 	 * This function is run when the robot is first started up and should be used for any
 	 * initialization code.

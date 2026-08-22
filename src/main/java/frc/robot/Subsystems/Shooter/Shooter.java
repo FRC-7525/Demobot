@@ -48,7 +48,7 @@ public class Shooter {
 		followerConfig.follow(leaderrightMotor, true);
 		followerleftMotor.configure(followerConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
-        // configures initial settings for the motors, such as idle mode is set to coast
+		// configures initial settings for the motors, such as idle mode is set to coast
 		leaderrightMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 		followerleftMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 		passMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
@@ -69,7 +69,7 @@ public class Shooter {
 		SmartDashboard.putNumber("Shooter/Target Speed (RPM)", state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR);
 		SmartDashboard.putNumber("Passthrough/Pass RPM", passMotor.getEncoder().getVelocity());
 		SmartDashboard.putData("Shooter/PID Controller", motorcontrollerright);
-		
+
 		// Check if Sparkmaxes are connected to CANBus
 		SmartDashboard.putBoolean("ShooterSpark13", followerleftMotor.getLastError() == com.revrobotics.REVLibError.kOk);
 		SmartDashboard.putBoolean("ShooterSpark12", leaderrightMotor.getLastError() == com.revrobotics.REVLibError.kOk);
@@ -83,11 +83,11 @@ public class Shooter {
 		feedforward.setKs(SmartDashboard.getNumber("kS", feedforward.getKs()));
 		SmartDashboard.putNumber("kS", feedforward.getKs());
 
-        // States change speed of motors
+		// States change speed of motors
 		if (state == ShooterStates.IDLE) {
 			leaderrightMotor.set(0);
 			passMotor.set(0);
-		} else if (state == ShooterStates.MIDSHOOT || state == ShooterStates.LOWSHOOT || state == ShooterStates.HIGHSHOOT){
+		} else if (state == ShooterStates.MIDSHOOT || state == ShooterStates.LOWSHOOT || state == ShooterStates.HIGHSHOOT) {
 			leaderrightMotor.setVoltage(
 				motorcontrollerright.calculate(followerleftMotor.getEncoder().getVelocity(), state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR) + feedforward.calculate(state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR)
 			);
