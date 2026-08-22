@@ -86,18 +86,17 @@ public class Manager {
 				// 	intakeOut = true;
 				// }
 				break;
-
 			case OUTTAKE:
 				if (operatorController.getBButtonPressed()) {
 					robotstate = IDLE;
 				}
 				break;
 			case INTAKING:
-			    if (driverController.getYButtonPressed()) {
-			        robotstate = IDLE;
-			    }
+				if (driverController.getYButtonPressed()) {
+					robotstate = IDLE;
+				}
 
-			    break;
+				break;
 			case REVERSE_PASS:
 				if (operatorController.getXButtonPressed()) {
 					robotstate = IDLE;
@@ -118,40 +117,37 @@ public class Manager {
 				if (operatorController.getBButtonPressed()) {
 					robotstate = IDLE;
 				}
-			// 	if (operatorController.getLeftTriggerAxis() > 0.1) {
-			// 		robotstate = CLIMBIN;
-			// 		intakeOut = true;
-			// 	}
+				// 	if (operatorController.getLeftTriggerAxis() > 0.1) {
+				// 		robotstate = CLIMBIN;
+				// 		intakeOut = true;
+				// 	}
 
-			// 	if (operatorController.getRightTriggerAxis() > 0.1) {
-			// 		robotstate = CLIMBOUT;
-			// 		intakeOut = true;
-			// 	}
-			// 	break;
-			// case CLIMBIN:
-			// 	intakeOut = true;
-			// 	climber.setSpeed(-0.25);
-			// 	if (operatorController.getLeftTriggerAxis() < 0.1) {
-			// 		robotstate = INIDLE;
-			// 	}
-			// 	break;
-			// case CLIMBAUTO:
-			// 	intakeOut = true;
-			// 	break;
-			// case CLIMBOUT:
-			// 	intakeOut = true;
-			// 	climber.setSpeed(0.25);
-			// 	if (operatorController.getRightTriggerAxis() < 0.1) {
-			// 		robotstate = INIDLE;
-			// 	}
+				// 	if (operatorController.getRightTriggerAxis() > 0.1) {
+				// 		robotstate = CLIMBOUT;
+				// 		intakeOut = true;
+				// 	}
+				// 	break;
+				// case CLIMBIN:
+				// 	intakeOut = true;
+				// 	climber.setSpeed(-0.25);
+				// 	if (operatorController.getLeftTriggerAxis() < 0.1) {
+				// 		robotstate = INIDLE;
+				// 	}
+				// 	break;
+				// case CLIMBAUTO:
+				// 	intakeOut = true;
+				// 	break;
+				// case CLIMBOUT:
+				// 	intakeOut = true;
+				// 	climber.setSpeed(0.25);
+				// 	if (operatorController.getRightTriggerAxis() < 0.1) {
+				// 		robotstate = INIDLE;
+				// 	}
 				break;
 			default:
 				//robotstate = IDLE;
 				break;
 		}
-
-
-
 		// SmartDashboard.putBoolean("Intake/Intake Out", intakeOut);
 	}
 

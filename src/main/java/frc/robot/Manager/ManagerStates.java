@@ -44,8 +44,6 @@ public enum ManagerStates {
 		return climberState;
 	}
 
-
-
 	public IntakeStates getIntakeState() {
 		return intakeState;
 	}
