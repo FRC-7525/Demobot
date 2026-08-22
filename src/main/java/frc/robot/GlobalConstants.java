@@ -8,7 +8,8 @@ public class GlobalConstants {
 
 	public enum RobotMode {
 		REAL,
-		SIM;
+		SIM,
+		TUNE;
 	}
 
 	public static final double SIMULATION_PERIOD = 0.02;
