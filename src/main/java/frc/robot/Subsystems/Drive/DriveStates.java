@@ -17,11 +17,11 @@ public enum DriveStates {
 			Drive.getInstance().getSwerveInputs().scaleRotation(0.2);
 			Drive.getInstance().getSwerveDrive().driveFieldOriented(Drive.getInstance().getSwerveInputs().get());
 		} else {
-			Drive.getInstance().getSwerveDrive().driveFieldOriented(ChassisSpeeds.fromRobotRelativeSpeeds(0,0,0, Rotation2d.fromDegrees(0)));
+			Drive.getInstance().getSwerveDrive().driveFieldOriented(ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, 0, Rotation2d.fromDegrees(0)));
 		}
 	}),
 	DISABLED("Disabled", () -> {
-		Drive.getInstance().getSwerveDrive().driveFieldOriented(ChassisSpeeds.fromRobotRelativeSpeeds(0,0,0, Rotation2d.fromDegrees(0)));
+		Drive.getInstance().getSwerveDrive().driveFieldOriented(ChassisSpeeds.fromRobotRelativeSpeeds(0, 0, 0, Rotation2d.fromDegrees(0)));
 	}),
 	SLOW("Slow", () -> {
 		Drive.getInstance().getSwerveInputs().scaleTranslation(0.33);

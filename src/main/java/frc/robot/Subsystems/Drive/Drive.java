@@ -1,5 +1,8 @@
 package frc.robot.Subsystems.Drive;
 
+import static frc.robot.GlobalConstants.Controllers.DRIVER_CONTROLLER;
+import static frc.robot.Subsystems.Drive.DriveConstants.*;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -14,10 +17,9 @@ import swervelib.SwerveInputStream;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
-import static frc.robot.Subsystems.Drive.DriveConstants.*;
-import static frc.robot.GlobalConstants.Controllers.DRIVER_CONTROLLER;
 
 public class Drive extends SubsystemBase {
+
 	private static Drive instance;
 	private DriveStates state;
 	private SwerveInputStream swerveInputs;
