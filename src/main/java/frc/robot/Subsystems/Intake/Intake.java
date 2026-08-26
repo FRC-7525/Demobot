@@ -26,7 +26,7 @@ public class Intake {
 		wheelMotor = new SparkMax(IntakeConstants.WHEEL_MOTOR_ID, MotorType.kBrushless);
 		armMotor = new SparkMax(IntakeConstants.ARM_MOTOR_ID, MotorType.kBrushless);
 
-		currentState = IntakeStates.IDLE;
+		currentState = IntakeStates.IN_IDLE;
 		agitatingHigh = false;
 		agitateTimer = new Timer();
 

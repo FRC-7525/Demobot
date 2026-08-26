@@ -56,7 +56,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		drive.setState(DriveStates.MANUAL);
 		CommandScheduler.getInstance().cancelAll();
-		manager.setState(ManagerStates.IDLE);
+		manager.setState(ManagerStates.IN_IDLE);
 		SmartDashboard.putBoolean("Robot State/isAutonomous", DriverStation.isAutonomous());
 		SmartDashboard.putBoolean("Robot State/isEnabled", DriverStation.isEnabled());
 	}
