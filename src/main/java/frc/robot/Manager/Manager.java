@@ -5,7 +5,6 @@ import static frc.robot.GlobalConstants.Controllers.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Subsystems.Intake.Intake;
-import frc.robot.Subsystems.Intake.IntakeStates;
 import frc.robot.Subsystems.Shooter.Shooter;
 import org.littletonrobotics.junction.Logger;
 
@@ -13,6 +12,7 @@ public class Manager {
 	Intake intake;
 	Shooter shooter;
 	ManagerStates robotstate;
+	ManagerStates goalState; // Used for tracking shooter power level
 
 	private static Manager instance;
 
@@ -21,6 +21,7 @@ public class Manager {
 		shooter = Shooter.getInstance();
 
 		robotstate = IN_IDLE;
+		goalState = LOWSHOT;
 	}
 
 	public static Manager getInstance() {
@@ -41,35 +42,100 @@ public class Manager {
 
 		if (DRIVER_CONTROLLER.getStartButtonPressed()) {
 			robotstate = IN_IDLE;
-			continue;
+			return;
+		}
+		if (robotstate == IN_IDLE || robotstate == OUT_IDLE || robotstate == INTAKING) {
+			if (OPERATOR_CONTROLLER.getPOV() == 0) {
+				goalState = HIGHSHOT;
+			} else if (OPERATOR_CONTROLLER.getPOV() == 180) {
+				goalState = LOWSHOT;
+			} else if (OPERATOR_CONTROLLER.getPOV() == 90) {
+				goalState = MIDSHOT;
+			} else if (OPERATOR_CONTROLLER.getPOV() == 270) {
+				goalState = MIDSHOT;
+			}
 		}
 
 		switch (robotstate) {
 			case IN_IDLE:
-				if (OPERATOR_CONTROLLER.getXButtonPressed()) {
-					robotstate = REVERSE_PASS;
-				}
-
-				if (DRIVER_CONTROLLER.getYButtonPressed()) {
+				if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) {
 					robotstate = INTAKING;
-				}
-
-				if (OPERATOR_CONTROLLER.getAButtonPressed()) {
-					robotstate = IN_IDLE;
+				} else if (DRIVER_CONTROLLER.getXButtonPressed()) {
+					robotstate = OUT_IDLE;
+				} else if (DRIVER_CONTROLLER.getRightBumperButtonPressed()) {
+					robotstate = goalState;
+				} 
+				break;
+			case OUT_IDLE:
+				if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) {
+					robotstate = INTAKING;
+				} else if (DRIVER_CONTROLLER.getRightBumperButtonPressed()) {
+					robotstate = goalState;
+				} else if (DRIVER_CONTROLLER.getBackButtonPressed()) {
+					robotstate = REVERSE_PASS;
 				}
 				break;
 			case INTAKING:
-				if (DRIVER_CONTROLLER.getYButtonPressed()) {
-					robotstate = IDLE;
+				if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) {
+					robotstate = OUT_IDLE;
+				} else if (DRIVER_CONTROLLER.getRightBumperButtonPressed()) {
+					robotstate = goalState;
 				}
 				break;
+			case HIGHSHOT:
+			case MIDSHOT:
+			case LOWSHOT:
+				if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) {
+					robotstate = INTAKING;
+				} else if (DRIVER_CONTROLLER.getRightBumperButtonPressed()) {
+					robotstate = OUT_IDLE;
+				} if (DRIVER_CONTROLLER.getAButtonPressed()) {
+					// SET to the AGITATE version of this state
+					switch (robotstate) {
+						case HIGHSHOT:
+							robotstate = HIGHSHOT_AGITATE;
+							break;
+						case MIDSHOT:
+							robotstate = MIDSHOT_AGITATE;
+							break;
+						case LOWSHOT:
+							robotstate = LOWSHOT_AGITATE;
+							break;
+						default:
+							break;
+					}
+				}
+				break;
+			case HIGHSHOT_AGITATE:
+			case MIDSHOT_AGITATE:
+			case LOWSHOT_AGITATE:
+				if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) {
+					robotstate = INTAKING;
+				} else if (DRIVER_CONTROLLER.getRightBumperButtonPressed()) {
+					robotstate = OUT_IDLE;
+				} if (DRIVER_CONTROLLER.getAButtonPressed()) {
+					// SET to the non-AGITATE version of this state
+					switch (robotstate) {
+						case HIGHSHOT_AGITATE:
+							robotstate = HIGHSHOT;
+							break;
+						case MIDSHOT_AGITATE:
+							robotstate = MIDSHOT;
+							break;
+						case LOWSHOT_AGITATE:
+							robotstate = LOWSHOT;
+							break;
+						default:
+							break;
+					}
+				}
 			case REVERSE_PASS:
-				if (OPERATOR_CONTROLLER.getXButtonPressed()) {
-					robotstate = IDLE;
+				if (DRIVER_CONTROLLER.getBackButtonPressed()) {
+					robotstate = OUT_IDLE;
 				}
 				break;
 			default:
-				robotstate = IDLE;
+				robotstate = IN_IDLE;
 				break;
 		}
 	}
@@ -80,9 +146,5 @@ public class Manager {
 
 	public void setState(ManagerStates newState) {
 		robotstate = newState;
-	}
-
-	public void setIntakeOut(boolean isOut) {
-		intakeOut = isOut;
 	}
 }

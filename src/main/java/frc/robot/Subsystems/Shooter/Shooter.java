@@ -1,6 +1,7 @@
 package frc.robot.Subsystems.Shooter;
 
 import static frc.robot.Subsystems.Shooter.ShooterConstants.*;
+import static frc.robot.GlobalConstants.ROBOT_MODE;
 
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
@@ -12,6 +13,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.GlobalConstants.RobotMode;
 
 public class Shooter {
 
@@ -67,7 +69,7 @@ public class Shooter {
 		// logging
 		SmartDashboard.putNumber("Shooter/Shooter RPM", followerleftMotor.getEncoder().getVelocity());
 		SmartDashboard.putNumber("Shooter/Target Speed (RPM)", state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR);
-		SmartDashboard.putNumber("Passthrough/Pass RPM", passMotor.getEncoder().getVelocity());
+		SmartDashboard.putNumber("Shooter/Pass RPM", passMotor.getEncoder().getVelocity());
 		SmartDashboard.putData("Shooter/PID Controller", motorcontrollerright);
 
 		// Check if Sparkmaxes are connected to CANBus
@@ -75,13 +77,17 @@ public class Shooter {
 		SmartDashboard.putBoolean("ShooterSpark12", leaderrightMotor.getLastError() == com.revrobotics.REVLibError.kOk);
 		SmartDashboard.putBoolean("PassthroughSpark14", passMotor.getLastError() == com.revrobotics.REVLibError.kOk);
 
-		// What ever is on the SmartDashboard (Elastic) will be used to set the feedforward values, and then the values will be put back onto the SmartDashboard for logging
-		feedforward.setKa(SmartDashboard.getNumber("kA", feedforward.getKa()));
-		SmartDashboard.putNumber("kA", feedforward.getKa());
-		feedforward.setKv(SmartDashboard.getNumber("kV", feedforward.getKv()));
-		SmartDashboard.putNumber("kV", feedforward.getKv());
-		feedforward.setKs(SmartDashboard.getNumber("kS", feedforward.getKs()));
-		SmartDashboard.putNumber("kS", feedforward.getKs());
+		if (ROBOT_MODE == RobotMode.TUNE) {
+			// What ever is on the SmartDashboard (Elastic) will be used to set the feedforward values, and then the values will be put back onto the SmartDashboard for logging
+			feedforward.setKa(SmartDashboard.getNumber("kA", feedforward.getKa()));
+			SmartDashboard.putNumber("Shooter/kA", feedforward.getKa());
+			feedforward.setKv(SmartDashboard.getNumber("kV", feedforward.getKv()));
+			SmartDashboard.putNumber("Shooter/kV", feedforward.getKv());
+			feedforward.setKs(SmartDashboard.getNumber("kS", feedforward.getKs()));
+			SmartDashboard.putNumber("Shooter/kS", feedforward.getKs());
+			SmartDashboard.putData("Shooter/PID Controller", motorcontrollerright);
+		}
+		
 
 		// States change speed of motors
 		if (state == ShooterStates.IDLE) {

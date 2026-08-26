@@ -8,6 +8,9 @@ import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.GlobalConstants.RobotMode;
+
+import static frc.robot.GlobalConstants.ROBOT_MODE;
 
 public class Intake {
 
@@ -95,5 +98,8 @@ public class Intake {
 		// agitates
 		SmartDashboard.putBoolean("Intake/Agitate/AtHigh", agitatingHigh);
 		SmartDashboard.putNumber("Intake/Agitate/Timer", agitateTimer.get());
+		if (ROBOT_MODE == RobotMode.TUNE) {
+			SmartDashboard.putData(armPIDController);
+		}
 	}
 }
