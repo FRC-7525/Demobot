@@ -1,7 +1,8 @@
 package frc.robot.Manager;
 
-import static frc.robot.Manager.ManagerStates.*;
 import static frc.robot.GlobalConstants.Controllers.*;
+import static frc.robot.Manager.ManagerConstants.*;
+import static frc.robot.Manager.ManagerStates.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Subsystems.Intake.Intake;
@@ -9,6 +10,7 @@ import frc.robot.Subsystems.Shooter.Shooter;
 import org.littletonrobotics.junction.Logger;
 
 public class Manager {
+
 	Intake intake;
 	Shooter shooter;
 	ManagerStates robotstate;
@@ -24,6 +26,7 @@ public class Manager {
 		goalState = LOWSHOT;
 	}
 
+	// Makes sure that there is only ONE instance of the Shooter class, and if there isn't, it creates a new one (this is a singleton pattern)
 	public static Manager getInstance() {
 		if (instance == null) {
 			instance = new Manager();
@@ -45,13 +48,13 @@ public class Manager {
 			return;
 		}
 		if (robotstate == IN_IDLE || robotstate == OUT_IDLE || robotstate == INTAKING) {
-			if (OPERATOR_CONTROLLER.getPOV() == 0) {
+			if (OPERATOR_CONTROLLER.getPOV() == UP) {
 				goalState = HIGHSHOT;
-			} else if (OPERATOR_CONTROLLER.getPOV() == 180) {
+			} else if (OPERATOR_CONTROLLER.getPOV() == DOWN) {
 				goalState = LOWSHOT;
-			} else if (OPERATOR_CONTROLLER.getPOV() == 90) {
+			} else if (OPERATOR_CONTROLLER.getPOV() == LEFT) {
 				goalState = MIDSHOT;
-			} else if (OPERATOR_CONTROLLER.getPOV() == 270) {
+			} else if (OPERATOR_CONTROLLER.getPOV() == RIGHT) {
 				goalState = MIDSHOT;
 			}
 		}
@@ -64,7 +67,7 @@ public class Manager {
 					robotstate = OUT_IDLE;
 				} else if (DRIVER_CONTROLLER.getRightBumperButtonPressed()) {
 					robotstate = goalState;
-				} 
+				}
 				break;
 			case OUT_IDLE:
 				if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) {
@@ -73,6 +76,8 @@ public class Manager {
 					robotstate = goalState;
 				} else if (DRIVER_CONTROLLER.getBackButtonPressed()) {
 					robotstate = REVERSE_PASS;
+				} else if (DRIVER_CONTROLLER.getXButtonPressed()) {
+					robotstate = IN_IDLE;
 				}
 				break;
 			case INTAKING:
@@ -89,7 +94,8 @@ public class Manager {
 					robotstate = INTAKING;
 				} else if (DRIVER_CONTROLLER.getRightBumperButtonPressed()) {
 					robotstate = OUT_IDLE;
-				} if (DRIVER_CONTROLLER.getAButtonPressed()) {
+				}
+				if (DRIVER_CONTROLLER.getAButtonPressed()) {
 					// SET to the AGITATE version of this state
 					switch (robotstate) {
 						case HIGHSHOT:
@@ -113,7 +119,8 @@ public class Manager {
 					robotstate = INTAKING;
 				} else if (DRIVER_CONTROLLER.getRightBumperButtonPressed()) {
 					robotstate = OUT_IDLE;
-				} if (DRIVER_CONTROLLER.getAButtonPressed()) {
+				}
+				if (DRIVER_CONTROLLER.getAButtonPressed()) {
 					// SET to the non-AGITATE version of this state
 					switch (robotstate) {
 						case HIGHSHOT_AGITATE:

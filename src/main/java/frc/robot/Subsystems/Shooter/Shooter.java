@@ -1,7 +1,7 @@
 package frc.robot.Subsystems.Shooter;
 
-import static frc.robot.Subsystems.Shooter.ShooterConstants.*;
 import static frc.robot.GlobalConstants.ROBOT_MODE;
+import static frc.robot.Subsystems.Shooter.ShooterConstants.*;
 
 import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
@@ -26,7 +26,7 @@ public class Shooter {
 	private SparkMaxConfig followerConfig;
 	protected SimpleMotorFeedforward feedforward;
 
-	// makes sure that there is only one instance of the Shooter class, and if there isn't, it creates a new one (this is a singleton pattern)
+	// Makes sure that there is only ONE instance of the Shooter class, and if there isn't, it creates a new one (this is a singleton pattern)
 	public static Shooter getInstance() {
 		if (instance == null) {
 			instance = new Shooter();
@@ -39,7 +39,7 @@ public class Shooter {
 		state = ShooterStates.IDLE;
 
 		motorcontrollerright = new PIDController(KP, KI, KD);
-		feedforward = new SimpleMotorFeedforward(0.26, 0.00207, 0);
+		feedforward = new SimpleMotorFeedforward(KS, KV, KA);
 
 		followerleftMotor = new SparkMax(LEFT_MOTOR_ID, MotorType.kBrushless);
 		leaderrightMotor = new SparkMax(RIGHT_MOTOR_ID, MotorType.kBrushless);
@@ -62,7 +62,7 @@ public class Shooter {
 
 	public boolean atSpeed() {
 		// checks if the shooter is at the target speed by comparing the current velocity of the follower left motor's encoder to the target speed in RPM, allowing a tolerance of 60 RPM
-		return Math.abs(followerleftMotor.getEncoder().getVelocity() - (state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR)) < 60;
+		return Math.abs(followerleftMotor.getEncoder().getVelocity() - (state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR)) < TOLERANCE;
 	}
 
 	public void periodic() {
@@ -85,9 +85,10 @@ public class Shooter {
 			SmartDashboard.putNumber("Shooter/kV", feedforward.getKv());
 			feedforward.setKs(SmartDashboard.getNumber("kS", feedforward.getKs()));
 			SmartDashboard.putNumber("Shooter/kS", feedforward.getKs());
+
+			// PID Controller tuning
 			SmartDashboard.putData("Shooter/PID Controller", motorcontrollerright);
 		}
-		
 
 		// States change speed of motors
 		if (state == ShooterStates.IDLE) {

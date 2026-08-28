@@ -2,7 +2,6 @@ package frc.robot.Subsystems.Shooter;
 
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.AngularVelocity;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public final class ShooterConstants {
 
@@ -15,11 +14,16 @@ public final class ShooterConstants {
 	public static final int RIGHT_MOTOR_ID = 12;
 	public static final int PASS_MOTOR_ID = 14;
 
-	public static final double KP = SmartDashboard.getNumber("KP", 0.0);
-	public static final double KI = SmartDashboard.getNumber("KI", 0.0);
-	public static final double KD = SmartDashboard.getNumber("KD", 0.0);
+	public static final double KP = 0.0;
+	public static final double KI = 0.0;
+	public static final double KD = 0.0;
+
+	public static final double KS = 0.26;
+	public static final double KV = 0.00207;
+	public static final double KA = 0.0;
 
 	public static final int PASS_SPEED = 1;
 
 	public static final int RPS_TO_RPM_CONVERSION_FACTOR = 60;
+	public static final int TOLERANCE = 60; // RPM
 }

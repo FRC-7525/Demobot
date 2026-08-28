@@ -14,6 +14,7 @@ public enum ManagerStates {
 	MIDSHOT_AGITATE(IntakeStates.AGITATE, ShooterStates.MIDSHOOT, "MIDSHOOT AGITATE"),
 	HIGHSHOT_AGITATE(IntakeStates.AGITATE, ShooterStates.HIGHSHOOT, "HIGHSHOOT AGITATE"),
 	REVERSE_PASS(IntakeStates.OUTTAKE, ShooterStates.IDLE, "REVERSE_PASS");
+
 	private final String stateString;
 	private final ShooterStates shooterState;
 	private final IntakeStates intakeState;

@@ -1,5 +1,7 @@
 package frc.robot.CI;
 
+import static frc.robot.GlobalConstants.SIMULATION_PERIOD;
+
 import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -103,7 +105,7 @@ public class CrashCheck extends IterativeRobotBase {
 	}
 
 	public CrashCheck(IterativeRobotBase robot) {
-		super(0.02);
+		super(SIMULATION_PERIOD);
 		CrashCheck.robot = robot;
 		HAL.initialize(500, 0);
 

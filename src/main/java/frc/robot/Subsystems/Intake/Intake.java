@@ -1,6 +1,7 @@
 package frc.robot.Subsystems.Intake;
 
 import static edu.wpi.first.units.Units.Degrees;
+import static frc.robot.GlobalConstants.ROBOT_MODE;
 import static frc.robot.Subsystems.Intake.IntakeConstants.*;
 
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -9,8 +10,6 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.GlobalConstants.RobotMode;
-
-import static frc.robot.GlobalConstants.ROBOT_MODE;
 
 public class Intake {
 
@@ -36,6 +35,7 @@ public class Intake {
 		armPIDController = new PIDController(ARM_P, ARM_I, ARM_D);
 	}
 
+	// Makes sure that there is only ONE instance of the Shooter class, and if there isn't, it creates a new one (this is a singleton pattern)
 	public static Intake getInstance() {
 		if (instance == null) {
 			instance = new Intake();
