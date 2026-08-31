@@ -29,6 +29,8 @@ public class Shooter {
 	private SparkMaxConfig followerConfig;
 	protected SimpleMotorFeedforward feedforward;
 	private final Timer passthroughTimer;
+	private boolean ready;
+	private boolean wasIdle;
 
 	// Makes sure that there is only ONE instance of the Shooter class, and if there isn't, it creates a new one (this is a singleton pattern)
 	public static Shooter getInstance() {
@@ -106,16 +108,28 @@ public class Shooter {
 		if (state == ShooterStates.IDLE) {
 			leaderrightMotor.set(0);
 			passMotor.set(0);
-			passthroughTimer.reset();
+			ready = false;
+			wasIdle = true;
 		} else if (state == ShooterStates.MIDSHOOT || state == ShooterStates.LOWSHOOT || state == ShooterStates.HIGHSHOOT) {
-			passthroughTimer.start();
-
-			if (passthroughTimer.hasElapsed(PASSTHROUGH_INTERVAL)) {
+			if (!ready && wasIdle) {
+				wasIdle = false;
+				passthroughTimer.reset();
+				passthroughTimer.start();
+			} else if (!ready && !wasIdle) {
+				leaderrightMotor.set(1);
+				if (passthroughTimer.hasElapsed(1.0)) {
+					ready = true;
+				}
+			} else if (ready) {
 				passMotor.set(PASS_SPEED);
-				System.out.println("heheh");
+				leaderrightMotor.set(1);
 			}
+			// if (passthroughTimer.hasElapsed(PASSTHROUGH_INTERVAL)) {
+			// 	passMotor.set(PASS_SPEED);
+			// 	System.out.println("heheh");
+			// }
 
-			leaderrightMotor.set(1);
+			// leaderrightMotor.set(1);
 			
 			//leaderrightMotor.setVoltage(
 				//motorcontrollerright.calculate(followerleftMotor.getEncoder().getVelocity(), state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR) + feedforward.calculate(state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR)
