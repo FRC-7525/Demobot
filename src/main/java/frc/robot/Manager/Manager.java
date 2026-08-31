@@ -78,7 +78,7 @@ public class Manager {
 					robotstate = REVERSE_PASS;
 				} else if (DRIVER_CONTROLLER.getXButtonPressed()) {
 					robotstate = IN_IDLE;
-				}
+				} 
 				break;
 			case INTAKING:
 				if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) {

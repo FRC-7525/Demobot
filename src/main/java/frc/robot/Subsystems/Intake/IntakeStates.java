@@ -7,7 +7,7 @@ public enum IntakeStates {
 	OUTTAKE(IntakeConstants.OUTTAKE_SPEED, IntakeConstants.ARM_ANGLE_OUTTAKE),
 	OUT_IDLE(IntakeConstants.IDLE_SPEED, IntakeConstants.ARM_ANGLE_INTAKE),
 	IN_IDLE(IntakeConstants.IDLE_SPEED, IntakeConstants.ARM_ANGLE_IDLE),
-	AGITATE(IntakeConstants.IDLE_SPEED, IntakeConstants.ARM_ANGLE_AGITATE_LOW);
+	AGITATE(IntakeConstants.INTAKE_SPEED, IntakeConstants.ARM_ANGLE_AGITATE_LOW);
 
 	private double wheelSpeed;
 	private Angle armAngle;

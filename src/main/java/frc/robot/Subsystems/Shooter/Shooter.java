@@ -1,6 +1,7 @@
 package frc.robot.Subsystems.Shooter;
 
 import static frc.robot.GlobalConstants.ROBOT_MODE;
+import static frc.robot.Subsystems.Intake.IntakeConstants.IDLE_SPEED;
 import static frc.robot.Subsystems.Shooter.ShooterConstants.*;
 
 import com.revrobotics.PersistMode;
@@ -12,8 +13,10 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.GlobalConstants.RobotMode;
+import frc.robot.Subsystems.Intake.IntakeStates;
 
 public class Shooter {
 
@@ -25,6 +28,7 @@ public class Shooter {
 	protected PIDController motorcontrollerright;
 	private SparkMaxConfig followerConfig;
 	protected SimpleMotorFeedforward feedforward;
+	private final Timer passthroughTimer;
 
 	// Makes sure that there is only ONE instance of the Shooter class, and if there isn't, it creates a new one (this is a singleton pattern)
 	public static Shooter getInstance() {
@@ -54,10 +58,18 @@ public class Shooter {
 		leaderrightMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 		followerleftMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 		passMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+		passthroughTimer = new Timer();
 	}
 
 	public void setState(ShooterStates state) {
 		this.state = state;
+
+		if (state == ShooterStates.MIDSHOOT || state == ShooterStates.LOWSHOOT || state == ShooterStates.HIGHSHOOT) {
+			// agitatingHigh = false;
+			passthroughTimer.restart();
+		} else {
+			passthroughTimer.stop();
+		}
 	}
 
 	public boolean atSpeed() {
@@ -94,13 +106,23 @@ public class Shooter {
 		if (state == ShooterStates.IDLE) {
 			leaderrightMotor.set(0);
 			passMotor.set(0);
+			passthroughTimer.reset();
 		} else if (state == ShooterStates.MIDSHOOT || state == ShooterStates.LOWSHOOT || state == ShooterStates.HIGHSHOOT) {
-			leaderrightMotor.setVoltage(
-				motorcontrollerright.calculate(followerleftMotor.getEncoder().getVelocity(), state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR) + feedforward.calculate(state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR)
-			);
-			passMotor.set(PASS_SPEED);
+			passthroughTimer.start();
+
+			if (passthroughTimer.hasElapsed(PASSTHROUGH_INTERVAL)) {
+				passMotor.set(PASS_SPEED);
+				System.out.println("heheh");
+			}
+
+			leaderrightMotor.set(1);
+			
+			//leaderrightMotor.setVoltage(
+				//motorcontrollerright.calculate(followerleftMotor.getEncoder().getVelocity(), state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR) + feedforward.calculate(state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR)
+            
+			
 			SmartDashboard.putBoolean("Shooter/On", true);
-		} else {
+		}  else {
 			// for safety, if the state is not recognized, stop the motors
 			leaderrightMotor.set(0);
 			passMotor.set(0);

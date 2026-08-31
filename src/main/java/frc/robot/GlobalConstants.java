@@ -14,7 +14,7 @@ public class GlobalConstants {
 
 	public static final double SIMULATION_PERIOD = 0.02;
 
-	public static final RobotMode ROBOT_MODE = "Crash".equals(System.getenv("CI_NAME")) || !Robot.isReal() ? RobotMode.SIM : RobotMode.REAL;
+	public static final RobotMode ROBOT_MODE = "Crash".equals(System.getenv("CI_NAME")) || !Robot.isReal() ? RobotMode.SIM : RobotMode.TUNE;
 
 	public static class FaultManagerConstants {
 
