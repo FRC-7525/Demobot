@@ -65,13 +65,6 @@ public class Shooter {
 
 	public void setState(ShooterStates state) {
 		this.state = state;
-
-		if (state == ShooterStates.MIDSHOOT || state == ShooterStates.LOWSHOOT || state == ShooterStates.HIGHSHOOT) {
-			// agitatingHigh = false;
-			passthroughTimer.restart();
-		} else {
-			passthroughTimer.stop();
-		}
 	}
 
 	public boolean atSpeed() {
@@ -117,13 +110,17 @@ public class Shooter {
 				passthroughTimer.start();
 			} else if (!ready && !wasIdle) {
 				leaderrightMotor.set(1);
-				if (passthroughTimer.hasElapsed(1.0)) {
+				if (passthroughTimer.hasElapsed(2.0)) {
 					ready = true;
 				}
 			} else if (ready) {
 				passMotor.set(PASS_SPEED);
+				SmartDashboard.putBoolean("BRUH", true);
 				leaderrightMotor.set(1);
 			}
+
+			SmartDashboard.putBoolean("ready", ready);
+
 			// if (passthroughTimer.hasElapsed(PASSTHROUGH_INTERVAL)) {
 			// 	passMotor.set(PASS_SPEED);
 			// 	System.out.println("heheh");
