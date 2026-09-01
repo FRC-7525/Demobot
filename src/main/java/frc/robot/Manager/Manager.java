@@ -26,7 +26,7 @@ public class Manager {
 		goalState = LOWSHOT;
 	}
 
-	// Makes sure that there is only ONE instance of the Shooter class, and if there isn't, it creates a new one (this is a singleton pattern)
+	// Makes sure that there is only ONE instance of the Manager class, and if there isn't, it creates a new one (this is a singleton pattern)
 	public static Manager getInstance() {
 		if (instance == null) {
 			instance = new Manager();

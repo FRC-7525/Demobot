@@ -44,7 +44,7 @@ public class Intake {
 		armMotor.getEncoder().setPosition(0);
 	}
 
-	// Makes sure that there is only ONE instance of the Shooter class, and if there isn't, it creates a new one (this is a singleton pattern)
+	// Makes sure that there is only ONE instance of the Intake class, and if there isn't, it creates a new one (this is a singleton pattern)
 	public static Intake getInstance() {
 		if (instance == null) {
 			instance = new Intake();
@@ -94,17 +94,17 @@ public class Intake {
 	private void log(double armPosition, double armSetpoint, double armOutput) {
 		SmartDashboard.putString("Intake/State", currentState.toString());
 
-		// arm
+		// Arm
 		SmartDashboard.putNumber("Intake/Arm/Position", armPosition);
 		SmartDashboard.putNumber("Intake/Arm/Setpoint", armSetpoint);
 		SmartDashboard.putNumber("Intake/Arm/Error", armSetpoint - armPosition);
 		SmartDashboard.putNumber("Intake/Arm/Output", armOutput);
 
-		// wheel
+		// Roller
 		SmartDashboard.putNumber("Intake/Wheel/Commanded", currentState.getWheelSpeed());
 		SmartDashboard.putNumber("Intake/Wheel/VelocityRPM", wheelMotor.getEncoder().getVelocity());
 
-		// agitates
+		// Agitation
 		SmartDashboard.putBoolean("Intake/Agitate/AtHigh", agitatingHigh);
 		SmartDashboard.putNumber("Intake/Agitate/Timer", agitateTimer.get());
 		if (ROBOT_MODE == RobotMode.TUNE) {
