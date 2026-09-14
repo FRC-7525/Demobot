@@ -25,7 +25,7 @@ public class Robot extends TimedRobot {
 
 	public static boolean isRedAlliance = false;
 	private final Manager manager = Manager.getInstance();
-	private final Drive drive = Drive.getInstance();
+	//private final Drive drive = Drive.getInstance();
 
 	/**
 	 * This function is run when the robot is first started up and should be used for any
@@ -37,13 +37,13 @@ public class Robot extends TimedRobot {
 		StatusLogger.disableAutoLogging();
 		DriverStation.silenceJoystickConnectionWarning(true);
 		CommandScheduler.getInstance().unregisterAllSubsystems();
-		drive.zeroGyro();
+		//drive.zeroGyro();
 	}
 
 	@Override
 	public void robotPeriodic() {
 		manager.periodic();
-		drive.periodic();
+		//drive.periodic();
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		drive.setState(DriveStates.MANUAL);
+		//drive.setState(DriveStates.MANUAL);
 		CommandScheduler.getInstance().cancelAll();
 		manager.setState(ManagerStates.IDLE);
 		SmartDashboard.putBoolean("Robot State/isAutonomous", DriverStation.isAutonomous());

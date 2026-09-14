@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Subsystems.Climber.Climber;
 import frc.robot.Subsystems.Intake.Intake;
 import frc.robot.Subsystems.Intake.IntakeStates;
+import frc.robot.Subsystems.LEDs.LEDs;
 import frc.robot.Subsystems.Shooter.Shooter;
 import org.littletonrobotics.junction.Logger;
 
@@ -17,6 +18,7 @@ public class Manager {
 	Intake intake;
 	IntakeStates passthrough;
 	Shooter shooter;
+	LEDs leds;
 	ManagerStates robotstate;
 	private boolean intakeOut;
 
@@ -26,9 +28,10 @@ public class Manager {
 	private static Manager instance;
 
 	private Manager() {
-		climber = Climber.getInstance();
-		intake = Intake.getInstance();
-		shooter = Shooter.getInstance();
+		//climber = Climber.getInstance();
+		//intake = Intake.getInstance();
+		//shooter = Shooter.getInstance();
+		leds = LEDs.getInstance();
 
 		robotstate = IDLE;
 		intakeOut = true;
@@ -47,15 +50,17 @@ public class Manager {
 
 	public void periodic() {
 		// intake.setState(getState().getIntakeState());
-		intake.setState(getState().getIntakeState());
-		shooter.setState(getState().getShooterState());
-		climber.setState(getState().getClimberState());
+		//intake.setState(getState().getIntakeState());
+		//shooter.setState(getState().getShooterState());
+		//climber.setState(getState().getClimberState());
+		leds.setState(getState().getLedStates());
 		Logger.recordOutput("Manager State", robotstate.getStateString());
 
-		intake.periodic();
-		intake.periodic();
-		shooter.periodic();
-		climber.periodic();
+		//intake.periodic();
+		//intake.periodic();
+		//shooter.periodic();
+		//climber.periodic();
+		leds.periodic();
 
 		SmartDashboard.putString("Manager State", robotstate.getStateString());
 
