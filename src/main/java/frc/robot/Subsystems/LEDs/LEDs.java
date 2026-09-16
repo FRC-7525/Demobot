@@ -15,6 +15,7 @@ public class LEDs {
     AddressableLEDBufferView leftBody;
     AddressableLEDBufferView rightPanel;
     AddressableLEDBufferView leftPanel;
+    AddressableLEDBufferView allLed;
     LEDStates state;
     private static LEDs instance;
 
@@ -22,26 +23,21 @@ public class LEDs {
         ledStrip = new AddressableLED(9);
         //ledStripBuffer = new AddressableLEDBuffer(24);
 
-        ledBuffer = new AddressableLEDBuffer(30);
+        ledBuffer = new AddressableLEDBuffer(264);
         ledStrip.setLength(ledBuffer.getLength());
 
 
-        bottom = ledBuffer.createView(0, 4);
-        intake = ledBuffer.createView(5, 9);
-        rightBody = ledBuffer.createView(10, 14);
-        leftBody = ledBuffer.createView(15, 19);
-        rightPanel = ledBuffer.createView(20, 24);
-        leftPanel = ledBuffer.createView(25, 29);
+        bottom = ledBuffer.createView(0, 67);
+        intake = ledBuffer.createView(68, 92);
+        rightBody = ledBuffer.createView(93, 117);
+        leftBody = ledBuffer.createView(118, 172);
+        rightPanel = ledBuffer.createView(173, 227);
+        leftPanel = ledBuffer.createView(228, 263);
+        allLed = ledBuffer.createView(0,263);
         state = LEDStates.IDLE;
 
         ledStrip.setData(ledBuffer);
         ledStrip.start();
-        state.getPattern().applyTo(bottom);
-        state.getPattern().applyTo(intake);
-        state.getPattern().applyTo(rightBody);
-        state.getPattern().applyTo(leftBody);
-        state.getPattern().applyTo(rightPanel);
-        state.getPattern().applyTo(leftPanel);
     }
 
     public void periodic() {
@@ -58,5 +54,15 @@ public class LEDs {
 
     public void setState(LEDStates state) {
 		this.state = state;
+        if (state == LEDStates.INTAKING) {
+            state.getPattern().applyTo(allLed);
+        } else {
+        state.getPattern().applyTo(bottom);
+        state.getPattern().applyTo(intake);
+        state.getPattern().applyTo(rightBody);
+        state.getPattern().applyTo(leftBody);
+        state.getPattern().applyTo(rightPanel);
+        state.getPattern().applyTo(leftPanel);
+        }
 	}
 }
