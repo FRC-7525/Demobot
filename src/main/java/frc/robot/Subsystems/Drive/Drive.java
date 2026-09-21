@@ -27,7 +27,7 @@ public class Drive extends SubsystemBase {
 	private boolean isDisableRequested = false;
 	private boolean isDemoRequested = false;
 
-	// Makes sure that there is only ONE instance of the Shooter class, and if there isn't, it creates a new one (this is a singleton pattern)
+	// Makes sure that there is only ONE instance of the Drive class, and if there isn't, it creates a new one (this is a singleton pattern)
 	public static Drive getInstance() {
 		if (instance == null) {
 			instance = new Drive();

@@ -42,8 +42,6 @@ public enum DriveStates {
 	}
 
 	public void drive() {
-		if (driveCommand != null) {
-			driveCommand.run();
-		}
+		driveCommand.run();
 	}
 }

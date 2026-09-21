@@ -1,7 +1,6 @@
 package frc.robot.Subsystems.Shooter;
 
 import static frc.robot.GlobalConstants.ROBOT_MODE;
-import static frc.robot.Subsystems.Intake.IntakeConstants.IDLE_SPEED;
 import static frc.robot.Subsystems.Shooter.ShooterConstants.*;
 
 import com.revrobotics.PersistMode;
@@ -12,11 +11,9 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.GlobalConstants.RobotMode;
-import frc.robot.Subsystems.Intake.IntakeStates;
 
 public class Shooter {
 
@@ -44,22 +41,21 @@ public class Shooter {
 	public Shooter() {
 		state = ShooterStates.IDLE;
 
-		motorcontrollerright = new PIDController(KP, KI, KD);
-		feedforward = new SimpleMotorFeedforward(KS, KV, KA);
-
 		followerleftMotor = new SparkMax(LEFT_MOTOR_ID, MotorType.kBrushless);
 		leaderrightMotor = new SparkMax(RIGHT_MOTOR_ID, MotorType.kBrushless);
 		passMotor = new SparkMax(PASS_MOTOR_ID, MotorType.kBrushless);
 
-		// this makes the left motor follow the right motor, and inverts it so that they spin in opposite directions
+		// This makes the left motor follow the right motor, and inverts it so that they spin in opposite directions
 		followerConfig = new SparkMaxConfig();
 		followerConfig.follow(leaderrightMotor, true);
+		followerConfig.idleMode(IdleMode.kBrake);
+		followerConfig.smartCurrentLimit(30, 40);
 		followerleftMotor.configure(followerConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
-		// configures initial settings for the motors, such as idle mode is set to coast
-		leaderrightMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
-		followerleftMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
-		passMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+		// Configures initial settings for the motors, such as idle mode is set to coast
+		leaderrightMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast).smartCurrentLimit(30, 40), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+		followerleftMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast).smartCurrentLimit(30, 40), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+		passMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast).smartCurrentLimit(30, 40), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 		passthroughTimer = new Timer();
 	}
 
@@ -74,7 +70,7 @@ public class Shooter {
 	}
 
 	public void periodic() {
-		// logging
+		// Logging
 		SmartDashboard.putNumber("Shooter/Shooter RPM", followerleftMotor.getEncoder().getVelocity());
 		SmartDashboard.putNumber("Shooter/Target Speed", state.getShooterRPS());
 		SmartDashboard.putNumber("Shooter/Pass RPM", passMotor.getEncoder().getVelocity());
@@ -100,6 +96,8 @@ public class Shooter {
 		}
 
 		// States change speed of motors
+		// Most horrible code ever written :(
+		// Should really be done using states and transitions, but no team lib in this project
 		if (state == ShooterStates.IDLE) {
 			leaderrightMotor.set(0);
 			passMotor.set(0);
@@ -120,23 +118,8 @@ public class Shooter {
 				SmartDashboard.putBoolean("BRUH", true);
 				leaderrightMotor.set(state.getShooterRPS());
 			}
-
-			SmartDashboard.putBoolean("ready", ready);
-
-			// if (passthroughTimer.hasElapsed(PASSTHROUGH_INTERVAL)) {
-			// 	passMotor.set(PASS_SPEED);
-			// 	System.out.println("heheh");
-			// }
-
-			// leaderrightMotor.set(1);
-			
-			//leaderrightMotor.setVoltage(
-				//motorcontrollerright.calculate(followerleftMotor.getEncoder().getVelocity(), state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR) + feedforward.calculate(state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR)
-            
-			
-			SmartDashboard.putBoolean("Shooter/On", true);
 		}  else {
-			// for safety, if the state is not recognized, stop the motors
+			// For safety, if the state is not recognized, stop the motors
 			leaderrightMotor.set(0);
 			passMotor.set(0);
 		}

@@ -1,7 +1,5 @@
 package frc.robot.Subsystems.Shooter;
 
-import edu.wpi.first.units.Units;
-import edu.wpi.first.units.measure.AngularVelocity;
 
 public final class ShooterConstants {
 
@@ -15,18 +13,8 @@ public final class ShooterConstants {
 	public static final int RIGHT_MOTOR_ID = 11;
 	public static final int PASS_MOTOR_ID = 12;
 
-	public static final double KP = 0.0;
-	public static final double KI = 0.0;
-	public static final double KD = 0.0;
+	public static final int PASSTHROUGH_SPEED = 1;
 
-	public static final double KS = 0.26;
-	public static final double KV = 0.00207;
-	public static final double KA = 0.0;
 
-	public static final int PASS_SPEED = 1;
-
-	public static final int RPS_TO_RPM_CONVERSION_FACTOR = 60;
-	public static final int TOLERANCE = 60; // RPM
-
-	public static final double PASSTHROUGH_INTERVAL = 1; // seconds;
+	public static final double PASSTHROUGH_INTERVAL = 2.0; // seconds;
 }

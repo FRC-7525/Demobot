@@ -10,7 +10,6 @@ public class IntakeConstants {
 	public static final double OUTTAKE_SPEED = 0.9;
 	public static final double IDLE_SPEED = 0.0;
 	public static final Angle ARM_ANGLE_INTAKE = Degrees.of(-90.0);
-	public static final Angle ARM_ANGLE_OUTTAKE = Degrees.of(90.0);
 	public static final Angle ARM_ANGLE_IDLE = Degrees.of(0.0);
 
 	public static final int WHEEL_MOTOR_ID = 9;
