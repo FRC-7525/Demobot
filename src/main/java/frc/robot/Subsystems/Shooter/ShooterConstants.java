@@ -5,11 +5,11 @@ import edu.wpi.first.units.measure.AngularVelocity;
 
 public final class ShooterConstants {
 
-	public static final AngularVelocity IDLE_RPS = Units.RotationsPerSecond.of(0);
-	public static final AngularVelocity WINDUP_RPS = Units.RotationsPerSecond.of(0.5);
-	public static final AngularVelocity MID_SHOOT_RPS = Units.RotationsPerSecond.of(35); //org: 73
-	public static final AngularVelocity LOW_SHOOT_RPS = Units.RotationsPerSecond.of(15);
-	public static final AngularVelocity HIGH_SHOOT_RPS = Units.RotationsPerSecond.of(55);
+	public static final double IDLE_RPS = 0;
+	public static final double WINDUP_RPS = 0.5;
+	public static final double MID_SHOOT_RPS = 0.7;
+	public static final double LOW_SHOOT_RPS = 0.4;
+	public static final double HIGH_SHOOT_RPS = 1;
 
 	public static final int LEFT_MOTOR_ID = 13;
 	public static final int RIGHT_MOTOR_ID = 11;

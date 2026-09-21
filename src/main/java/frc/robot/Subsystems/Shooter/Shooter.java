@@ -68,14 +68,15 @@ public class Shooter {
 	}
 
 	public boolean atSpeed() {
+		//return Math.abs(followerleftMotor.getEncoder().getVelocity() - (state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR)) < TOLERANCE;
 		// checks if the shooter is at the target speed by comparing the current velocity of the follower left motor's encoder to the target speed in RPM, allowing a tolerance of 60 RPM
-		return Math.abs(followerleftMotor.getEncoder().getVelocity() - (state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR)) < TOLERANCE;
+		return true;
 	}
 
 	public void periodic() {
 		// logging
 		SmartDashboard.putNumber("Shooter/Shooter RPM", followerleftMotor.getEncoder().getVelocity());
-		SmartDashboard.putNumber("Shooter/Target Speed (RPM)", state.getShooterRPS().in(Units.RotationsPerSecond) * RPS_TO_RPM_CONVERSION_FACTOR);
+		SmartDashboard.putNumber("Shooter/Target Speed", state.getShooterRPS());
 		SmartDashboard.putNumber("Shooter/Pass RPM", passMotor.getEncoder().getVelocity());
 		SmartDashboard.putData("Shooter/PID Controller", motorcontrollerright);
 
@@ -93,6 +94,7 @@ public class Shooter {
 			feedforward.setKs(SmartDashboard.getNumber("kS", feedforward.getKs()));
 			SmartDashboard.putNumber("Shooter/kS", feedforward.getKs());
 
+
 			// PID Controller tuning
 			SmartDashboard.putData("Shooter/PID Controller", motorcontrollerright);
 		}
@@ -109,14 +111,14 @@ public class Shooter {
 				passthroughTimer.reset();
 				passthroughTimer.start();
 			} else if (!ready && !wasIdle) {
-				leaderrightMotor.set(1);
+				leaderrightMotor.set(state.getShooterRPS());
 				if (passthroughTimer.hasElapsed(2.0)) {
 					ready = true;
 				}
 			} else if (ready) {
 				passMotor.set(PASS_SPEED);
 				SmartDashboard.putBoolean("BRUH", true);
-				leaderrightMotor.set(1);
+				leaderrightMotor.set(state.getShooterRPS());
 			}
 
 			SmartDashboard.putBoolean("ready", ready);

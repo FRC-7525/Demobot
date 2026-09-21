@@ -48,13 +48,13 @@ public class Manager {
 			return;
 		}
 		if (robotstate == IN_IDLE || robotstate == OUT_IDLE || robotstate == INTAKING) {
-			if (OPERATOR_CONTROLLER.getPOV() == UP) {
+			if (DRIVER_CONTROLLER.getPOV() == UP) {
 				goalState = HIGHSHOT;
-			} else if (OPERATOR_CONTROLLER.getPOV() == DOWN) {
+			} else if (DRIVER_CONTROLLER.getPOV() == DOWN) {
 				goalState = LOWSHOT;
-			} else if (OPERATOR_CONTROLLER.getPOV() == LEFT) {
+			} else if (DRIVER_CONTROLLER.getPOV() == LEFT) {
 				goalState = MIDSHOT;
-			} else if (OPERATOR_CONTROLLER.getPOV() == RIGHT) {
+			} else if (DRIVER_CONTROLLER.getPOV() == RIGHT) {
 				goalState = MIDSHOT;
 			}
 		}
@@ -87,7 +87,7 @@ public class Manager {
 					robotstate = goalState;
 				}
 				break;
-			case HIGHSHOT:
+		    case HIGHSHOT:
 			case MIDSHOT:
 			case LOWSHOT:
 				if (DRIVER_CONTROLLER.getLeftBumperButtonPressed()) {

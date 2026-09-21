@@ -11,9 +11,9 @@ public enum ShooterStates {
 	HIGHSHOOT(HIGH_SHOOT_RPS);
 
 	private String stateString;
-	private AngularVelocity shooterSpeed;
+	private double shooterSpeed;
 
-	ShooterStates(AngularVelocity shooterSpeed) {
+	ShooterStates(double shooterSpeed) {
 		this.stateString = this.name();
 		this.shooterSpeed = shooterSpeed;
 	}
@@ -22,7 +22,7 @@ public enum ShooterStates {
 		return stateString;
 	}
 
-	public AngularVelocity getShooterRPS() {
+	public double getShooterRPS() {
 		return shooterSpeed;
 	}
 }
