@@ -89,7 +89,6 @@ public class Shooter {
 			SmartDashboard.putNumber("Shooter/kV", feedforward.getKv());
 			feedforward.setKs(SmartDashboard.getNumber("kS", feedforward.getKs()));
 			SmartDashboard.putNumber("Shooter/kS", feedforward.getKs());
-
 		}
 
 		// States change speed of motors
