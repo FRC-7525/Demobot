@@ -49,13 +49,13 @@ public class Shooter {
 		followerConfig = new SparkMaxConfig();
 		followerConfig.follow(leaderrightMotor, true);
 		followerConfig.idleMode(IdleMode.kBrake);
-		followerConfig.smartCurrentLimit(30, 40);
+		followerConfig.smartCurrentLimit(STALL_LIMIT, FREE_LIMIT);
 		followerleftMotor.configure(followerConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
 		// Configures initial settings for the motors, such as idle mode is set to coast
-		leaderrightMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast).smartCurrentLimit(30, 40), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
-		followerleftMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast).smartCurrentLimit(30, 40), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
-		passMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast).smartCurrentLimit(30, 40), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+		leaderrightMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast).smartCurrentLimit(STALL_LIMIT, FREE_LIMIT), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+		followerleftMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast).smartCurrentLimit(STALL_LIMIT, FREE_LIMIT), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+		passMotor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast).smartCurrentLimit(STALL_LIMIT, FREE_LIMIT), ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
 		passthroughTimer = new Timer();
 	}
 
@@ -109,7 +109,7 @@ public class Shooter {
 				passthroughTimer.start();
 			} else if (!ready && !wasIdle) {
 				leaderrightMotor.set(state.getShooterRPS());
-				if (passthroughTimer.hasElapsed(2.0)) {
+				if (passthroughTimer.hasElapsed(WINDUP_TIME)) {
 					ready = true;
 				}
 			} else if (ready) {
