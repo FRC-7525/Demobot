@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
 import java.io.File;
 import swervelib.SwerveDrive;
 import swervelib.SwerveInputStream;
@@ -28,6 +27,7 @@ public class Drive extends SubsystemBase {
 	private boolean isDisableRequested = false;
 	private boolean isDemoRequested = false;
 
+	// Makes sure that there is only ONE instance of the Drive class, and if there isn't, it creates a new one (this is a singleton pattern)
 	public static Drive getInstance() {
 		if (instance == null) {
 			instance = new Drive();
@@ -93,9 +93,6 @@ public class Drive extends SubsystemBase {
 
 	public void zeroGyro() {
 		swerveDrive.zeroGyro();
-		if (Robot.isRedAlliance) {
-			swerveDrive.resetOdometry(swerveDrive.getPose().transformBy(RED_TRANSFORM));
-		}
 	}
 
 	public void setState(DriveStates state) {

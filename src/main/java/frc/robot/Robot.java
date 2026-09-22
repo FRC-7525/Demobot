@@ -7,7 +7,6 @@ package frc.robot;
 import com.ctre.phoenix6.SignalLogger;
 import com.revrobotics.util.StatusLogger;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -23,7 +22,6 @@ import frc.robot.Subsystems.Drive.DriveStates;
  */
 public class Robot extends TimedRobot {
 
-	public static boolean isRedAlliance = false;
 	private final Manager manager = Manager.getInstance();
 	private final Drive drive = Drive.getInstance();
 
@@ -56,7 +54,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		drive.setState(DriveStates.MANUAL);
 		CommandScheduler.getInstance().cancelAll();
-		manager.setState(ManagerStates.IDLE);
+		manager.setState(ManagerStates.IN_IDLE);
 		SmartDashboard.putBoolean("Robot State/isAutonomous", DriverStation.isAutonomous());
 		SmartDashboard.putBoolean("Robot State/isEnabled", DriverStation.isEnabled());
 	}
@@ -71,14 +69,10 @@ public class Robot extends TimedRobot {
 	}
 
 	@Override
-	public void disabledPeriodic() {
-		isRedAlliance = DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red;
-	}
+	public void disabledPeriodic() {}
 
 	@Override
-	public void disabledExit() {
-		isRedAlliance = DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red;
-	}
+	public void disabledExit() {}
 
 	@Override
 	public void testInit() {}
