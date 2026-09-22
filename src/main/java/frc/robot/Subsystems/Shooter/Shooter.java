@@ -90,8 +90,6 @@ public class Shooter {
 			feedforward.setKs(SmartDashboard.getNumber("kS", feedforward.getKs()));
 			SmartDashboard.putNumber("Shooter/kS", feedforward.getKs());
 
-			// PID Controller tuning
-			SmartDashboard.putData("Shooter/PID Controller", motorcontrollerright);
 		}
 
 		// States change speed of motors
