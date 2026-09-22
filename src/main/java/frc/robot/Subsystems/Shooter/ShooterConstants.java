@@ -1,6 +1,5 @@
 package frc.robot.Subsystems.Shooter;
 
-
 public final class ShooterConstants {
 
 	public static final double IDLE_RPS = 0;
@@ -14,7 +13,6 @@ public final class ShooterConstants {
 	public static final int PASS_MOTOR_ID = 12;
 
 	public static final int PASSTHROUGH_SPEED = 1;
-
 
 	public static final double PASSTHROUGH_INTERVAL = 2.0; // seconds;
 }

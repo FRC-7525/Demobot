@@ -12,7 +12,7 @@ import frc.robot.CI.CrashCheck;
  * you are doing, do not modify this file except to change the parameter class to the startRobot
  * call.
  */
-public final class Main { 
+public final class Main {
 
 	private Main() {}
 

@@ -90,7 +90,6 @@ public class Shooter {
 			feedforward.setKs(SmartDashboard.getNumber("kS", feedforward.getKs()));
 			SmartDashboard.putNumber("Shooter/kS", feedforward.getKs());
 
-
 			// PID Controller tuning
 			SmartDashboard.putData("Shooter/PID Controller", motorcontrollerright);
 		}
@@ -118,7 +117,7 @@ public class Shooter {
 				SmartDashboard.putBoolean("BRUH", true);
 				leaderrightMotor.set(state.getShooterRPS());
 			}
-		}  else {
+		} else {
 			// For safety, if the state is not recognized, stop the motors
 			leaderrightMotor.set(0);
 			passMotor.set(0);
