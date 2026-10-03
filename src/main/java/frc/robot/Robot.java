@@ -31,7 +31,6 @@ public class Robot extends TimedRobot {
 	 */
 
 	public Robot() {
-		SignalLogger.enableAutoLogging(false);
 		StatusLogger.disableAutoLogging();
 		DriverStation.silenceJoystickConnectionWarning(true);
 		CommandScheduler.getInstance().unregisterAllSubsystems();

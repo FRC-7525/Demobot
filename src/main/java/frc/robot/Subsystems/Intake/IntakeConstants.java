@@ -6,7 +6,7 @@ import edu.wpi.first.units.measure.Angle;
 
 public class IntakeConstants {
 
-	public static final double INTAKE_SPEED = -0.75;
+	public static final double INTAKE_SPEED = -0.5;
 	public static final double OUTTAKE_SPEED = 0.9;
 	public static final double IDLE_SPEED = 0.0;
 	public static final Angle ARM_ANGLE_INTAKE = Degrees.of(-90.0);
