@@ -6,6 +6,7 @@ import static frc.robot.Manager.ManagerStates.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Subsystems.Intake.Intake;
+import frc.robot.Subsystems.LEDs.LEDs;
 import frc.robot.Subsystems.Shooter.Shooter;
 import org.littletonrobotics.junction.Logger;
 
@@ -13,6 +14,7 @@ public class Manager {
 
 	Intake intake;
 	Shooter shooter;
+	LEDs leds;
 	ManagerStates robotstate;
 	ManagerStates goalState; // Used for tracking shooter power level
 
@@ -21,6 +23,7 @@ public class Manager {
 	private Manager() {
 		intake = Intake.getInstance();
 		shooter = Shooter.getInstance();
+		leds = LEDs.getInstance();
 
 		robotstate = IN_IDLE;
 		goalState = LOWSHOT;
@@ -37,10 +40,12 @@ public class Manager {
 	public void periodic() {
 		intake.setState(getState().getIntakeState());
 		shooter.setState(getState().getShooterState());
+		leds.setState(getState().getLEDState());
 		Logger.recordOutput("Manager State", robotstate.getStateString());
 
 		intake.periodic();
 		shooter.periodic();
+		leds.periodic();
 		SmartDashboard.putString("Manager State", robotstate.getStateString());
 
 		if (DRIVER_CONTROLLER.getStartButtonPressed()) {
