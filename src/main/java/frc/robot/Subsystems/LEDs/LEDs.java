@@ -20,7 +20,7 @@ public class LEDs {
     private static LEDs instance;
 
     public LEDs() {
-        ledStrip = new AddressableLED(9);
+        ledStrip = new AddressableLED(0);
         //ledStripBuffer = new AddressableLEDBuffer(24);
 
         ledBuffer = new AddressableLEDBuffer(264);
