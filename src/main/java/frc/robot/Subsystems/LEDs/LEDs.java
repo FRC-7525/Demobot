@@ -20,20 +20,19 @@ public class LEDs {
     private static LEDs instance;
 
     public LEDs() {
-        ledStrip = new AddressableLED(9);
-        //ledStripBuffer = new AddressableLEDBuffer(24);
+        ledStrip = new AddressableLED(0);
 
         ledBuffer = new AddressableLEDBuffer(264);
         ledStrip.setLength(ledBuffer.getLength());
 
 
-        bottom = ledBuffer.createView(0, 67);
-        intake = ledBuffer.createView(68, 92);
+        bottom = ledBuffer.createView(0, 62);
+        intake = ledBuffer.createView(63, 92);
         rightBody = ledBuffer.createView(93, 117);
         leftBody = ledBuffer.createView(118, 172);
         rightPanel = ledBuffer.createView(173, 227);
         leftPanel = ledBuffer.createView(228, 263);
-        allLed = ledBuffer.createView(0,263);
+        allLed = ledBuffer.createView(0,62);
         state = LEDStates.IDLE;
 
         ledStrip.setData(ledBuffer);
